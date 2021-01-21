@@ -9,7 +9,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private Transform m_Camera;
     [SerializeField]
     private float m_Speed = 6f;
-    private float m_TurnSmoothTime = 0.1f;
+    private float m_TurnSmoothTime = 0.5f;
     private float m_TurnSmoothVelocity;
 
     private void Start()
@@ -34,7 +34,7 @@ public class ThirdPersonMovement : MonoBehaviour
             float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
-            Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            Vector3 l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             m_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
         }
     }
