@@ -121,6 +121,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &26076515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 26076516}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &26076516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26076515}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1628822869}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64010926
 GameObject:
   m_ObjectHideFlags: 3
@@ -618,7 +648,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331314634}
-  m_LocalRotation: {x: 0.11067582, y: 0.6237294, z: -0.08982265, w: 0.76853395}
+  m_LocalRotation: {x: 0.11067583, y: 0.6237294, z: -0.08982266, w: 0.76853395}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1157,7 +1187,7 @@ GameObject:
   - component: {fileID: 694419149}
   - component: {fileID: 694419148}
   - component: {fileID: 694419147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1746,6 +1776,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 201611539}
+  - {fileID: 26076516}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1763,7 +1794,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Controller: {fileID: 1628822871}
   m_Camera: {fileID: 1437417517}
+  m_Groundcheck: {fileID: 26076516}
+  m_GroundMask:
+    serializedVersion: 2
+    m_Bits: 512
   m_Speed: 6
+  m_Gravity: -9.81
+  m_GroundDistance: 0.4
 --- !u!143 &1628822871
 CharacterController:
   m_ObjectHideFlags: 0
