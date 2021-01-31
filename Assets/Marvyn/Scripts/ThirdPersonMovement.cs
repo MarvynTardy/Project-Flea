@@ -16,7 +16,7 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Variables")]
     [SerializeField]
     private float m_Speed = 6f;
-    private float m_TurnSmoothTime = 0.1f;
+    private float m_TurnSmoothTime = 0.5f;
     private float m_TurnSmoothVelocity;
 
     Vector3 m_Velocity = Vector3.zero;
@@ -30,10 +30,15 @@ public class ThirdPersonMovement : MonoBehaviour
     private float m_JumpHeight = 3f;
 
     bool isGrounded;
+
+    private Gliding m_PlayerGliding = null;
+    private Walking m_PlayerWalking = null;
      
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        m_PlayerGliding = GetComponent<Gliding>();
+        m_PlayerWalking = GetComponent<Walking>();
     }
 
     private void Update()
@@ -55,7 +60,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void Move()
     {
-        float l_Horizontal = Input.GetAxisRaw("Horizontal");
+        /*float l_Horizontal = Input.GetAxisRaw("Horizontal");
         float l_Vertical = Input.GetAxisRaw("Vertical");
         Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
         
@@ -65,9 +70,13 @@ public class ThirdPersonMovement : MonoBehaviour
             float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
-            Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            Vector3 l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             m_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
-        }
+        }*/
+        if (Input.GetKey(KeyCode.LeftShift))
+            m_PlayerGliding.Glide(m_Camera, m_Controller);
+        else
+            m_PlayerWalking.Walk(m_Camera, m_Controller);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
 
