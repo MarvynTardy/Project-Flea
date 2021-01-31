@@ -25,6 +25,14 @@ public class Gliding : MonoBehaviour
 
     private float m_Speed = 0f;
 
+    private Vector3 m_PastDirection = Vector3.zero;
+
+    private bool m_IsGliding = false;
+
+    private bool m_EndingGlide = false;
+
+    private float m_ETimer = 0f;
+
     private void Awake()
     {
         m_Speed = m_TrueSpeed;
@@ -32,7 +40,7 @@ public class Gliding : MonoBehaviour
 
     private void Update()
     {
-        BeginGliding();
+
     }
 
     public void Glide(Transform p_Camera, CharacterController p_Controller)
@@ -50,23 +58,46 @@ public class Gliding : MonoBehaviour
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            m_PastDirection = l_MoveDir;
+            m_IsGliding = true;
         }
         else
+        {
             m_BeginGlide = false;
+            if(m_IsGliding)
+            {
+                m_EndingGlide = true;
+                m_IsGliding = false;
+            }
+        }
+        BeginGliding();
+        EndGliding(p_Controller);
     }
 
     private void BeginGliding()
     {
         if (m_BeginGlide)
         {
+            m_EndingGlide = false;
             m_BTimer += 1 * Time.deltaTime;
-            Debug.Log(m_Speed);
             m_Speed = m_TrueSpeed * m_BeginVelocity.Evaluate(m_BTimer);
-            /*Debug.Log("Timer : " + m_BTimer);
-            Debug.Log("Curve : " + m_BeginVelocity.Evaluate(m_BTimer));
-            Debug.Log("Speed : " + m_Speed);*/
         }
         else
             m_BTimer = 0;
+    }
+
+    private void EndGliding(CharacterController p_Controller)
+    {
+        if (m_Speed == 0)
+        {
+            m_EndingGlide = false;
+            m_ETimer = 0;
+        }
+        if (m_EndingGlide)
+        {
+            m_ETimer += 1 * Time.deltaTime;
+            m_Speed = m_TrueSpeed * m_EndVelocity.Evaluate(m_ETimer);
+            p_Controller.Move(m_PastDirection.normalized * m_Speed * Time.deltaTime);
+        }
     }
 }

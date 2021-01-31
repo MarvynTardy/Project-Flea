@@ -26,6 +26,14 @@ public class Walking : MonoBehaviour
 
     private float m_Speed = 0f;
 
+    private Vector3 m_PastDirection = Vector3.zero;
+
+    private bool m_IsWalking = false;
+
+    private bool m_EndingWalk = false;
+
+    private float m_ETimer = 0f;
+
     private void Awake()
     {
         m_Speed = m_TrueSpeed;
@@ -33,7 +41,7 @@ public class Walking : MonoBehaviour
 
     private void Update()
     {
-        BeginWalking();
+        Debug.Log(m_IsWalking);
     }
 
     public void Walk(Transform p_Camera, CharacterController p_Controller)
@@ -51,23 +59,46 @@ public class Walking : MonoBehaviour
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
             p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            m_PastDirection = l_MoveDir;
+            m_IsWalking = true;
         }
         else
+        {
             m_BeginWalk = false;
+            if (m_IsWalking)
+            {
+                m_EndingWalk = true;
+                m_IsWalking = false;
+            }
+        }
+        BeginWalking();
+        EndWalking(p_Controller);
     }
 
     private void BeginWalking()
     {
         if (m_BeginWalk)
         {
+            m_EndingWalk = false;
             m_BTimer += 1 * Time.deltaTime;
-            Debug.Log(m_TrueSpeed);
             m_Speed = m_TrueSpeed * m_BeginVelocity.Evaluate(m_BTimer);
-            /*Debug.Log("Timer : " + m_BTimer);
-            Debug.Log("Curve : " + m_BeginVelocity.Evaluate(m_BTimer));
-            Debug.Log("Speed : " + m_Speed);*/
         }
         else
             m_BTimer = 0;
+    }
+
+    private void EndWalking(CharacterController p_Controller)
+    {
+        if (m_Speed == 0)
+        {
+            m_EndingWalk = false;
+            m_ETimer = 0;
+        }
+        if (m_EndingWalk)
+        {
+            m_ETimer += 1 * Time.deltaTime;
+            m_Speed = m_TrueSpeed * m_EndVelocity.Evaluate(m_ETimer);
+            p_Controller.Move(m_PastDirection.normalized * m_Speed * Time.deltaTime);
+        }
     }
 }
