@@ -1885,6 +1885,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1227884258}
+  - component: {fileID: 1227884259}
   m_Layer: 0
   m_Name: Post Process Volume
   m_TagString: Untagged
@@ -1906,6 +1907,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227884259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227884257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 183cbd347d25080429f42b520742bbd8, type: 2}
 --- !u!1 &1329417236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2498,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrueSpeed: 15
   m_TurnSmoothTime: 0.5
-  m_Gravity: -9.81
   m_BeginVelocity:
     serializedVersion: 2
     m_Curve:
@@ -2544,7 +2561,6 @@ MonoBehaviour:
   m_TrueSpeed: 5
   m_TurnSmoothTime: 0.2
   m_TurnSmoothVelocity: 0
-  m_Gravity: -9.81
   m_BeginVelocity:
     serializedVersion: 2
     m_Curve:
@@ -2629,7 +2645,6 @@ MonoBehaviour:
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 512
-  m_Speed: 20
   m_Gravity: -9.81
   m_GroundDistance: 0.4
   m_JumpHeight: 3
