@@ -7,7 +7,7 @@ public class HookPosDetection : MonoBehaviour
     [SerializeField]
     private float m_HookDistance = 10.0f;
 
-    private Transform m_HookTarget = null;
+    public Transform m_HookTarget = null;
 
     [SerializeField]
     private LayerMask m_LayerToDetect;
@@ -57,7 +57,8 @@ public class HookPosDetection : MonoBehaviour
                 }
                
             }
-            Debug.Log(Vector2.Distance(l_PotentialTarget.position, m_CenterScreenPos));
+
+            // Debug.Log(Vector2.Distance(l_PotentialTarget.position, m_CenterScreenPos));
 
             // Actualise le point de grappin si la cible potentiel n'est pas nulle et que la cible n'est pas déjà la cible actuelle
             if (l_PotentialTarget != null && m_HookTarget != l_PotentialTarget)
