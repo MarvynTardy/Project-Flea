@@ -10,8 +10,8 @@ public class Gliding : MonoBehaviour
     [SerializeField]
     private float m_TurnSmoothTime = 0.5f;
     private float m_TurnSmoothVelocity;
-    [SerializeField]
-    private float m_Gravity = -9.81f;
+    //[SerializeField]
+    //private float m_Gravity = -9.81f;
     [SerializeField]
     private AnimationCurve m_BeginVelocity = null;
     [SerializeField]
@@ -43,16 +43,16 @@ public class Gliding : MonoBehaviour
 
     }
 
-    public void Glide(Transform p_Camera, CharacterController p_Controller)
+    public Vector3 Glide(Transform p_Camera, CharacterController p_Controller, Vector3 p_Direction)
     {
-        float l_Horizontal = Input.GetAxisRaw("Horizontal");
-        float l_Vertical = Input.GetAxisRaw("Vertical");
-        Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
+        //float l_Horizontal = Input.GetAxisRaw("Horizontal");
+        //float l_Vertical = Input.GetAxisRaw("Vertical");
+        //Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
-        if (l_Direction.magnitude >= 0.1f)
+        if (p_Direction.magnitude >= 0.1f)
         {
             m_BeginGlide = true;
-            float l_TargetAngle = Mathf.Atan2(l_Direction.x, l_Direction.z) * Mathf.Rad2Deg + p_Camera.eulerAngles.y;
+            float l_TargetAngle = Mathf.Atan2(p_Direction.x, p_Direction.z) * Mathf.Rad2Deg + p_Camera.eulerAngles.y;
             float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
@@ -72,6 +72,8 @@ public class Gliding : MonoBehaviour
         }
         BeginGliding();
         EndGliding(p_Controller);
+
+        return p_Direction;
     }
 
     private void BeginGliding()
