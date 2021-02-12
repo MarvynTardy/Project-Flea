@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_MomentumBoost = 5f;
 
     private bool m_IsGrounded;
+    private bool m_CanJump;
     private float m_CharacterVelocityY;
     private Vector3 m_CharacterVelocityMomentum;
     private State m_State;
@@ -61,6 +62,11 @@ public class PlayerController : MonoBehaviour
     {
         m_IsGrounded = Physics.CheckSphere(m_Groundcheck.position, m_GroundDistance, m_GroundMask);
         
+        if (m_IsGrounded)
+        {
+            m_CanJump = true;
+        }
+
         m_HookShotTarget = m_HookPosDetection.m_HookTarget;
 
         if (m_IsGrounded && m_CharacterVelocityY < 0)
@@ -68,12 +74,12 @@ public class PlayerController : MonoBehaviour
             ResetGravityEffect();
         }
 
-        if (TestInputJump() && m_IsGrounded)
+        if (TestInputJump() && m_CanJump)
         {
             Jump();
         }
 
-            switch (m_State)
+        switch (m_State)
         {
             default:
             case State.Normal:
@@ -155,6 +161,8 @@ public class PlayerController : MonoBehaviour
     {
         m_HookShotOrigin.LookAt(m_HookshotPosition);
 
+        m_CanJump = true;
+
         float hookshotThrowSpeed = 500f;
         m_HookshotSize += hookshotThrowSpeed * Time.deltaTime;
         m_HookShotOrigin.localScale = new Vector3(1, 1, m_HookshotSize);
@@ -211,6 +219,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // Debug.Log("saut");
+        m_CanJump = false;
         ResetGravityEffect();
         m_CharacterVelocityMomentum += Vector3.up * m_JumpForce * 3;
         // ResetGravityEffect();
