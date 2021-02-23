@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GrapPoint
+  - WallGlide
   layers:
   - Default
   - TransparentFX

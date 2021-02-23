@@ -50,6 +50,7 @@ public class Walking : MonoBehaviour
         //float l_Vertical = Input.GetAxisRaw("Vertical");
         //Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
+
         if (p_Direction.magnitude >= 0.1f)
         {
             m_BeginWalk = true;
