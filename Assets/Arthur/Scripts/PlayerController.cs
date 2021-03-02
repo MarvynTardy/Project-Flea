@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_MomentumBoost = 5f;
 
     private bool m_IsGrounded;
+    private bool m_CanJump;
     private float m_CharacterVelocityY;
     private Vector3 m_CharacterVelocityMomentum;
     private State m_State;
@@ -56,13 +57,18 @@ public class PlayerController : MonoBehaviour
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
 
-        Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
+        // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
     private void Update()
     {
         m_IsGrounded = Physics.CheckSphere(m_Groundcheck.position, m_GroundDistance, m_GroundMask);
         
+        if (m_IsGrounded)
+        {
+            m_CanJump = true;
+        }
+
         m_HookShotTarget = m_HookPosDetection.m_HookTarget;
 
         if (m_IsGrounded && m_CharacterVelocityY < 0)
@@ -70,12 +76,12 @@ public class PlayerController : MonoBehaviour
             ResetGravityEffect();
         }
 
-        if (TestInputJump() && m_IsGrounded)
+        if (TestInputJump() && m_CanJump)
         {
             Jump();
         }
 
-            switch (m_State)
+        switch (m_State)
         {
             default:
             case State.Normal:
@@ -102,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
             m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
         else
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
@@ -143,7 +149,7 @@ public class PlayerController : MonoBehaviour
     {
         if (TestInputDownHookshot())
         {
-            if (m_HookShotTarget)
+            if (m_HookShotTarget && m_HookPosDetection.m_CanBeHooked)
             {
                 // debugHitPointTransform.position = m_HookPoint.position;
                 m_HookshotPosition = m_HookShotTarget.position;
@@ -158,6 +164,8 @@ public class PlayerController : MonoBehaviour
     private void HookshotThrow()
     {
         m_HookShotOrigin.LookAt(m_HookshotPosition);
+
+        m_CanJump = true;
 
         float hookshotThrowSpeed = 500f;
         m_HookshotSize += hookshotThrowSpeed * Time.deltaTime;
@@ -215,6 +223,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // Debug.Log("saut");
+        m_CanJump = false;
         ResetGravityEffect();
         m_CharacterVelocityMomentum += Vector3.up * m_JumpForce * 3;
         // ResetGravityEffect();
@@ -233,12 +242,14 @@ public class PlayerController : MonoBehaviour
 
     private bool TestInputDownHookshot()
     {
-        return Input.GetKeyDown(KeyCode.E);
+        // return Input.GetKeyDown(KeyCode.E);
+        return Input.GetButtonDown("Hook");
     }
 
     private bool TestInputJump()
     {
-        return Input.GetKeyDown(KeyCode.Space);
+        //return Input.GetKeyDown(KeyCode.Space);
+        return Input.GetButtonDown("Jump");
     }
 
     private void OnDrawGizmos()
