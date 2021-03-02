@@ -6,43 +6,59 @@ public class WallGliding : MonoBehaviour
 {
     [SerializeField] private GameObject m_PlayerGraphicVisual = null;
 
-    private void Update()
+    [SerializeField] private LayerMask m_GlideableWall;
+    private bool m_TouchingWallRight = false;
+    private bool m_TouchingWallLeft = false;
+
+    private bool m_IsWallGLiding = false;
+
+    public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
+        WallGlideInput();
+        WallGlide(p_Controller);
     }
 
-    private void ChangePosition(RaycastHit p_HitInfo, string p_Orientation)
+    private void WallGlideInput()
     {
-        if(p_Orientation == "right")
+        if(Input.GetKey(KeyCode.D) && m_TouchingWallRight) { Debug.Log("right"); StartWallGlide(); }
+        if(Input.GetKey(KeyCode.Q) && m_TouchingWallLeft) { Debug.Log("left"); StartWallGlide(); }
+    }
+
+    private void StartWallGlide()
+    {
+        m_IsWallGLiding = true;
+    }
+
+    private void EndWallGlide()
+    {
+        m_IsWallGLiding = false;
+    }
+
+    private void WallGlide(CharacterController p_Controller)
+    {
+        if(m_IsWallGLiding)
         {
-            Debug.Log("aaa");
-            m_PlayerGraphicVisual.transform.rotation = Quaternion.Euler(45, 45, 45);
-        }
-        if (p_Orientation == "left")
-        {
-            m_PlayerGraphicVisual.transform.rotation = Quaternion.Euler(0, 0, -45);
+            if(m_TouchingWallRight)
+            {
+                //p_Controller.Move(transform.right * 2);
+                p_Controller.Move(transform.up * (60 * Time.deltaTime) * Time.deltaTime);
+            }
+            else if (m_TouchingWallLeft)
+            {
+                //p_Controller.Move(-transform.right * 2);
+                p_Controller.Move(transform.up * (60 * Time.deltaTime) * Time.deltaTime);
+            }
+            else
+            { Debug.Log("marche pas"); }
         }
     }
 
     private void DetectionWall()
     {
-        RaycastHit l_HitRight;
-        if (Physics.Raycast(transform.position, transform.right, out l_HitRight, 1))
-        {  
-            if(l_HitRight.transform.tag == "WallGlide")
-            {
-                Debug.Log("Right");
-                ChangePosition(l_HitRight, "right");
-            }
-        }
-        RaycastHit l_HitLeft;
-        if (Physics.Raycast(transform.position, transform.right * -1, out l_HitLeft, -1))
-        {
-            if (l_HitRight.transform.tag == "WallGlide")
-            {
-                Debug.Log("Left");
-                ChangePosition(l_HitLeft, "left");
-            }
-        }
+        m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, 1f, m_GlideableWall);
+        m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, m_GlideableWall);
+
+        if (!m_TouchingWallRight && !m_TouchingWallLeft) EndWallGlide();
     }
 }

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Transform m_HookShotTarget = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
+    private WallGliding m_PlayerWallGliding = null;
 
     [Header("Variables")]
     [SerializeField] private float m_GroundDistance = 0.4f;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         m_HookPosDetection = GetComponent<HookPosDetection>();
         m_PlayerGliding = GetComponent<Gliding>();
         m_PlayerWalking = GetComponent<Walking>();
+        m_PlayerWallGliding = GetComponent<WallGliding>();
 
         Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
@@ -128,6 +130,8 @@ public class PlayerController : MonoBehaviour
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
         }
+
+        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
     }
 
     private void ResetGravityEffect()
