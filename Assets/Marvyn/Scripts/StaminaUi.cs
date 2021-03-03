@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StaminaUi : MonoBehaviour
+public class StaminaUI : MonoBehaviour
 {
-    private Image m_StaminaAmount;
+    [SerializeField]
+    private Slider m_StaminaAmount;
+    private StaminaComponent m_StaminaComponent;
+    private void Start()
 
-
-    void Start()
     {
-       
+        m_StaminaComponent = FindObjectOfType<StaminaComponent>();
+        m_StaminaAmount.value = m_StaminaComponent.CurrentStamina;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SetStamina(float p_Stamina)
     {
+        m_StaminaAmount.value = m_StaminaComponent.CurrentStamina;
         
     }
+
+
+    
 }
