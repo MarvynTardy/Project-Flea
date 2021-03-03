@@ -865,7 +865,6 @@ MonoBehaviour:
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 512
-  m_Speed: 20
   m_Gravity: -9.81
   m_GroundDistance: 0.4
   m_JumpHeight: 3
@@ -883,7 +882,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrueSpeed: 15
   m_TurnSmoothTime: 0.5
-  m_Gravity: -9.81
   m_BeginVelocity:
     serializedVersion: 2
     m_Curve:
@@ -947,7 +945,6 @@ MonoBehaviour:
   m_TrueSpeed: 5
   m_TurnSmoothTime: 0.2
   m_TurnSmoothVelocity: 0
-  m_Gravity: -9.81
   m_BeginVelocity:
     serializedVersion: 2
     m_Curve:
@@ -1937,7 +1934,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762798746}
-  m_LocalRotation: {x: 0.100115344, y: 0.6122409, z: -0.07854628, w: 0.78036433}
+  m_LocalRotation: {x: 0.10011534, y: 0.6122409, z: -0.07854627, w: 0.78036433}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
