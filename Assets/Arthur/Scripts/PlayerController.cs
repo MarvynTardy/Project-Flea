@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private State m_State;
     private Vector3 m_HookshotPosition;
     private float m_HookshotSize;
+    private bool m_FreezePlayer = false;
 
     // Feedback
     private const float m_NormalFOV = 40f;
@@ -62,42 +63,46 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        m_IsGrounded = Physics.CheckSphere(m_Groundcheck.position, m_GroundDistance, m_GroundMask);
+        if(!m_FreezePlayer)
+        {
+            m_IsGrounded = Physics.CheckSphere(m_Groundcheck.position, m_GroundDistance, m_GroundMask);
         
-        if (m_IsGrounded)
-        {
-            m_CanJump = true;
-        }
+            if (m_IsGrounded)
+            {
+                m_CanJump = true;
+            }
 
-        m_HookShotTarget = m_HookPosDetection.m_HookTarget;
+            m_HookShotTarget = m_HookPosDetection.m_HookTarget;
 
-        if (m_IsGrounded && m_CharacterVelocityY < 0)
-        {
-            ResetGravityEffect();
-        }
+            if (m_IsGrounded && m_CharacterVelocityY < 0)
+            {
+                ResetGravityEffect();
+            }
 
-        if (TestInputJump() && m_CanJump)
-        {
-            Jump();
-        }
+            if (TestInputJump() && m_CanJump)
+            {
+                Jump();
+            }
 
-        switch (m_State)
-        {
-            default:
-            case State.Normal:
-                // HandleCharacterLook();
-                CharacterMovement();
-                HandleHookshotStart();
-                break;
-            case State.HookshotThrown:
-                HookshotThrow();
-                // HandleCharacterLook();
-                CharacterMovement();
-                break;
-            case State.HookshotFlyingPlayer:
-                // HandleCharacterLook();
-                HookshotMovement();
-                break;
+            switch (m_State)
+            {
+                default:
+                case State.Normal:
+                    // HandleCharacterLook();
+                    CharacterMovement();
+                    HandleHookshotStart();
+                    break;
+                case State.HookshotThrown:
+                    HookshotThrow();
+                    // HandleCharacterLook();
+                    CharacterMovement();
+                    break;
+                case State.HookshotFlyingPlayer:
+                    // HandleCharacterLook();
+                    HookshotMovement();
+                    break;
+            }
+
         }
     }
 
@@ -118,7 +123,7 @@ public class PlayerController : MonoBehaviour
         if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
         {
             // Apply gravity to the velocity
-            float gravityDownForce = -60f;
+            float gravityDownForce = -40f;
             if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
@@ -156,14 +161,22 @@ public class PlayerController : MonoBehaviour
         {
             if (m_HookShotTarget && m_HookPosDetection.m_CanBeHooked)
             {
-                // debugHitPointTransform.position = m_HookPoint.position;
-                m_HookshotPosition = m_HookShotTarget.position;
-                m_HookshotSize = 0f;
-                m_HookShotOrigin.gameObject.SetActive(true);
-                m_HookShotOrigin.localScale = Vector3.zero;
-                m_State = State.HookshotThrown;
+                StartCoroutine(HandleHookshotStartCO());
             }
         }
+    }
+
+    IEnumerator HandleHookshotStartCO()
+    {
+        m_FreezePlayer = true;
+        yield return new WaitForSeconds(0.2f);
+
+        m_FreezePlayer = false;
+        m_HookshotPosition = m_HookShotTarget.position;
+        m_HookshotSize = 0f;
+        m_HookShotOrigin.gameObject.SetActive(true);
+        m_HookShotOrigin.localScale = Vector3.zero;
+        m_State = State.HookshotThrown;
     }
 
     private void HookshotThrow()
