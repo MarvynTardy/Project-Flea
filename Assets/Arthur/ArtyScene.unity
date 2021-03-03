@@ -1108,6 +1108,7 @@ GameObject:
   - component: {fileID: 442888927}
   - component: {fileID: 442888926}
   - component: {fileID: 442888930}
+  - component: {fileID: 442888929}
   - component: {fileID: 442888928}
   m_Layer: 11
   m_Name: ThirdPersonPlayer
@@ -1284,6 +1285,22 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &442888929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442888924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1980a0e7c2dcc694a8f201729fd6f53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerGraphicVisual: {fileID: 2068979452}
+  m_GlideableWall:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &442888930
 MonoBehaviour:
   m_ObjectHideFlags: 0
