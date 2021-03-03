@@ -113,12 +113,18 @@ public class PlayerController : MonoBehaviour
         else
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
 
-        // Apply gravity to the velocity
-        float gravityDownForce = -60f;
-        m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
-        // Apply Y velocity to move vector
-        l_Direction.y = m_CharacterVelocityY;
+        if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
+        {
+            // Apply gravity to the velocity
+            float gravityDownForce = -60f;
+            if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+
+            // Apply Y velocity to move vector
+            l_Direction.y = m_CharacterVelocityY;
+
+        }
 
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
@@ -137,7 +143,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
     }
 
     private void ResetGravityEffect()
