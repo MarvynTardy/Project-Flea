@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Transform m_HookShotTarget = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
+    private WallGliding m_PlayerWallGliding = null;
 
     [Header("Variables")]
     [SerializeField] private float m_GroundDistance = 0.4f;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
         m_HookPosDetection = GetComponent<HookPosDetection>();
         m_PlayerGliding = GetComponent<Gliding>();
         m_PlayerWalking = GetComponent<Walking>();
+        m_PlayerWallGliding = GetComponent<WallGliding>();
 
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
@@ -111,12 +113,18 @@ public class PlayerController : MonoBehaviour
         else
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
 
-        // Apply gravity to the velocity
-        float gravityDownForce = -60f;
-        m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
-        // Apply Y velocity to move vector
-        l_Direction.y = m_CharacterVelocityY;
+        if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
+        {
+            // Apply gravity to the velocity
+            float gravityDownForce = -60f;
+            if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+
+            // Apply Y velocity to move vector
+            l_Direction.y = m_CharacterVelocityY;
+
+        }
 
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
@@ -134,6 +142,7 @@ public class PlayerController : MonoBehaviour
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
         }
+
     }
 
     private void ResetGravityEffect()
