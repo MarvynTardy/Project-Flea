@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private WallGliding m_PlayerWallGliding = null;
+    private Animator m_PlayerAnim = null;
 
     [Header("Variables")]
     [SerializeField] private float m_GroundDistance = 0.4f;
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
         m_PlayerGliding = GetComponent<Gliding>();
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
+        m_PlayerAnim = GetComponentInChildren<Animator>();
 
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
@@ -112,6 +114,15 @@ public class PlayerController : MonoBehaviour
         float l_Vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
+
+        if (l_Direction != Vector3.zero)
+        {
+            m_PlayerAnim.SetBool("IsMoving", true);
+        }
+        else
+        {
+            m_PlayerAnim.SetBool("IsMoving", false);
+        }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
             m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
