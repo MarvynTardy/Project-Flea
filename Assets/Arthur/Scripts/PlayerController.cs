@@ -113,13 +113,13 @@ public class PlayerController : MonoBehaviour
         else
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
 
-        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
+        
 
-        if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
+        if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
             float gravityDownForce = -60f;
-            if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+            if (!m_PlayerWallGliding.IsWallGliding()) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;

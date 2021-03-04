@@ -12,11 +12,15 @@ public class WallGliding : MonoBehaviour
 
     private bool m_IsWallGLiding = false;
 
-    public bool WallGlidingUpdate(CharacterController p_Controller)
+    public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
         WallGlideInput();
         WallGlide(p_Controller);
+    }
+
+    public bool IsWallGliding()
+    {
         return m_IsWallGLiding;
     }
 
@@ -42,13 +46,9 @@ public class WallGliding : MonoBehaviour
         {
             if(m_TouchingWallRight)
             {
-                //p_Controller.Move(transform.right * 2);
-                //p_Controller.Move(transform.up * 5 * Time.deltaTime);
             }
             else if (m_TouchingWallLeft)
             {
-                //p_Controller.Move(-transform.right * 2);
-                //p_Controller.Move(transform.up * Time.deltaTime);
             }
             else
             { Debug.Log("marche pas"); }
