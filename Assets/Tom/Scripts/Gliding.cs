@@ -33,32 +33,30 @@ public class Gliding : MonoBehaviour
 
     private float m_ETimer = 0f;
 
-    private WallGliding m_PlayerWallGliding = null;
-
-
     private void Awake()
-    {
-        m_PlayerWallGliding = GetComponent<WallGliding>();
-    }
-
-    private void Start()
     {
         m_Speed = m_TrueSpeed;
     }
 
+    private void Update()
+    {
+
+    }
+
     public Vector3 Glide(Transform p_Camera, CharacterController p_Controller, Vector3 p_Direction)
     {
+        //float l_Horizontal = Input.GetAxisRaw("Horizontal");
+        //float l_Vertical = Input.GetAxisRaw("Vertical");
+        //Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
         if (p_Direction.magnitude >= 0.1f)
         {
             m_BeginGlide = true;
             float l_TargetAngle = Mathf.Atan2(p_Direction.x, p_Direction.z) * Mathf.Rad2Deg + p_Camera.eulerAngles.y;
             float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
-            if (!m_PlayerWallGliding.IsWallGliding()) transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+            transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
-            Vector3 l_MoveDir;
-            if (!m_PlayerWallGliding.IsWallGliding()) l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
-            else l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            Vector3 l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
             m_PastDirection = l_MoveDir;
             m_IsGliding = true;
@@ -74,8 +72,6 @@ public class Gliding : MonoBehaviour
         }
         BeginGliding();
         EndGliding(p_Controller);
-
-        m_PlayerWallGliding.WallGlidingUpdate(p_Controller);
 
         return p_Direction;
     }
