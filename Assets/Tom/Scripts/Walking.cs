@@ -34,14 +34,9 @@ public class Walking : MonoBehaviour
 
     private float m_ETimer = 0f;
 
-    private void Awake()
+    private void Start()
     {
         m_Speed = m_TrueSpeed;
-    }
-
-    private void Update()
-    {
-        // Debug.Log(m_IsWalking);
     }
 
     public Vector3 Walk(Transform p_Camera, CharacterController p_Controller, Vector3 p_Direction)
