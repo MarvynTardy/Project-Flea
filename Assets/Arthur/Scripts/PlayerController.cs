@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_GroundDistance = 0.4f;
     [SerializeField] float m_JumpForce = 15f;
     [SerializeField] float m_MomentumBoost = 5f;
+    [SerializeField] float gravityDownForce = -30f;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -72,6 +73,12 @@ public class PlayerController : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_CanJump = true;
+
+                m_PlayerAnim.SetBool("IsGrounded", true);
+            }
+            else
+            {
+                m_PlayerAnim.SetBool("IsGrounded", false);
             }
 
             m_HookShotTarget = m_HookPosDetection.m_HookTarget;
@@ -115,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
+
         if (l_Direction != Vector3.zero)
         {
             m_PlayerAnim.SetBool("IsMoving", true);
@@ -125,16 +133,21 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
+        {
+            m_PlayerAnim.SetBool("IsGliding", true);
             m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
+        }
         else
+        {
+            m_PlayerAnim.SetBool("IsGliding", false);
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
+        }
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
         if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
         {
             // Apply gravity to the velocity
-            float gravityDownForce = -40f;
             if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
@@ -158,7 +171,6 @@ public class PlayerController : MonoBehaviour
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
         }
-
     }
 
     private void ResetGravityEffect()
@@ -251,6 +263,8 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        m_PlayerAnim.SetTrigger("IsJumping");
+
         // Debug.Log("saut");
         m_CanJump = false;
         ResetGravityEffect();
