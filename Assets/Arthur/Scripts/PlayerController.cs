@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
                 Jump();
             }
 
+            ApplyWallJump();
+
             switch (m_State)
             {
                 default:
@@ -131,20 +133,17 @@ public class PlayerController : MonoBehaviour
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
-        if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
+        if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
-            float gravityDownForce = -40f;
-            if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+            float gravityDownForce = -60f;
+            m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;
-
         }
-
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
-
         // Move Character Controller
         m_Controller.Move(l_Direction * Time.deltaTime);
 
@@ -258,6 +257,15 @@ public class PlayerController : MonoBehaviour
         // ResetGravityEffect();
     }
 
+    private void ApplyWallJump()
+    {
+        if(m_PlayerWallGliding.WallJumpPower != Vector3.zero)
+        {
+            m_CharacterVelocityMomentum += m_PlayerWallGliding.WallJumpPower;
+            m_PlayerWallGliding.WallJumpPower = Vector3.zero;
+        }
+    }
+
     private void StopHookshot()
     {
         m_State = State.Normal;
@@ -284,6 +292,8 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        //Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        Vector3 direction = transform.right * 10;
+        Gizmos.DrawRay(transform.position, direction);
     }
 }
