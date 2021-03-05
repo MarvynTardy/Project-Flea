@@ -127,11 +127,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
+        {
             m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
+            m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
+        }
+        else if (Input.GetButtonUp("Glide"))
+            m_PlayerWallGliding.EndWallGlide();
         else
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
-
-        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
         if (!m_PlayerWallGliding.IsWallGliding())
         {
@@ -292,8 +295,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
-        Vector3 direction = transform.right * 10;
-        Gizmos.DrawRay(transform.position, direction);
+        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
     }
 }

@@ -30,18 +30,26 @@ public class WallGliding : MonoBehaviour
 
     private void WallGlideInput()
     {
-        if(Input.GetAxisRaw("Horizontal") > 0 && m_TouchingWallRight) { Debug.Log("right"); StartWallGlide(); }
-        if(Input.GetAxisRaw("Horizontal") < 0 && m_TouchingWallLeft) { Debug.Log("left"); StartWallGlide(); }
+        if(Input.GetAxisRaw("Horizontal") > 0 && m_TouchingWallRight) { StartWallGlideRight(); }
+        if(Input.GetAxisRaw("Horizontal") < 0 && m_TouchingWallLeft) { StartWallGlideLeft(); }
     }
 
-    private void StartWallGlide()
+    private void StartWallGlideRight()
     {
         m_IsWallGLiding = true;
+        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 45f);
     }
 
-    private void EndWallGlide()
+    private void StartWallGlideLeft()
+    {
+        m_IsWallGLiding = true;
+        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, -45f);
+    }
+
+    public void EndWallGlide()
     {
         m_IsWallGLiding = false;
+        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void WallGlide(CharacterController p_Controller)
@@ -51,7 +59,7 @@ public class WallGliding : MonoBehaviour
             if(m_TouchingWallRight)
             {
                 WallJump();
-                if(Input.GetAxisRaw("Horizontal") == 0)
+                if (Input.GetAxisRaw("Horizontal") == 0)
                 {
                     EndWallGlide();
                 }
@@ -65,7 +73,7 @@ public class WallGliding : MonoBehaviour
                 }
             }
             else
-            { EndWallGlide(); }
+                EndWallGlide(); 
         }
     }
 
@@ -76,12 +84,10 @@ public class WallGliding : MonoBehaviour
             if (m_TouchingWallRight)
             {
                 m_WallJumpPower = (-transform.right + transform.up).normalized * m_WallJumpForce * 3;
-                Debug.Log(m_WallJumpPower);
             }
             else if (m_TouchingWallLeft)
             {
                 m_WallJumpPower = (transform.right + transform.up).normalized * m_WallJumpForce * 3;
-                Debug.Log(m_WallJumpPower);
             }
         }
     }
