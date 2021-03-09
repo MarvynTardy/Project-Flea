@@ -296,5 +296,13 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), -transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), -transform.right * 0.75f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.right);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), -transform.right);
     }
 }

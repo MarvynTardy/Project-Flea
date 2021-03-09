@@ -94,8 +94,12 @@ public class WallGliding : MonoBehaviour
 
     private void DetectionWall()
     {
-        m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, 1f, m_GlideableWall);
-        m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, m_GlideableWall);
+        //m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, 1f, m_GlideableWall);
+        //m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, m_GlideableWall);
+        m_TouchingWallRight = Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right, 0.75f, m_GlideableWall) & Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f), transform.right, 0.75f, m_GlideableWall);
+        m_TouchingWallLeft = Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), -transform.right, 0.75f, m_GlideableWall) & Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f), -transform.right, 0.75f, m_GlideableWall);
+        Debug.Log("Right " + m_TouchingWallRight);
+        Debug.Log("Left " + m_TouchingWallLeft);
     }
 
     public Vector3 WallJumpPower
