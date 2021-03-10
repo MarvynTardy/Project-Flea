@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_GroundDistance = 0.4f;
     [SerializeField] float m_JumpForce = 15f;
     [SerializeField] float m_MomentumBoost = 5f;
-    [SerializeField] float gravityDownForce = -30f;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -73,12 +72,6 @@ public class PlayerController : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_CanJump = true;
-
-                m_PlayerAnim.SetBool("IsGrounded", true);
-            }
-            else
-            {
-                m_PlayerAnim.SetBool("IsGrounded", false);
             }
 
             m_HookShotTarget = m_HookPosDetection.m_HookTarget;
@@ -92,6 +85,8 @@ public class PlayerController : MonoBehaviour
             {
                 Jump();
             }
+
+            ApplyWallJump();
 
             switch (m_State)
             {
@@ -122,7 +117,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
-
         if (l_Direction != Vector3.zero)
         {
             m_PlayerAnim.SetBool("IsMoving", true);
@@ -133,31 +127,23 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
-        {
-            m_PlayerAnim.SetBool("IsGliding", true);
             m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
-        }
         else
-        {
-            m_PlayerAnim.SetBool("IsGliding", false);
             m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
-        }
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
-        if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller))
+        if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
-            if (!m_PlayerWallGliding.WallGlidingUpdate(m_Controller)) m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
+            float gravityDownForce = -60f;
+            m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;
-
         }
-
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
-
         // Move Character Controller
         m_Controller.Move(l_Direction * Time.deltaTime);
 
@@ -171,6 +157,7 @@ public class PlayerController : MonoBehaviour
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
         }
+
     }
 
     private void ResetGravityEffect()
@@ -263,13 +250,20 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        m_PlayerAnim.SetTrigger("IsJumping");
-
         // Debug.Log("saut");
         m_CanJump = false;
         ResetGravityEffect();
         m_CharacterVelocityMomentum += Vector3.up * m_JumpForce * 3;
         // ResetGravityEffect();
+    }
+
+    private void ApplyWallJump()
+    {
+        if(m_PlayerWallGliding.WallJumpPower != Vector3.zero)
+        {
+            m_CharacterVelocityMomentum += m_PlayerWallGliding.WallJumpPower;
+            m_PlayerWallGliding.WallJumpPower = Vector3.zero;
+        }
     }
 
     private void StopHookshot()
@@ -298,6 +292,8 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        //Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        Vector3 direction = transform.right * 10;
+        Gizmos.DrawRay(transform.position, direction);
     }
 }

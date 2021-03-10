@@ -12,18 +12,26 @@ public class WallGliding : MonoBehaviour
 
     private bool m_IsWallGLiding = false;
 
-    public bool WallGlidingUpdate(CharacterController p_Controller)
+    private Vector3 m_WallJumpPower = Vector3.zero;
+
+    [SerializeField] private float m_WallJumpForce = 15f;
+
+    public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
         WallGlideInput();
         WallGlide(p_Controller);
+    }
+
+    public bool IsWallGliding()
+    {
         return m_IsWallGLiding;
     }
 
     private void WallGlideInput()
     {
-        if(Input.GetKey(KeyCode.D) && m_TouchingWallRight) { Debug.Log("right"); StartWallGlide(); }
-        if(Input.GetKey(KeyCode.Q) && m_TouchingWallLeft) { Debug.Log("left"); StartWallGlide(); }
+        if(Input.GetAxisRaw("Horizontal") > 0 && m_TouchingWallRight) { Debug.Log("right"); StartWallGlide(); }
+        if(Input.GetAxisRaw("Horizontal") < 0 && m_TouchingWallLeft) { Debug.Log("left"); StartWallGlide(); }
     }
 
     private void StartWallGlide()
@@ -42,16 +50,39 @@ public class WallGliding : MonoBehaviour
         {
             if(m_TouchingWallRight)
             {
-                //p_Controller.Move(transform.right * 2);
-                //p_Controller.Move(transform.up * 5 * Time.deltaTime);
+                WallJump();
+                if(Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    EndWallGlide();
+                }
             }
             else if (m_TouchingWallLeft)
             {
-                //p_Controller.Move(-transform.right * 2);
-                //p_Controller.Move(transform.up * Time.deltaTime);
+                WallJump();
+                if (Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    EndWallGlide();
+                }
             }
             else
-            { Debug.Log("marche pas"); }
+            { EndWallGlide(); }
+        }
+    }
+
+    private void WallJump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (m_TouchingWallRight)
+            {
+                m_WallJumpPower = (-transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                Debug.Log(m_WallJumpPower);
+            }
+            else if (m_TouchingWallLeft)
+            {
+                m_WallJumpPower = (transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                Debug.Log(m_WallJumpPower);
+            }
         }
     }
 
@@ -59,7 +90,11 @@ public class WallGliding : MonoBehaviour
     {
         m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, 1f, m_GlideableWall);
         m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, m_GlideableWall);
+    }
 
-        if (!m_TouchingWallRight && !m_TouchingWallLeft) EndWallGlide();
+    public Vector3 WallJumpPower
+    {
+        get { return m_WallJumpPower;  }
+        set { m_WallJumpPower = value; }
     }
 }
