@@ -127,9 +127,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
-            m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
+            l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
         else
-            m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
+            l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;
         }
+
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
         // Move Character Controller
