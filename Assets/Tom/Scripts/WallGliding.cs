@@ -94,12 +94,17 @@ public class WallGliding : MonoBehaviour
 
     private void DetectionWall()
     {
-        //m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, 1f, m_GlideableWall);
-        //m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, m_GlideableWall);
-        m_TouchingWallRight = Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right, 0.75f, m_GlideableWall) & Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f), transform.right, 0.75f, m_GlideableWall);
-        m_TouchingWallLeft = Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), -transform.right, 0.75f, m_GlideableWall) & Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f), -transform.right, 0.75f, m_GlideableWall);
-        Debug.Log("Right " + m_TouchingWallRight);
-        Debug.Log("Left " + m_TouchingWallLeft);
+        RaycastHit l_HitRight;
+        RaycastHit l_HitLeft;
+        m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, out l_HitRight, 0.75f, m_GlideableWall);
+        m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, out l_HitLeft, 0.75f, m_GlideableWall);
+        Debug.DrawRay(l_HitRight.point, l_HitRight.normal, Color.blue, 60f);
+        Debug.DrawRay(l_HitLeft.point, l_HitLeft.normal, Color.blue, 60f);
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Vector3 l_Forward = transform.forward;
+            transform.forward = l_HitRight.transform.forward;
+        }
     }
 
     public Vector3 WallJumpPower
