@@ -41,10 +41,7 @@ public class Walking : MonoBehaviour
 
     public Vector3 Walk(Transform p_Camera, CharacterController p_Controller, Vector3 p_Direction)
     {
-        //float l_Horizontal = Input.GetAxisRaw("Horizontal");
-        //float l_Vertical = Input.GetAxisRaw("Vertical");
-        //Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
-
+        Vector3 l_DirectionToReturn = Vector3.zero;
 
         if (p_Direction.magnitude >= 0.1f)
         {
@@ -54,7 +51,8 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
-            p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            // p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            l_DirectionToReturn = l_MoveDir.normalized * m_Speed;
             m_PastDirection = l_MoveDir;
             m_IsWalking = true;
         }
@@ -70,7 +68,7 @@ public class Walking : MonoBehaviour
         BeginWalking();
         EndWalking(p_Controller);
 
-        return p_Direction;
+        return l_DirectionToReturn;
     }
 
     private void BeginWalking()
