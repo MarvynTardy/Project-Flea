@@ -131,8 +131,6 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
-        }
-            m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
         }
         else if (Input.GetButtonUp("Glide"))

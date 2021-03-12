@@ -37,13 +37,13 @@ public class WallGliding : MonoBehaviour
     private void StartWallGlideRight()
     {
         m_IsWallGLiding = true;
-        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 45f);
+        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 60f);
     }
 
     private void StartWallGlideLeft()
     {
         m_IsWallGLiding = true;
-        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, -45f);
+        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, -60f);
     }
 
     public void EndWallGlide()
