@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(transform.forward);
         if(!m_FreezePlayer)
         {
             m_IsGrounded = Physics.CheckSphere(m_Groundcheck.position, m_GroundDistance, m_GroundMask);
@@ -131,8 +130,6 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
-        }
-            m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
         }
         else if (Input.GetButtonUp("Glide"))
@@ -146,7 +143,11 @@ public class PlayerController : MonoBehaviour
         if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
-            float gravityDownForce = -60f;
+            float gravityDownForce = 0f;
+            if(!Input.GetButton("Glide"))
+                gravityDownForce = -60f;
+            else if(Input.GetButton("Glide"))
+                gravityDownForce = -10f;
             m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector

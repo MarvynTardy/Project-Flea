@@ -98,8 +98,6 @@ public class WallGliding : MonoBehaviour
         RaycastHit l_HitLeft;
         m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, out l_HitRight, 0.75f, m_GlideableWall);
         m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, out l_HitLeft, 0.75f, m_GlideableWall);
-        Debug.DrawRay(l_HitRight.point, l_HitRight.normal, Color.blue, 60f);
-        Debug.DrawRay(l_HitLeft.point, l_HitLeft.normal, Color.blue, 60f);
         if(Input.GetKeyDown(KeyCode.L))
         {
             Vector3 l_Forward = transform.forward;
