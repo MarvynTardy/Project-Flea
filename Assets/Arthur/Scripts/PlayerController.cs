@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform m_HookShotOrigin;
     [SerializeField] private GameObject m_PlayerModel;
     [SerializeField] private CinemachineFreeLook CinemachineComponent;
+    [SerializeField] private SkinnedMeshRenderer m_Cloth;
+    [SerializeField] private Material m_GlowMaterial;
+    private Material m_SavedMaterial;
     private HookPosDetection m_HookPosDetection;
     private Transform m_HookShotTarget = null;
     private Gliding m_PlayerGliding = null;
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
         m_PlayerAnim = GetComponentInChildren<Animator>();
-
+        m_SavedMaterial = m_Cloth.materials[0];
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
@@ -136,11 +139,13 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
+            m_Cloth.material = m_GlowMaterial;
         }
         else
         {
             l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", false);
+            m_Cloth.material = m_SavedMaterial;
         }
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
