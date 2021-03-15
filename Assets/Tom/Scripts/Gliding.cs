@@ -52,6 +52,7 @@ public class Gliding : MonoBehaviour
 
     public Vector3 Glide(Transform p_Camera, CharacterController p_Controller, Vector3 p_Direction)
     {
+        Vector3 l_DirectionToReturn = Vector3.zero;
 
         if (p_Direction.magnitude >= 0.1f)
         {
@@ -63,14 +64,15 @@ public class Gliding : MonoBehaviour
             Vector3 l_MoveDir;
             if (!m_PlayerWallGliding.IsWallGliding()) l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             else l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
-            p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            // p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
+            l_DirectionToReturn = l_MoveDir.normalized * m_Speed;
             m_PastDirection = l_MoveDir;
             m_IsGliding = true;
         }
         else
         {
             m_BeginGlide = false;
-            if(m_IsGliding)
+            if (m_IsGliding)
             {
                 m_EndingGlide = true;
                 m_IsGliding = false;
@@ -81,7 +83,7 @@ public class Gliding : MonoBehaviour
 
         m_PlayerWallGliding.WallGlidingUpdate(p_Controller);
 
-        return p_Direction;
+        return l_DirectionToReturn;
     }
 
     private void BeginGliding()

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_GroundDistance = 0.4f;
     [SerializeField] float m_JumpForce = 15f;
     [SerializeField] float m_MomentumBoost = 5f;
+    [SerializeField] float gravityDownForce = -40f;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -72,7 +73,10 @@ public class PlayerController : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_CanJump = true;
+                m_PlayerAnim.SetBool("IsGrounded", true);
             }
+            else
+                m_PlayerAnim.SetBool("IsGrounded", false);
 
             m_HookShotTarget = m_HookPosDetection.m_HookTarget;
 
@@ -84,6 +88,8 @@ public class PlayerController : MonoBehaviour
             if (TestInputJump() && m_CanJump)
             {
                 Jump();
+
+                m_PlayerAnim.SetTrigger("IsJumping");
             }
 
             ApplyWallJump();
@@ -127,21 +133,28 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
-            m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
+        {
+            l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
+            m_PlayerAnim.SetBool("IsGliding", true);
+        }
         else
-            m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
+        {
+            l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
+            m_PlayerAnim.SetBool("IsGliding", false);
+        }
 
         m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
 
         if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
-            float gravityDownForce = -60f;
+            
             m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;
         }
+
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;
         // Move Character Controller
@@ -178,8 +191,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator HandleHookshotStartCO()
     {
+        //float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
+        //m_PlayerModel.transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+        // m_PlayerModel.transform.LookAt(m_HookShotTarget);
+
+        m_PlayerAnim.SetTrigger("IsHookshot");
         m_FreezePlayer = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
+        m_PlayerAnim.SetBool("LaunchRotate", true);
 
         m_FreezePlayer = false;
         m_HookshotPosition = m_HookShotTarget.position;
@@ -223,8 +242,11 @@ public class PlayerController : MonoBehaviour
         m_Controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
         float reachedHookshotPositionDistance = 1.5f;
+
+        // joueur a atteint le point de grappin
         if (Vector3.Distance(transform.position, m_HookshotPosition) < reachedHookshotPositionDistance)
         {
+            m_PlayerAnim.SetTrigger("LaunchSalto");
             MomentumLaunch(hookshotDir, hookshotSpeed);
         }
 
