@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpectralMat
+  m_Shader: {fileID: -6465566751694194690, guid: cf425696fe12ffc4b8f132465d2e5cd8,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - Vector1_28F58DD0: 2
+    - Vector1_4F903FE7: 1
+    m_Colors:
+    - Color_E0D09970: {r: 0.8489776, g: 1.527942, b: 1.830277, a: 0}
+    - Color_EECD512E: {r: 2, g: 2, b: 2, a: 0}
