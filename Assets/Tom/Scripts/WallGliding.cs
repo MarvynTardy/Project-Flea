@@ -16,6 +16,9 @@ public class WallGliding : MonoBehaviour
 
     [SerializeField] private float m_WallJumpForce = 15f;
 
+    private RaycastHit m_HitRight;
+    private RaycastHit m_HitLeft;
+
     public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
@@ -56,8 +59,14 @@ public class WallGliding : MonoBehaviour
     {
         if(m_IsWallGLiding)
         {
+
             if(m_TouchingWallRight)
             {
+                if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                    transform.forward = m_HitRight.transform.forward;
+                else
+                    transform.forward = -m_HitRight.transform.forward;
+
                 WallJump();
                 if (Input.GetAxisRaw("Horizontal") == 0)
                 {
@@ -66,6 +75,11 @@ public class WallGliding : MonoBehaviour
             }
             else if (m_TouchingWallLeft)
             {
+                if (Vector3.Angle(m_HitLeft.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitLeft.transform.forward, transform.forward) > -90)
+                    transform.forward = m_HitLeft.transform.forward;
+                else
+                    transform.forward = -m_HitLeft.transform.forward;
+
                 WallJump();
                 if (Input.GetAxisRaw("Horizontal") == 0)
                 {
@@ -94,15 +108,16 @@ public class WallGliding : MonoBehaviour
 
     private void DetectionWall()
     {
-        RaycastHit l_HitRight;
-        RaycastHit l_HitLeft;
-        m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, out l_HitRight, 0.75f, m_GlideableWall);
-        m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, out l_HitLeft, 0.75f, m_GlideableWall);
-        if(Input.GetKeyDown(KeyCode.L))
+        m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, out m_HitRight, 0.75f, m_GlideableWall);
+        m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, out m_HitLeft, 0.75f, m_GlideableWall);
+        /*if(Input.GetKeyDown(KeyCode.L))
         {
             Vector3 l_Forward = transform.forward;
-            transform.forward = l_HitRight.transform.forward;
-        }
+            if(Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                transform.forward = m_HitRight.transform.forward;
+            else
+                transform.forward = -m_HitRight.transform.forward;
+        }*/
     }
 
     public Vector3 WallJumpPower
