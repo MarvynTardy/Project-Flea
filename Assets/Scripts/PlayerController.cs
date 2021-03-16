@@ -102,7 +102,8 @@ public class PlayerController : MonoBehaviour
             {
                 Jump();
 
-                m_PlayerAnim.SetTrigger("IsJumping");
+                if (!Input.GetButton("Glide"))
+                    m_PlayerAnim.SetTrigger("IsJumping");
             }
 
             ApplyWallJump();
