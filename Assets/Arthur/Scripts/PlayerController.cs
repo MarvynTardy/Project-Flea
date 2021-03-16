@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform m_HookShotOrigin;
     [SerializeField] private GameObject m_PlayerModel;
     [SerializeField] private CinemachineFreeLook CinemachineComponent;
+    [SerializeField] private SkinnedMeshRenderer m_Cloth;
+    [SerializeField] private Material m_GlowMaterial;
+    private Material m_SavedMaterial;
     private HookPosDetection m_HookPosDetection;
     private Transform m_HookShotTarget = null;
     private Gliding m_PlayerGliding = null;
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_GroundDistance = 0.4f;
     [SerializeField] float m_JumpForce = 15f;
     [SerializeField] float m_MomentumBoost = 5f;
+    [SerializeField] float gravityDownForce = -40f;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
         m_PlayerAnim = GetComponentInChildren<Animator>();
-
+        m_SavedMaterial = m_Cloth.materials[0];
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
@@ -72,7 +76,10 @@ public class PlayerController : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_CanJump = true;
+                m_PlayerAnim.SetBool("IsGrounded", true);
             }
+            else
+                m_PlayerAnim.SetBool("IsGrounded", false);
 
             m_HookShotTarget = m_HookPosDetection.m_HookTarget;
 
@@ -84,6 +91,8 @@ public class PlayerController : MonoBehaviour
             if (TestInputJump() && m_CanJump)
             {
                 Jump();
+
+                m_PlayerAnim.SetTrigger("IsJumping");
             }
 
             ApplyWallJump();
@@ -130,6 +139,7 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
+            m_Cloth.material = m_GlowMaterial;
             m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
         }
         else if (Input.GetButtonUp("Glide"))
@@ -138,6 +148,7 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", false);
+            m_Cloth.material = m_SavedMaterial;
         }
 
         if (!m_PlayerWallGliding.IsWallGliding())
@@ -190,8 +201,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator HandleHookshotStartCO()
     {
+        //float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
+        //m_PlayerModel.transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+        // m_PlayerModel.transform.LookAt(m_HookShotTarget);
+
+        m_PlayerAnim.SetTrigger("IsHookshot");
         m_FreezePlayer = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
+        m_PlayerAnim.SetBool("LaunchRotate", true);
 
         m_FreezePlayer = false;
         m_HookshotPosition = m_HookShotTarget.position;
@@ -235,8 +252,11 @@ public class PlayerController : MonoBehaviour
         m_Controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
         float reachedHookshotPositionDistance = 1.5f;
+
+        // joueur a atteint le point de grappin
         if (Vector3.Distance(transform.position, m_HookshotPosition) < reachedHookshotPositionDistance)
         {
+            m_PlayerAnim.SetTrigger("LaunchSalto");
             MomentumLaunch(hookshotDir, hookshotSpeed);
         }
 
