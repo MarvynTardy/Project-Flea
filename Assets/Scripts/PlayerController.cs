@@ -13,15 +13,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform m_HookShotOrigin;
     [SerializeField] private GameObject m_PlayerModel;
     [SerializeField] private CinemachineFreeLook CinemachineComponent;
+    [SerializeField] private ParticleSystem[] m_GlideParticle;
     [SerializeField] private SkinnedMeshRenderer m_Cloth;
+    [SerializeField] private MeshRenderer m_Pagne;
     [SerializeField] private Material m_GlowMaterial;
-    private Material m_SavedMaterial;
+    private Material m_ClothSavedMaterial;
+    private Material m_PagneSavedMaterial;
     private HookPosDetection m_HookPosDetection;
     private Transform m_HookShotTarget = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private WallGliding m_PlayerWallGliding = null;
     private Animator m_PlayerAnim = null;
+    private Quaternion m_SavedRotation;
 
     [Header("Variables")]
     [SerializeField] private float m_GroundDistance = 0.4f;
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private enum State
     {
         Normal,
+        HookshotLaunch,
         HookshotThrown,
         HookshotFlyingPlayer,
     }
@@ -63,7 +68,12 @@ public class PlayerController : MonoBehaviour
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
         m_PlayerAnim = GetComponentInChildren<Animator>();
-        m_SavedMaterial = m_Cloth.materials[0];
+        //for (int i = 0; i < m_Cloth.Length; i++)
+        //{
+        //    m_SavedMaterial[i] = m_Cloth[i].materials[0];
+        //}
+        m_ClothSavedMaterial = m_Cloth.materials[0];
+        m_PagneSavedMaterial = m_Pagne.materials[0];
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
@@ -139,16 +149,36 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
-            //m_Cloth.material = m_GlowMaterial;
+            m_Cloth.material = m_GlowMaterial;
+            m_Pagne.material = m_GlowMaterial;
+            //foreach (var clothToReplace in m_Cloth)
+            //{
+            //    clothToReplace.material = m_GlowMaterial;
+            //}
             m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
+            foreach (ParticleSystem glideParticle in m_GlideParticle)
+            {
+                glideParticle.Play();
+            }
         }
         else if (Input.GetButtonUp("Glide"))
+        {
             m_PlayerWallGliding.EndWallGlide();
+            m_PlayerAnim.SetBool("IsGliding", false);
+            //for (int i = 0; i < m_Cloth.Length; i++)
+            //{
+            //    m_Cloth[i].material = m_SavedMaterial[i];
+            //}
+            m_Cloth.material = m_ClothSavedMaterial;
+            m_Pagne.material = m_PagneSavedMaterial;
+            foreach (ParticleSystem glideParticle in m_GlideParticle)
+            {
+                glideParticle.Stop();
+            }
+        }
         else
         {
             l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
-            m_PlayerAnim.SetBool("IsGliding", false);
-            m_Cloth.material = m_SavedMaterial;
         }
 
         if (!m_PlayerWallGliding.IsWallGliding())
@@ -203,7 +233,9 @@ public class PlayerController : MonoBehaviour
     {
         //float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
         //m_PlayerModel.transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
-        // m_PlayerModel.transform.LookAt(m_HookShotTarget);
+        m_State = State.HookshotLaunch;
+        m_SavedRotation = m_PlayerModel.transform.rotation;
+        m_PlayerModel.transform.LookAt(m_HookShotTarget);
 
         m_PlayerAnim.SetTrigger("IsHookshot");
         m_FreezePlayer = true;
@@ -256,6 +288,7 @@ public class PlayerController : MonoBehaviour
         // joueur a atteint le point de grappin
         if (Vector3.Distance(transform.position, m_HookshotPosition) < reachedHookshotPositionDistance)
         {
+            m_PlayerModel.transform.rotation = m_SavedRotation;
             m_PlayerAnim.SetTrigger("LaunchSalto");
             MomentumLaunch(hookshotDir, hookshotSpeed);
         }
@@ -263,12 +296,14 @@ public class PlayerController : MonoBehaviour
         if (TestInputDownHookshot())
         {
             // Cancel Hookshot
+            m_PlayerModel.transform.rotation = m_SavedRotation;
             StopHookshot();
         }
 
         if (TestInputJump())
         {
             // Cancelled with Jump
+            m_PlayerModel.transform.rotation = m_SavedRotation;
             MomentumLaunch(hookshotDir, hookshotSpeed);
         }
     }
