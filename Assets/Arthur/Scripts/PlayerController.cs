@@ -139,8 +139,11 @@ public class PlayerController : MonoBehaviour
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
-            m_Cloth.material = m_GlowMaterial;
+            //m_Cloth.material = m_GlowMaterial;
+            m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
         }
+        else if (Input.GetButtonUp("Glide"))
+            m_PlayerWallGliding.EndWallGlide();
         else
         {
             l_Direction = m_PlayerWalking.Walk(m_Camera, m_Controller, l_Direction);
@@ -148,12 +151,14 @@ public class PlayerController : MonoBehaviour
             m_Cloth.material = m_SavedMaterial;
         }
 
-        m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
-
         if (!m_PlayerWallGliding.IsWallGliding())
         {
             // Apply gravity to the velocity
-            
+            float gravityDownForce = 0f;
+            if(!Input.GetButton("Glide"))
+                gravityDownForce = -60f;
+            else if(Input.GetButton("Glide"))
+                gravityDownForce = -10f;
             m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
 
             // Apply Y velocity to move vector
@@ -319,8 +324,14 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
-        Vector3 direction = transform.right * 10;
-        Gizmos.DrawRay(transform.position, direction);
+        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        /*Gizmos.color = Color.blue;
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), -transform.right * 0.75f);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), -transform.right * 0.75f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.right);
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), -transform.right);*/
     }
 }
