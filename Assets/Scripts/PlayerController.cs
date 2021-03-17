@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private WallGliding m_PlayerWallGliding = null;
     private Animator m_PlayerAnim = null;
     private Quaternion m_SavedRotation;
+    private StaminaComponent m_StaminaComponent = null;
 
     [Header("Variables")]
     [SerializeField] private float m_GroundDistance = 0.4f;
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerWallGliding = GetComponent<WallGliding>();
         m_PlayerAnim = GetComponentInChildren<Animator>();
+        m_StaminaComponent = GetComponent<StaminaComponent>();
         //for (int i = 0; i < m_Cloth.Length; i++)
         //{
         //    m_SavedMaterial[i] = m_Cloth[i].materials[0];
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviour
             m_PlayerAnim.SetBool("IsMoving", false);
         }
 
-        if (Input.GetButton("Glide") /* Input.GetKey(KeyCode.LeftShift)*/)
+        if (Input.GetButton("Glide") && m_StaminaComponent.CurrentStamina >= 0 /* Input.GetKey(KeyCode.LeftShift)*/)
         {
             l_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, l_Direction);
             m_PlayerAnim.SetBool("IsGliding", true);
@@ -158,6 +160,7 @@ public class PlayerController : MonoBehaviour
             //    clothToReplace.material = m_GlowMaterial;
             //}
             m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
+            m_StaminaComponent.UseStamina(10 * Time.deltaTime);
             foreach (ParticleSystem glideParticle in m_GlideParticle)
             {
                 glideParticle.Play();
@@ -173,6 +176,7 @@ public class PlayerController : MonoBehaviour
             //}
             m_Cloth.material = m_ClothSavedMaterial;
             m_Pagne.material = m_PagneSavedMaterial;
+           
             foreach (ParticleSystem glideParticle in m_GlideParticle)
             {
                 glideParticle.Stop();
