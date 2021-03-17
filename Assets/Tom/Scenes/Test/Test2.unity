@@ -2817,6 +2817,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -17
       objectReference: {fileID: 0}
+    - target: {fileID: 6904411845879777652, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_CollideAgainst.m_Bits
+      value: 4608
+      objectReference: {fileID: 0}
     - target: {fileID: 6904411845929686987, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -2830,12 +2835,12 @@ PrefabInstance:
     - target: {fileID: 6904411845929686987, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001713355
+      value: -0.000000017133537
       objectReference: {fileID: 0}
     - target: {fileID: 6904411845929686987, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000015815562
+      value: 0.0000000015815551
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585937, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -2846,6 +2851,141 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedWallGlide
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_RotationSpeedLerpWallGlide.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].inSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904411846153585949, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_AnimationRotationSpeedWallGlide.m_Curve.Array.data[1].tangentMode
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585950, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -2960,12 +3100,12 @@ PrefabInstance:
     - target: {fileID: 6904411847017455258, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000035061024
+      value: -0.000000035061017
       objectReference: {fileID: 0}
     - target: {fileID: 6904411847017455258, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000032363978
+      value: 0.000000003236397
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52374ad4b0b255d429daacf39f476345, type: 3}
