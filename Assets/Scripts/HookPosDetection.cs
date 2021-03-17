@@ -158,6 +158,7 @@ public class HookPosDetection : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, m_DetectionDistance);
 
+        Gizmos.color = Color.red;
         if(m_HookTarget)
         {
             Gizmos.DrawLine(transform.position, m_HookTarget.position);

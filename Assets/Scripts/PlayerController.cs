@@ -131,6 +131,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        switch (m_State)
+        {
+            case State.HookshotLaunch:
+                DrawLine();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void CharacterMovement()
     {
         float l_Horizontal = Input.GetAxisRaw("Horizontal");
@@ -238,8 +250,9 @@ public class PlayerController : MonoBehaviour
         m_State = State.HookshotLaunch;
         m_SavedRotation = m_PlayerModel.transform.rotation;
         m_PlayerModel.transform.LookAt(m_HookShotTarget);
+        m_HookShotOrigin.gameObject.SetActive(true);
 
-        DrawLine();
+        // DrawLine();
 
         m_PlayerAnim.SetTrigger("IsHookshot");
         m_FreezePlayer = true;
@@ -249,8 +262,7 @@ public class PlayerController : MonoBehaviour
         m_FreezePlayer = false;
         m_HookshotPosition = m_HookShotTarget.position;
         m_HookshotSize = 0f;
-        m_HookShotOrigin.gameObject.SetActive(true);
-        m_HookShotOrigin.localScale = Vector3.zero;
+        // m_HookShotOrigin.localScale = Vector3.zero;
         m_State = State.HookshotThrown;
     }
 
@@ -262,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
         float hookshotThrowSpeed = 500f;
         m_HookshotSize += hookshotThrowSpeed * Time.deltaTime;
-        m_HookShotOrigin.localScale = new Vector3(1, 1, m_HookshotSize);
+        // m_HookShotOrigin.localScale = new Vector3(1, 1, m_HookshotSize);
 
         if (m_HookshotSize >= Vector3.Distance(transform.position, m_HookshotPosition))
         {
@@ -362,8 +374,10 @@ public class PlayerController : MonoBehaviour
 
     private void DrawLine()
     {
+        Debug.Log("marche");
         m_HookLine.SetPosition(0, m_HookShotOrigin.position);
         m_HookLine.SetPosition(1, m_HookShotTarget.position);
+        Debug.Break();
     }
 
     private void OnDrawGizmos()
