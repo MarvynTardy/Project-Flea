@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Material m_PagneSavedMaterial;
     private HookPosDetection m_HookPosDetection;
     private Transform m_HookShotTarget = null;
+    private LineRenderer m_HookLine;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private WallGliding m_PlayerWallGliding = null;
@@ -74,6 +75,7 @@ public class PlayerController : MonoBehaviour
         //}
         m_ClothSavedMaterial = m_Cloth.materials[0];
         m_PagneSavedMaterial = m_Pagne.materials[0];
+        m_HookLine = m_HookShotOrigin.GetComponent<LineRenderer>();
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
@@ -126,7 +128,6 @@ public class PlayerController : MonoBehaviour
                     HookshotMovement();
                     break;
             }
-
         }
     }
 
@@ -237,6 +238,8 @@ public class PlayerController : MonoBehaviour
         m_State = State.HookshotLaunch;
         m_SavedRotation = m_PlayerModel.transform.rotation;
         m_PlayerModel.transform.LookAt(m_HookShotTarget);
+
+        DrawLine();
 
         m_PlayerAnim.SetTrigger("IsHookshot");
         m_FreezePlayer = true;
@@ -355,6 +358,12 @@ public class PlayerController : MonoBehaviour
     {
         //return Input.GetKeyDown(KeyCode.Space);
         return Input.GetButtonDown("Jump");
+    }
+
+    private void DrawLine()
+    {
+        m_HookLine.SetPosition(0, m_HookShotOrigin.position);
+        m_HookLine.SetPosition(1, m_HookShotTarget.position);
     }
 
     private void OnDrawGizmos()
