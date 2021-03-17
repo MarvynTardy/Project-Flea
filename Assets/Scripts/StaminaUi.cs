@@ -12,11 +12,11 @@ public class StaminaUI : MonoBehaviour
 
     {
         m_StaminaComponent = FindObjectOfType<StaminaComponent>();
-        m_StaminaAmount.value = m_StaminaComponent.CurrentStamina;
+        SetStamina(m_StaminaComponent.CurrentStamina);
     }
     public void SetStamina(float p_Stamina)
     {
-        m_StaminaAmount.value = m_StaminaComponent.CurrentStamina;
+        m_StaminaAmount.value = p_Stamina;
         
     }
 
