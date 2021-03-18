@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
             // Apply gravity to the velocity
             float gravityDownForce = 0f;
             if(!Input.GetButton("Glide"))
-                gravityDownForce = -60f;
+                gravityDownForce = -30f;
             else if(Input.GetButton("Glide"))
                 gravityDownForce = -10f;
             m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
