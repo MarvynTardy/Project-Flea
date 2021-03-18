@@ -53,4 +53,12 @@ public class StaminaComponent : MonoBehaviour
         m_CurrentStamina += p_Amount;
         m_StaminaUI.SetStamina(CurrentStamina);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 13)
+        {
+            GainStamina(m_MaxStamina - CurrentStamina);
+        }
+    }
 }
