@@ -6,22 +6,23 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private CharacterController m_Controller;
-    [SerializeField] private Transform m_Camera;
+    [SerializeField] private CharacterController m_Controller = null;
+    [SerializeField] private Transform m_Camera = null;
     [SerializeField] private Transform m_Groundcheck = null;
     [SerializeField] private LayerMask m_GroundMask;
-    [SerializeField] private Transform m_HookShotOrigin;
-    [SerializeField] private GameObject m_PlayerModel;
-    [SerializeField] private CinemachineFreeLook CinemachineComponent;
-    [SerializeField] private ParticleSystem[] m_GlideParticle;
-    [SerializeField] private SkinnedMeshRenderer m_Cloth;
-    [SerializeField] private MeshRenderer m_Pagne;
-    [SerializeField] private Material m_GlowMaterial;
+    [SerializeField] private Transform m_HookShotOrigin = null;
+    [SerializeField] private GameObject m_PlayerModel = null;
+    [SerializeField] private CinemachineFreeLook CinemachineComponent = null;
+    [SerializeField] private ParticleSystem[] m_GlideParticle = null;
+    [SerializeField] private ParticleSystem m_HookshotParticle = null;
+    [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
+    [SerializeField] private MeshRenderer m_Pagne = null;
+    [SerializeField] private Material m_GlowMaterial = null;
     private Material m_ClothSavedMaterial;
     private Material m_PagneSavedMaterial;
     private HookPosDetection m_HookPosDetection;
     private Transform m_HookShotTarget = null;
-    private LineRenderer m_HookLine;
+    [SerializeField] private LineRenderer m_HookLine;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private WallGliding m_PlayerWallGliding = null;
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
         //}
         m_ClothSavedMaterial = m_Cloth.materials[0];
         m_PagneSavedMaterial = m_Pagne.materials[0];
-        m_HookLine = m_HookShotOrigin.GetComponent<LineRenderer>();
+        // m_HookLine = m_HookShotOrigin.GetComponent<LineRenderer>();
         // Debug.Log(CinemachineComponent.m_Lens.FieldOfView);
     }
 
@@ -133,11 +134,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         switch (m_State)
         {
             case State.HookshotLaunch:
+            case State.HookshotFlyingPlayer:
                 DrawLine();
                 break;
             default:
@@ -204,7 +206,7 @@ public class PlayerController : MonoBehaviour
             // Apply gravity to the velocity
             float gravityDownForce = 0f;
             if(!Input.GetButton("Glide"))
-                gravityDownForce = -60f;
+                gravityDownForce = -30f;
             else if(Input.GetButton("Glide"))
                 gravityDownForce = -10f;
             m_CharacterVelocityY += gravityDownForce * Time.deltaTime;
@@ -259,6 +261,7 @@ public class PlayerController : MonoBehaviour
         m_SavedRotation = m_PlayerModel.transform.rotation;
         m_PlayerModel.transform.LookAt(m_HookShotTarget);
         m_HookShotOrigin.gameObject.SetActive(true);
+        m_HookshotParticle.Play();
 
         // DrawLine();
 
@@ -363,9 +366,19 @@ public class PlayerController : MonoBehaviour
         ResetGravityEffect();
         m_HookShotOrigin.gameObject.SetActive(false);
         CinemachineComponent.m_Lens.FieldOfView = m_NormalFOV;
+
+        StopHookshotFeedback();
         // m_Camera.GetComponent<Camera>().fieldOfView = m_NormalFOV;
         // Camera.main.fieldOfView = m_NormalFOV;
         // speedLinesParticleSystem.Stop();
+    }
+
+    private void StopHookshotFeedback()
+    {
+        m_HookshotParticle.Clear();
+
+        m_HookLine.SetPosition(0, Vector3.zero);
+        m_HookLine.SetPosition(1, Vector3.zero);
     }
 
     private bool TestInputDownHookshot()
@@ -382,10 +395,15 @@ public class PlayerController : MonoBehaviour
 
     private void DrawLine()
     {
-        Debug.Log("marche");
+        // m_HookLine.positionCount = 2;
+        // Debug.Log(m_HookShotOrigin.position);
         m_HookLine.SetPosition(0, m_HookShotOrigin.position);
         m_HookLine.SetPosition(1, m_HookShotTarget.position);
-        Debug.Break();
+        //if (Vector3.Distance(m_HookShotOrigin.position, m_HookShotTarget.position) > 0.5f)
+        //{
+        //    m_HookLine.positionCount = 0;
+        //}
+        // Debug.Break();
     }
 
     private void OnDrawGizmos()
