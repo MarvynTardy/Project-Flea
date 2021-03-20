@@ -6,7 +6,8 @@ public class HookPosDetection : MonoBehaviour
 {
     [SerializeField]
     private float m_DetectionDistance = 20.0f;
-    private float m_HookDistance = 15.0f;
+    [SerializeField]
+    private float m_HookDistance = 17.0f;
 
     public Transform m_HookTarget = null;
     [SerializeField] GameObject m_UIFeedback;

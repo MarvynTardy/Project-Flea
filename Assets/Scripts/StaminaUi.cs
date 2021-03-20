@@ -11,6 +11,7 @@ public class StaminaUI : MonoBehaviour
     private void Start()
 
     {
+        m_StaminaAmount = GetComponent<Slider>();
         m_StaminaComponent = FindObjectOfType<StaminaComponent>();
         SetStamina(m_StaminaComponent.CurrentStamina);
     }
