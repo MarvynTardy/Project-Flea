@@ -37,7 +37,7 @@ public class WallGliding : MonoBehaviour
     public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
-        WallGlideInput();
+        WallGlideInput(p_Controller);
         WallGlide(p_Controller);
     }
 
@@ -46,10 +46,10 @@ public class WallGliding : MonoBehaviour
         return m_IsWallGLiding;
     }
 
-    private void WallGlideInput()
+    private void WallGlideInput(CharacterController p_Controller)
     {
-        if(Input.GetAxisRaw("Horizontal") > 0 && m_TouchingWallRight) { StartWallGlideRight(); }
-        if(Input.GetAxisRaw("Horizontal") < 0 && m_TouchingWallLeft) { StartWallGlideLeft(); }
+        if(m_TouchingWallRight && !p_Controller.isGrounded) { StartWallGlideRight(); }
+        if(m_TouchingWallLeft && !p_Controller.isGrounded) { StartWallGlideLeft(); }
     }
 
     private void StartWallGlideRight()
@@ -69,7 +69,6 @@ public class WallGliding : MonoBehaviour
     public void EndWallGlide()
     {
         m_IsWallGLiding = false;
-        //m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 0);
         if(m_PlayerGraphicVisual.transform.localRotation.z > 0)
             m_IsAnimationBackRotationRight = true;
         else if (m_PlayerGraphicVisual.transform.localRotation.z < 0)
@@ -93,11 +92,11 @@ public class WallGliding : MonoBehaviour
                     transform.forward = -m_HitRight.transform.forward;
 
                 WallJump();
-                if (Input.GetAxisRaw("Horizontal") < 0)
+                /*if (Input.GetAxisRaw("Horizontal") < 0)
                 {
                     EndWallGlide();
-                }
-                m_WallGlideGravity = new Vector3(150 * Time.deltaTime, 0, 0);
+                }*/
+                //m_WallGlideGravity = new Vector3(150 * Time.deltaTime, 0, 0);
             }
             else if (m_TouchingWallLeft)
             {
@@ -108,11 +107,11 @@ public class WallGliding : MonoBehaviour
                     transform.forward = -m_HitLeft.transform.forward;
 
                 WallJump();
-                if (Input.GetAxisRaw("Horizontal") > 0)
+                /*if (Input.GetAxisRaw("Horizontal") > 0)
                 {
                     EndWallGlide();
-                }
-                m_WallGlideGravity = new Vector3(-150 * Time.deltaTime, 0, 0);
+                }*/
+                //m_WallGlideGravity = new Vector3(-150 * Time.deltaTime, 0, 0);
             }
             else
                 EndWallGlide(); 
@@ -123,12 +122,14 @@ public class WallGliding : MonoBehaviour
     {
         if (m_IsAnimationBackRotationRight)
         {
+            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
         }
         else if (m_IsAnimationBackRotationLeft)
         {
+            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
@@ -143,15 +144,15 @@ public class WallGliding : MonoBehaviour
 
     private void WallJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetButtonDown("Jump"))
         {
             if (m_TouchingWallRight)
             {
-                m_WallJumpPower = (-transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                m_WallJumpPower = (-transform.right + transform.up * 0.75f)/*.normalized*/ * m_WallJumpForce * 3;
             }
             else if (m_TouchingWallLeft)
             {
-                m_WallJumpPower = (transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                m_WallJumpPower = (transform.right + transform.up * 0.75f)/*.normalized*/ * m_WallJumpForce * 3;
             }
         }
     }
