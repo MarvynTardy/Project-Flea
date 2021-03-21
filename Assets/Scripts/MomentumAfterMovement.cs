@@ -13,12 +13,24 @@ public class MomentumAfterMovement : MonoBehaviour
     private Walking m_PlayerWalking;
     private Gliding m_PlayerGliding;
 
+    private bool m_IsGliding = false;
+    private bool m_IsWalking = false;
+    private bool m_IsMoving = false;
+
     private float m_Speed = 0f;
 
     private void Awake()
     {
         m_PlayerWalking = GetComponent<Walking>();
         m_PlayerGliding = GetComponent<Gliding>();
+    }
+
+    private void Update()
+    {
+        if (!m_IsGliding && !m_IsWalking)
+            m_IsMoving = false;
+        else
+            m_IsMoving = true;
     }
 
     private void EndWalking(CharacterController p_Controller)
@@ -49,5 +61,17 @@ public class MomentumAfterMovement : MonoBehaviour
             m_Speed = m_PlayerGliding.GlidingTrueSpeed * m_GlideEndVelocity.Evaluate(m_ETimer);
             p_Controller.Move(m_PlayerGliding.GlidingPastDirection.normalized * m_Speed * Time.deltaTime);
         }
+    }
+
+    public bool IsWalking
+    {
+        get { return m_IsWalking; }
+        set { m_IsWalking = value; }
+    }
+
+    public bool IsGliding
+    {
+        get { return m_IsGliding; }
+        set { m_IsGliding = value; }
     }
 }

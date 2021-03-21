@@ -22,6 +22,7 @@ public class WallGliding : MonoBehaviour
     private float m_RotationLerpValueWallGlide = 0;
     [SerializeField] private float m_RotationSpeedWallGlide = 0.5f;
     [SerializeField] private AnimationCurve m_AnimationRotationSpeedWallGlide;
+    [SerializeField] private AnimationCurve m_AnimationRotationBackSpeedWallGlide;
 
     private bool m_IsAnimationBackRotationRight = false;
     private bool m_IsAnimationBackRotationLeft = false;
@@ -124,13 +125,13 @@ public class WallGliding : MonoBehaviour
         {
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
-            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
+            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
         }
         else if (m_IsAnimationBackRotationLeft)
         {
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
-            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
+            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
         }
 
         if (m_RotationLerpValueWallGlide <= 0)

@@ -114,7 +114,7 @@ public class Gliding : MonoBehaviour
         }
     }
 
-    public float GlidinTrueSpeed
+    public float GlidingTrueSpeed
     {
         get { return m_TrueSpeed; }
     }
