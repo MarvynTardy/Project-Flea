@@ -62,8 +62,9 @@ public class Gliding : MonoBehaviour
             if (!m_PlayerWallGliding.IsWallGliding()) transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
             Vector3 l_MoveDir;
-            if (!m_PlayerWallGliding.IsWallGliding()) l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
-            else l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            /*if (!m_PlayerWallGliding.IsWallGliding()) l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
+            else l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;*/
+            l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;
             // p_Controller.Move(l_MoveDir.normalized * m_Speed * Time.deltaTime);
             l_DirectionToReturn = l_MoveDir.normalized * m_Speed;
             m_PastDirection = l_MoveDir;
@@ -111,5 +112,20 @@ public class Gliding : MonoBehaviour
             m_Speed = m_TrueSpeed * m_EndVelocity.Evaluate(m_ETimer);
             p_Controller.Move(m_PastDirection.normalized * m_Speed * Time.deltaTime);
         }
+    }
+
+    public float GlidingTrueSpeed
+    {
+        get { return m_TrueSpeed; }
+    }
+
+    public float GlidingSpeed
+    {
+        get { return m_Speed; }
+    }
+
+    public Vector3 GlidingPastDirection
+    {
+        get { return m_PastDirection; }
     }
 }

@@ -97,4 +97,19 @@ public class Walking : MonoBehaviour
             p_Controller.Move(m_PastDirection.normalized * m_Speed * Time.deltaTime);
         }
     }
+
+    public float WalkingTrueSpeed
+    {
+        get { return m_TrueSpeed; }
+    }
+
+    public float WalkingSpeed
+    {
+        get { return m_Speed; }
+    }
+
+    public Vector3 WalkingPastDirection
+    {
+        get { return m_PastDirection; }
+    }
 }
