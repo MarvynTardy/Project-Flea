@@ -304,7 +304,7 @@ public class PlayerController : MonoBehaviour
         Vector3 hookshotDir = (m_HookshotPosition - transform.position).normalized;
 
         float hookshotSpeedMin = 10f;
-        float hookshotSpeedMax = 40f;
+        float hookshotSpeedMax = 20f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, m_HookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 5f;
 
