@@ -214,6 +214,10 @@ public class PlayerController : MonoBehaviour
             // Apply Y velocity to move vector
             l_Direction.y = m_CharacterVelocityY;
         }
+        else
+        {
+            l_Direction += m_PlayerWallGliding.WallGlideGravity;
+        }
 
         // Apply momentum
         l_Direction += m_CharacterVelocityMomentum;

@@ -19,10 +19,25 @@ public class WallGliding : MonoBehaviour
     private RaycastHit m_HitRight;
     private RaycastHit m_HitLeft;
 
+    private float m_RotationLerpValueWallGlide = 0;
+    [SerializeField] private float m_RotationSpeedWallGlide = 0.5f;
+    [SerializeField] private AnimationCurve m_AnimationRotationSpeedWallGlide;
+    [SerializeField] private AnimationCurve m_AnimationRotationBackSpeedWallGlide;
+
+    private bool m_IsAnimationBackRotationRight = false;
+    private bool m_IsAnimationBackRotationLeft = false;
+
+    private Vector3 m_WallGlideGravity = Vector3.zero;
+
+    private void Update()
+    {
+        AnimationBackRotation();
+    }
+
     public void WallGlidingUpdate(CharacterController p_Controller)
     {
         DetectionWall();
-        WallGlideInput();
+        WallGlideInput(p_Controller);
         WallGlide(p_Controller);
     }
 
@@ -31,77 +46,113 @@ public class WallGliding : MonoBehaviour
         return m_IsWallGLiding;
     }
 
-    private void WallGlideInput()
+    private void WallGlideInput(CharacterController p_Controller)
     {
-        if(Input.GetAxisRaw("Horizontal") > 0 && m_TouchingWallRight) { StartWallGlideRight(); }
-        if(Input.GetAxisRaw("Horizontal") < 0 && m_TouchingWallLeft) { StartWallGlideLeft(); }
+        if(m_TouchingWallRight && !p_Controller.isGrounded) { StartWallGlideRight(); }
+        if(m_TouchingWallLeft && !p_Controller.isGrounded) { StartWallGlideLeft(); }
     }
 
     private void StartWallGlideRight()
     {
         m_IsWallGLiding = true;
-        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 60f);
+        m_IsAnimationBackRotationRight = false;
+        m_IsAnimationBackRotationLeft = false;
     }
 
     private void StartWallGlideLeft()
     {
         m_IsWallGLiding = true;
-        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, -60f);
+        m_IsAnimationBackRotationRight = false;
+        m_IsAnimationBackRotationLeft = false;
     }
 
     public void EndWallGlide()
     {
         m_IsWallGLiding = false;
-        m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        if(m_PlayerGraphicVisual.transform.localRotation.z > 0)
+            m_IsAnimationBackRotationRight = true;
+        else if (m_PlayerGraphicVisual.transform.localRotation.z < 0)
+            m_IsAnimationBackRotationLeft = true;
+        m_WallGlideGravity = Vector3.zero;
     }
 
     private void WallGlide(CharacterController p_Controller)
     {
         if(m_IsWallGLiding)
         {
+            m_RotationLerpValueWallGlide += m_RotationSpeedWallGlide * Time.deltaTime;
+            m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
 
-            if(m_TouchingWallRight)
+            if (m_TouchingWallRight)
             {
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
                 if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
                     transform.forward = m_HitRight.transform.forward;
                 else
                     transform.forward = -m_HitRight.transform.forward;
 
                 WallJump();
-                if (Input.GetAxisRaw("Horizontal") == 0)
+                /*if (Input.GetAxisRaw("Horizontal") < 0)
                 {
                     EndWallGlide();
-                }
+                }*/
+                //m_WallGlideGravity = new Vector3(150 * Time.deltaTime, 0, 0);
             }
             else if (m_TouchingWallLeft)
             {
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
                 if (Vector3.Angle(m_HitLeft.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitLeft.transform.forward, transform.forward) > -90)
                     transform.forward = m_HitLeft.transform.forward;
                 else
                     transform.forward = -m_HitLeft.transform.forward;
 
                 WallJump();
-                if (Input.GetAxisRaw("Horizontal") == 0)
+                /*if (Input.GetAxisRaw("Horizontal") > 0)
                 {
                     EndWallGlide();
-                }
+                }*/
+                //m_WallGlideGravity = new Vector3(-150 * Time.deltaTime, 0, 0);
             }
             else
                 EndWallGlide(); 
         }
     }
 
+    private void AnimationBackRotation()
+    {
+        if (m_IsAnimationBackRotationRight)
+        {
+            Debug.Log("aaa");
+            m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
+            m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
+            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
+        }
+        else if (m_IsAnimationBackRotationLeft)
+        {
+            Debug.Log("aaa");
+            m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
+            m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
+            m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
+        }
+
+        if (m_RotationLerpValueWallGlide <= 0)
+        {
+            m_IsAnimationBackRotationRight = false;
+            m_IsAnimationBackRotationLeft = false;
+        }
+    }
+
     private void WallJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetButtonDown("Jump"))
         {
             if (m_TouchingWallRight)
             {
-                m_WallJumpPower = (-transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                m_WallJumpPower = (-transform.right + transform.up * 0.75f)/*.normalized*/ * m_WallJumpForce * 3;
             }
             else if (m_TouchingWallLeft)
             {
-                m_WallJumpPower = (transform.right + transform.up).normalized * m_WallJumpForce * 3;
+                m_WallJumpPower = (transform.right + transform.up * 0.75f)/*.normalized*/ * m_WallJumpForce * 3;
             }
         }
     }
@@ -110,14 +161,11 @@ public class WallGliding : MonoBehaviour
     {
         m_TouchingWallRight = Physics.Raycast(transform.position, transform.right, out m_HitRight, 0.75f, m_GlideableWall);
         m_TouchingWallLeft = Physics.Raycast(transform.position, -transform.right, out m_HitLeft, 0.75f, m_GlideableWall);
-        /*if(Input.GetKeyDown(KeyCode.L))
-        {
-            Vector3 l_Forward = transform.forward;
-            if(Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
-                transform.forward = m_HitRight.transform.forward;
-            else
-                transform.forward = -m_HitRight.transform.forward;
-        }*/
+    }
+
+    public Vector3 WallGlideGravity
+    {
+        get { return m_WallGlideGravity; }
     }
 
     public Vector3 WallJumpPower
