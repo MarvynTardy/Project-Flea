@@ -5,9 +5,12 @@ using UnityEngine;
 public class StaminaComponent : MonoBehaviour
 {
     [SerializeField]
-    private float m_MaxStamina;
+    private float m_MaxStamina = 100;
+    [SerializeField]
+    private MeshRenderer m_MeshParchment;
     private float m_CurrentStamina;
     private StaminaUI m_StaminaUI;
+    private float m_CutoffValue;
 
     public float CurrentStamina
     {
@@ -18,24 +21,22 @@ public class StaminaComponent : MonoBehaviour
         set
         {
             m_CurrentStamina = value;
-        }
-        
-        
+        }       
     }
+
     private void Awake()
     {
         m_StaminaUI = FindObjectOfType<StaminaUI>();
         m_CurrentStamina = m_MaxStamina;
+        m_MeshParchment.material.SetFloat("_Cutoff", 1f);
     }
-
-    
 
     private void Start()
-    {
-        
+    {        
         m_StaminaUI.SetStamina(CurrentStamina);
-    }
 
+        // m_MeshParchment.material.SetFloat("_Cutoff", 0.5f);
+    }
 
     public void UseStamina(float p_Amount)
     {
@@ -43,9 +44,8 @@ public class StaminaComponent : MonoBehaviour
         {
             m_CurrentStamina -= p_Amount;
             m_StaminaUI.SetStamina(CurrentStamina);
+            m_MeshParchment.material.SetFloat("_Cutoff", (CurrentStamina - 28.571f) / 71.429f);
         }
-        
-
     }
 
     public void GainStamina(float p_Amount)
