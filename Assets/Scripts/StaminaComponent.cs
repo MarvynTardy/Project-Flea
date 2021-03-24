@@ -29,6 +29,7 @@ public class StaminaComponent : MonoBehaviour
         m_StaminaUI = FindObjectOfType<StaminaUI>();
         m_CurrentStamina = m_MaxStamina;
         m_MeshParchment.material.SetFloat("_Cutoff", 1f);
+        AudioManager.Initialize();
     }
 
     private void Start()
