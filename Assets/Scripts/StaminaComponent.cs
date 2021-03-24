@@ -26,6 +26,7 @@ public class StaminaComponent : MonoBehaviour
     {
         m_StaminaUI = FindObjectOfType<StaminaUI>();
         m_CurrentStamina = m_MaxStamina;
+        AudioManager.Initialize();
     }
 
     
