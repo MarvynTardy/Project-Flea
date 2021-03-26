@@ -86,10 +86,47 @@ public class WallGliding : MonoBehaviour
             if (m_TouchingWallRight)
             {
                 m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
-                if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
-                    transform.forward = m_HitRight.transform.forward;
+                if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward))
+                {
+                    if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward))
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                            transform.forward = m_HitRight.transform.forward;
+                        else
+                            transform.forward = -m_HitRight.transform.forward;
+                    }
+                    else
+                    {
+                        Debug.Log("aaa");
+                        if (Vector3.Angle(m_HitRight.transform.forward, -transform.right) < 90 && Vector3.Angle(m_HitRight.transform.forward, -transform.right) > -90)
+                            transform.forward = m_HitRight.transform.right;
+                        /*Debug.Log(Vector3.Angle(m_HitRight.transform.forward, transform.right));*/
+                        else
+                        {
+                            Debug.Log(transform.forward);
+                            transform.right = m_HitRight.transform.forward;
+                            Debug.Log(transform.forward);
+                        }
+                    }
+                }
                 else
-                    transform.forward = -m_HitRight.transform.forward;
+                {
+                    if (Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                            transform.forward = m_HitRight.transform.forward;
+                        else
+                            transform.forward = -m_HitRight.transform.forward;
+                    }
+                    else
+                    {
+                        Debug.Log("bbb");
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.right) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.right) > -90)
+                            transform.forward = m_HitRight.transform.right;
+                        else
+                            transform.forward = -m_HitRight.transform.right;
+                    }
+                }
 
                 WallJump();
                 /*if (Input.GetAxisRaw("Horizontal") < 0)
@@ -122,14 +159,12 @@ public class WallGliding : MonoBehaviour
     {
         if (m_IsAnimationBackRotationRight)
         {
-            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
         }
         else if (m_IsAnimationBackRotationLeft)
         {
-            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));

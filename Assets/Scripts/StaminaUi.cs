@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class StaminaUI : MonoBehaviour
 {
-    [SerializeField]
     private Slider m_StaminaAmount;
     private StaminaComponent m_StaminaComponent;
-    private void Start()
-
+    private void Awake()
     {
         m_StaminaAmount = GetComponent<Slider>();
         m_StaminaComponent = FindObjectOfType<StaminaComponent>();
