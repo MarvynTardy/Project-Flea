@@ -18,9 +18,6 @@ public class StaminaUI : MonoBehaviour
     public void SetStamina(float p_Stamina)
     {
         m_StaminaAmount.value = p_Stamina;
-        
+
     }
-
-
-    
 }
