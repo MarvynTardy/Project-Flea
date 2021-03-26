@@ -93,7 +93,11 @@ public class WallGliding : MonoBehaviour
                         if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
                             transform.forward = m_HitRight.transform.forward;
                         else
+                        {
+                            Debug.Log(transform.forward);
+                            Debug.Log(m_HitRight.transform.forward);
                             transform.forward = -m_HitRight.transform.forward;
+                        }
                     }
                     else
                     {
@@ -103,8 +107,13 @@ public class WallGliding : MonoBehaviour
                         /*Debug.Log(Vector3.Angle(m_HitRight.transform.forward, transform.right));*/
                         else
                         {
-                            Debug.Log(transform.forward);
-                            transform.right = m_HitRight.transform.forward;
+                            //Debug.Log(transform.forward);
+                            //Debug.Log(m_HitRight.transform.localRotation);
+                            //transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
+                            transform.forward = -m_HitRight.transform.right;
+                            //transform.localRotation = Quaternion.AngleAxis(90, Vector3.up);
+                            //transform.localRotation = Quaternion.Euler(transform.localRotation.x, -90, transform.localRotation.z);
+                            Debug.Break();
                             Debug.Log(transform.forward);
                         }
                     }
@@ -116,7 +125,9 @@ public class WallGliding : MonoBehaviour
                         if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
                             transform.forward = m_HitRight.transform.forward;
                         else
+                        {
                             transform.forward = -m_HitRight.transform.forward;
+                        }
                     }
                     else
                     {
