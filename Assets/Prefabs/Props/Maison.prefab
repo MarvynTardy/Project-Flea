@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6794964160064230624}
   - component: {fileID: 6205948662934125360}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9437275, y: 3.9636874, z: 5.798611}
-  m_Center: {x: -2.9288883, y: 1.9926908, z: -1.085551}
+  m_Size: {x: 0.9437275, y: 3.913579, z: 5.9578085}
+  m_Center: {x: -2.9288883, y: 1.9241462, z: -1.0638428}
 --- !u!1 &2811356842163222199
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3549030109519716051}
   - component: {fileID: 5846367326763700096}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tuiles001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,8 +87,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4369326, y: 1.4628243, z: 0.9609184}
-  m_Center: {x: -0.022105753, y: -0.0040249825, z: 0.76934147}
+  m_Size: {x: 1.3331845, y: 1.3175768, z: 0.9609184}
+  m_Center: {x: 0.009018779, y: -0.007483165, z: 0.76934147}
 --- !u!1 &3528101719806816230
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 2177686459780868546}
   - component: {fileID: 1146907756510660613}
   - component: {fileID: 5592459879390853911}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box078
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 2373516948424829651}
   - component: {fileID: 5412100403320738983}
   - component: {fileID: 3948836969882927402}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box025
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9187877310680504745}
   - component: {fileID: 3468094695150715593}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Maison
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,5 +292,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 3.87, z: 4.91}
-  m_Center: {x: -0.91, y: 2, z: -1.49}
+  m_Size: {x: 5.0300636, y: 3.929491, z: 5.033018}
+  m_Center: {x: -0.9250318, y: 1.9182556, z: -1.5515083}
