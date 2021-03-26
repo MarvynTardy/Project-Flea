@@ -85,12 +85,12 @@ public class WallGliding : MonoBehaviour
 
             if (m_TouchingWallRight)
             {
-                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
+                //m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
                 if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward))
                 {
                     if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward))
                     {
-                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90)
                             transform.forward = m_HitRight.transform.forward;
                         else
                         {
@@ -102,7 +102,7 @@ public class WallGliding : MonoBehaviour
                     else
                     {
                         Debug.Log("aaa");
-                        if (Vector3.Angle(m_HitRight.transform.forward, -transform.right) < 90 && Vector3.Angle(m_HitRight.transform.forward, -transform.right) > -90)
+                        if (Vector3.Angle(m_HitRight.transform.forward, -transform.right) < 90)
                             transform.forward = m_HitRight.transform.right;
                         /*Debug.Log(Vector3.Angle(m_HitRight.transform.forward, transform.right));*/
                         else
@@ -113,7 +113,7 @@ public class WallGliding : MonoBehaviour
                             transform.forward = -m_HitRight.transform.right;
                             //transform.localRotation = Quaternion.AngleAxis(90, Vector3.up);
                             //transform.localRotation = Quaternion.Euler(transform.localRotation.x, -90, transform.localRotation.z);
-                            Debug.Break();
+                            //Debug.Break();
                             Debug.Log(transform.forward);
                         }
                     }
@@ -122,17 +122,18 @@ public class WallGliding : MonoBehaviour
                 {
                     if (Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
                     {
-                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90)
                             transform.forward = m_HitRight.transform.forward;
                         else
                         {
+                            //là
                             transform.forward = -m_HitRight.transform.forward;
                         }
                     }
                     else
                     {
                         Debug.Log("bbb");
-                        if (Vector3.Angle(m_HitRight.transform.forward, transform.right) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.right) > -90)
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.right) < 90)
                             transform.forward = m_HitRight.transform.right;
                         else
                             transform.forward = -m_HitRight.transform.right;
