@@ -85,11 +85,41 @@ public class WallGliding : MonoBehaviour
 
             if (m_TouchingWallRight)
             {
-                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
-                if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitRight.transform.forward, transform.forward) > -90)
+                //m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, 60, m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)), Vector3.forward);
+
+                if(Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
                     transform.forward = m_HitRight.transform.forward;
-                else
+                    Debug.Log("aaa");
+                }
+                else if (Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
                     transform.forward = -m_HitRight.transform.forward;
+                    Debug.Log("bbb");
+                }
+                else if (Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
+                    transform.forward = -m_HitRight.transform.right;
+                    Debug.Log("ccc");
+                }
+                else if (Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward))
+                {
+                    transform.forward = m_HitRight.transform.right;
+                    Debug.Log("ddd");
+                }
+                else
+                {
+                    Debug.LogWarning("NANI");
+                }
 
                 WallJump();
                 /*if (Input.GetAxisRaw("Horizontal") < 0)
@@ -100,11 +130,46 @@ public class WallGliding : MonoBehaviour
             }
             else if (m_TouchingWallLeft)
             {
-                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, -60, m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)), Vector3.forward);
+
+                if (Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = m_HitLeft.transform.forward;
+                    Debug.Log("aaa");
+                }
+                else if (Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = -m_HitLeft.transform.forward;
+                    Debug.Log("bbb");
+                }
+                else if (Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = -m_HitLeft.transform.right;
+                    Debug.Log("ccc");
+                }
+                else if (Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward))
+                {
+                    transform.forward = m_HitLeft.transform.right;
+                    Debug.Log("ddd");
+                }
+                else
+                {
+                    Debug.LogWarning("NANI");
+                }
+
+                /*m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
                 if (Vector3.Angle(m_HitLeft.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitLeft.transform.forward, transform.forward) > -90)
                     transform.forward = m_HitLeft.transform.forward;
                 else
-                    transform.forward = -m_HitLeft.transform.forward;
+                    transform.forward = -m_HitLeft.transform.forward;*/
 
                 WallJump();
                 /*if (Input.GetAxisRaw("Horizontal") > 0)
@@ -122,14 +187,12 @@ public class WallGliding : MonoBehaviour
     {
         if (m_IsAnimationBackRotationRight)
         {
-            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));
         }
         else if (m_IsAnimationBackRotationLeft)
         {
-            Debug.Log("aaa");
             m_RotationLerpValueWallGlide -= m_RotationSpeedWallGlide * Time.deltaTime;
             m_RotationLerpValueWallGlide = Mathf.Clamp(m_RotationLerpValueWallGlide, 0, 1);
             m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationBackSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide * 1.5f)));

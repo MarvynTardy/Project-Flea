@@ -175,8 +175,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    clothToReplace.material = m_GlowMaterial;
             //}
-            m_PlayerWallGliding.WallGlidingUpdate(m_Controller);
-            m_StaminaComponent.UseStamina(20 * Time.deltaTime);
+            m_StaminaComponent.UseStamina(0.01f * Time.deltaTime);
             foreach (ParticleSystem glideParticle in m_GlideParticle)
             {
                 glideParticle.Play();
