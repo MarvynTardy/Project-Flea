@@ -157,6 +157,8 @@ public class PlayerController : MonoBehaviour
         if (l_Direction != Vector3.zero)
         {
             m_PlayerAnim.SetBool("IsMoving", true);
+            //AudioManager.PlaySound(AudioManager.Sound.Footstep);
+            
         }
         else
         {
@@ -233,6 +235,8 @@ public class PlayerController : MonoBehaviour
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
         }
+
+        
 
     }
 
