@@ -8,16 +8,19 @@ public class StaminaUI : MonoBehaviour
     [SerializeField]
     private Slider m_StaminaAmount;
     private StaminaComponent m_StaminaComponent;
-    private void Start()
 
+    private void Awake()
     {
         m_StaminaAmount = GetComponent<Slider>();
+    }
+
+    private void Start()
+    {
         m_StaminaComponent = FindObjectOfType<StaminaComponent>();
         SetStamina(m_StaminaComponent.CurrentStamina);
     }
     public void SetStamina(float p_Stamina)
     {
         m_StaminaAmount.value = p_Stamina;
-
     }
 }
