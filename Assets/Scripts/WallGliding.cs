@@ -86,7 +86,111 @@ public class WallGliding : MonoBehaviour
             if (m_TouchingWallRight)
             {
                 //m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
-                if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward))
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, 60, m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)), Vector3.forward);
+
+                if(Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
+                    transform.forward = m_HitRight.transform.forward;
+                    Debug.Log("aaa");
+                }
+                else if (Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
+                    transform.forward = -m_HitRight.transform.forward;
+                    Debug.Log("bbb");
+                }
+                else if (Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
+                    transform.forward = -m_HitRight.transform.right;
+                    Debug.Log("ccc");
+                }
+                else if (Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward) 
+                    && Vector3.Angle(transform.right, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward))
+                {
+                    transform.forward = m_HitRight.transform.right;
+                    Debug.Log("ddd");
+                }
+                else
+                {
+                    Debug.LogWarning("NANI");
+                }
+
+
+
+
+
+                /*if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward) || Vector3.Angle(transform.forward, -m_HitRight.transform.forward) < Vector3.Angle(transform.right, -m_HitRight.transform.forward))
+                {
+                    if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward))
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90)
+                        {
+                            transform.forward = m_HitRight.transform.forward;
+                            Debug.Log("aaa");
+                        }
+                        else
+                        {
+                            transform.forward = -m_HitRight.transform.forward;
+                            Debug.Log("bbb");
+                        }
+                    }
+                    else
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.forward) < 90)
+                        {
+                            transform.forward = m_HitRight.transform.forward;
+                            Debug.Log("ccc");
+                        }
+                        else
+                        {
+                            transform.forward = -m_HitRight.transform.forward;
+                            Debug.Log("ddd");
+                        }
+                    }
+                }
+                else
+                {
+                    if (Vector3.Angle(transform.forward, m_HitRight.transform.right) < Vector3.Angle(transform.forward, -m_HitRight.transform.right))
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, -transform.right) < 90)
+                        {
+                            transform.forward = m_HitRight.transform.right;
+                            Debug.Log("eee");
+                        }
+                        else
+                        {
+                            //Debug.Log(transform.forward);
+                            //Debug.Log(m_HitRight.transform.localRotation);
+                            //transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
+                            transform.forward = -m_HitRight.transform.right;
+                            //transform.localRotation = Quaternion.AngleAxis(90, Vector3.up);
+                            //transform.localRotation = Quaternion.Euler(transform.localRotation.x, -90, transform.localRotation.z);
+                            //Debug.Break();
+                            Debug.Log("fff");
+                        }
+                    }
+                    else
+                    {
+                        if (Vector3.Angle(m_HitRight.transform.forward, transform.right) < 90)
+                        {
+                            transform.forward = m_HitRight.transform.right;
+                            Debug.Log("ggg");
+                        }
+                        else
+                        {
+                            transform.forward = -m_HitRight.transform.right;
+                            Debug.Log("hhh");
+                        }
+                    }
+                }*/
+
+                /*if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.forward, -m_HitRight.transform.forward))
                 {
                     if (Vector3.Angle(transform.forward, m_HitRight.transform.forward) < Vector3.Angle(transform.right, m_HitRight.transform.forward))
                     {
@@ -104,7 +208,7 @@ public class WallGliding : MonoBehaviour
                         Debug.Log("aaa");
                         if (Vector3.Angle(m_HitRight.transform.forward, -transform.right) < 90)
                             transform.forward = m_HitRight.transform.right;
-                        /*Debug.Log(Vector3.Angle(m_HitRight.transform.forward, transform.right));*/
+                        *//*Debug.Log(Vector3.Angle(m_HitRight.transform.forward, transform.right));*//*
                         else
                         {
                             //Debug.Log(transform.forward);
@@ -138,7 +242,7 @@ public class WallGliding : MonoBehaviour
                         else
                             transform.forward = -m_HitRight.transform.right;
                     }
-                }
+                }*/
 
                 WallJump();
                 /*if (Input.GetAxisRaw("Horizontal") < 0)
@@ -149,11 +253,46 @@ public class WallGliding : MonoBehaviour
             }
             else if (m_TouchingWallLeft)
             {
-                m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
+                m_PlayerGraphicVisual.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, -60, m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)), Vector3.forward);
+
+                if (Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = m_HitLeft.transform.forward;
+                    Debug.Log("aaa");
+                }
+                else if (Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.forward, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = -m_HitLeft.transform.forward;
+                    Debug.Log("bbb");
+                }
+                else if (Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, m_HitLeft.transform.forward) < Vector3.Angle(transform.right, -m_HitLeft.transform.forward))
+                {
+                    transform.forward = -m_HitLeft.transform.right;
+                    Debug.Log("ccc");
+                }
+                else if (Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.forward, -m_HitLeft.transform.forward)
+                    && Vector3.Angle(transform.right, -m_HitLeft.transform.forward) < Vector3.Angle(transform.right, m_HitLeft.transform.forward))
+                {
+                    transform.forward = m_HitLeft.transform.right;
+                    Debug.Log("ddd");
+                }
+                else
+                {
+                    Debug.LogWarning("NANI");
+                }
+
+                /*m_PlayerGraphicVisual.transform.localRotation = Quaternion.Euler(Vector3.Lerp(Vector3.zero, new Vector3(0, 0, -60), m_AnimationRotationSpeedWallGlide.Evaluate(m_RotationLerpValueWallGlide)));
                 if (Vector3.Angle(m_HitLeft.transform.forward, transform.forward) < 90 && Vector3.Angle(m_HitLeft.transform.forward, transform.forward) > -90)
                     transform.forward = m_HitLeft.transform.forward;
                 else
-                    transform.forward = -m_HitLeft.transform.forward;
+                    transform.forward = -m_HitLeft.transform.forward;*/
 
                 WallJump();
                 /*if (Input.GetAxisRaw("Horizontal") > 0)
