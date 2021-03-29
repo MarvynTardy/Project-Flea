@@ -325,7 +325,7 @@ Transform:
   m_GameObject: {fileID: 232352274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.496, z: -15}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 3
@@ -1362,7 +1362,7 @@ Transform:
   m_GameObject: {fileID: 701997051}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15, y: 3.496, z: 0}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 0
@@ -1735,7 +1735,7 @@ Transform:
   m_GameObject: {fileID: 985106896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -25, y: 3.496, z: -25}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 5
@@ -1828,7 +1828,7 @@ Transform:
   m_GameObject: {fileID: 1023161953}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -25, y: 3.496, z: 25}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 6
@@ -1995,7 +1995,7 @@ Transform:
   m_GameObject: {fileID: 1200480311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25, y: 3.496, z: -25}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 7
@@ -2154,7 +2154,7 @@ Transform:
   m_GameObject: {fileID: 1330799246}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.496, z: 15}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 2
@@ -2340,7 +2340,7 @@ Transform:
   m_GameObject: {fileID: 1422439252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -15, y: 3.496, z: 0}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 1
@@ -3055,17 +3055,17 @@ PrefabInstance:
     - target: {fileID: 6904411845819887998, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1420644
+      value: 0.14206441
       objectReference: {fileID: 0}
     - target: {fileID: 6904411845819887998, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000008515929
+      value: 0.000000008515935
       objectReference: {fileID: 0}
     - target: {fileID: 6904411845819887998, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000012222067
+      value: -0.0000000012222076
       objectReference: {fileID: 0}
     - target: {fileID: 6904411845879777651, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3135,7 +3135,7 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3165,7 +3165,7 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].time
-      value: 0.89976794
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3190,7 +3190,7 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].value
-      value: 0.06257404
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3210,12 +3210,12 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].inSlope
-      value: 0.023039652
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[2].inSlope
-      value: 2.970841
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3235,22 +3235,22 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].inWeight
-      value: 0.058473032
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].outSlope
-      value: 0.023039652
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[2].inWeight
-      value: 0.019008279
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[2].outSlope
-      value: 2.970841
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3275,7 +3275,7 @@ PrefabInstance:
     - target: {fileID: 6904411846153585938, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_AnimationRotationBackSpeedWallGlide.m_Curve.Array.data[1].tangentMode
-      value: 0
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 6904411846153585940, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
@@ -3478,7 +3478,7 @@ Transform:
   m_GameObject: {fileID: 1954532990}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25, y: 3.496, z: 25}
-  m_LocalScale: {x: 5.522389, y: 3.967042, z: 8.72338}
+  m_LocalScale: {x: 5.522389, y: 19.291725, z: 8.72338}
   m_Children: []
   m_Father: {fileID: 582980284}
   m_RootOrder: 4
