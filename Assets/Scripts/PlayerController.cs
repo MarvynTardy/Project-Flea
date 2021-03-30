@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    clothToReplace.material = m_GlowMaterial;
             //}
-            m_StaminaComponent.UseStamina(0.01f * Time.deltaTime);
+            m_StaminaComponent.UseStamina(10 * Time.deltaTime);
             foreach (ParticleSystem glideParticle in m_GlideParticle)
             {
                 glideParticle.Play();
