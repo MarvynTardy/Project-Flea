@@ -4868,6 +4868,11 @@ PrefabInstance:
       propertyPath: m_UIFeedback
       value: 
       objectReference: {fileID: 1061655261}
+    - target: {fileID: 6904411846153585939, guid: 52374ad4b0b255d429daacf39f476345,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 6904411846161374037, guid: 52374ad4b0b255d429daacf39f476345,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
