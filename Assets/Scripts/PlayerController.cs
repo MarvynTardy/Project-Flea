@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetButtonUp("Glide"))
         {
+            m_PlayerGliding.GlideSpeed = 0;
             m_PlayerWallGliding.EndWallGlide();
             m_PlayerAnim.SetBool("IsGliding", false);
             //for (int i = 0; i < m_Cloth.Length; i++)
