@@ -128,4 +128,10 @@ public class Gliding : MonoBehaviour
     {
         get { return m_PastDirection; }
     }
+
+    public float GlideSpeed
+    {
+        get { return m_Speed; }
+        set { m_Speed = value; }
+    }
 }
