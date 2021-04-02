@@ -24,7 +24,9 @@ public class AudioAssets : MonoBehaviour
     public class SoundAudioClip
     {
         public AudioManager.Sound m_Sound;
-        public AudioClip m_AudioClip;
+        public AudioClip[] m_AudioClip;
+        [Range(0,100)]
+        public float m_ProbabilityToLaunch = 100;
         
     }
 }
