@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
         if (l_Direction != Vector3.zero)
         {
             m_PlayerAnim.SetBool("IsMoving", true);
-            //AudioManager.PlaySound(AudioManager.Sound.Footstep);
+            AudioManager.PlaySound(AudioManager.Sound.Footstep);
             
         }
         else
@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetButtonUp("Glide"))
         {
+            m_PlayerGliding.GlideSpeed = 0;
             m_PlayerWallGliding.EndWallGlide();
             m_PlayerAnim.SetBool("IsGliding", false);
             //for (int i = 0; i < m_Cloth.Length; i++)
@@ -347,6 +348,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager.PlaySound(AudioManager.Sound.Foley);
         // Debug.Log("saut");
         m_CanJump = false;
         ResetGravityEffect();

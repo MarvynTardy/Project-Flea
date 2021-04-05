@@ -6,10 +6,11 @@ public static class AudioManager
 {
     public enum Sound
     {
+        Foley,
         Footstep,
         PlayerAttack,
     }
-
+    private static Dictionary<Sound, float> probability;
     private static Dictionary<Sound, float> soundTimerDictionary;
     private static GameObject m_OneShotGameObject;
     private static AudioSource m_OneShotAudioSource;
@@ -17,6 +18,8 @@ public static class AudioManager
     public static void Initialize()
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
+        probability = new Dictionary<Sound, float>();
+        probability[Sound.Foley] = 25f;
         soundTimerDictionary[Sound.Footstep] = 0f;
     }
 
@@ -64,6 +67,27 @@ public static class AudioManager
                 {
                     return true;
                 }
+            case Sound.Foley:
+                if (probability.ContainsKey(p_Sound))
+                {
+                    float l_RandomThrow = Random.Range(0, 100);
+                    float l_ProbabilityToLaunch = probability[p_Sound];
+                    if(l_RandomThrow <= l_ProbabilityToLaunch)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+
+                }
+                else
+                {
+                    return true;
+                }
+
                 
         }
     }
@@ -74,7 +98,10 @@ public static class AudioManager
         {
             if(soundAudioClip.m_Sound == p_Sound )
             {
-                return soundAudioClip.m_AudioClip;
+                foreach(AudioClip audioClip in soundAudioClip.m_AudioClip)
+                {
+                    return soundAudioClip.m_AudioClip[Random.Range(0, soundAudioClip.m_AudioClip.Length)];
+                }
             }
         }
         return null;
