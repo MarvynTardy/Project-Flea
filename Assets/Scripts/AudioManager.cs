@@ -47,26 +47,26 @@ public static class AudioManager
         {
             default:
                 return true;
-            case Sound.Footstep:
-                if (soundTimerDictionary.ContainsKey(p_Sound))
-                {
-                    float l_lastTimePlayed = soundTimerDictionary[p_Sound];
-                    float l_FootStepTimerMax = 0.5f;
-                    if(l_lastTimePlayed + l_FootStepTimerMax < Time.time)
-                    {
-                        soundTimerDictionary[p_Sound]= Time.time;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+            //case Sound.Footstep:
+            //    if (soundTimerDictionary.ContainsKey(p_Sound))
+            //    {
+            //        float l_lastTimePlayed = soundTimerDictionary[p_Sound];
+            //        float l_FootStepTimerMax = 0.5f;
+            //        if(l_lastTimePlayed + l_FootStepTimerMax < Time.time)
+            //        {
+            //            soundTimerDictionary[p_Sound]= Time.time;
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
                     
-                }
-                else
-                {
-                    return true;
-                }
+            //    }
+            //    else
+            //    {
+            //        return true;
+            //    }
             case Sound.Foley:
                 if (probability.ContainsKey(p_Sound))
                 {
