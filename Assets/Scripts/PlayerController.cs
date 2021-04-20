@@ -157,8 +157,6 @@ public class PlayerController : MonoBehaviour
         if (l_Direction != Vector3.zero)
         {
             m_PlayerAnim.SetBool("IsMoving", true);
-           
-            
         }
         else
         {
@@ -222,7 +220,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply momentum
-        l_Direction += m_CharacterVelocityMomentum;
+        // l_Direction += m_CharacterVelocityMomentum;
         // Move Character Controller
         m_Controller.Move(l_Direction * Time.deltaTime);
 
@@ -413,8 +411,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
         /*Gizmos.color = Color.blue;
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right * 0.75f);
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), transform.right * 0.75f);
