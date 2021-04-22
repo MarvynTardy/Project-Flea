@@ -231,7 +231,7 @@ public class PlayerController : MonoBehaviour
         {
             float momentumDrag = 3f;
             m_CharacterVelocityMomentum -= m_CharacterVelocityMomentum * momentumDrag * Time.deltaTime;
-            if (m_CharacterVelocityMomentum.magnitude < .0f)
+            if (m_CharacterVelocityMomentum.magnitude < 1f)
             {
                 m_CharacterVelocityMomentum = Vector3.zero;
             }
@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
     private void ResetGravityEffect()
     {
-        m_CharacterVelocityY = -2f;
+        m_CharacterVelocityY = -2;
     }
 
     private void HandleHookshotStart()
@@ -413,8 +413,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawWireSphere(m_Groundcheck.position, m_GroundDistance);
         /*Gizmos.color = Color.blue;
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.5f), transform.right * 0.75f);
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z + -0.5f), transform.right * 0.75f);
