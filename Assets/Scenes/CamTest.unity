@@ -150,22 +150,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a200b19ca1a9685429ed7e043c28e904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Resolution: 20
+  m_Resolution: 100
   m_Appearance:
     pathColor: {r: 0, g: 1, b: 0, a: 1}
     inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     width: 0.2
   m_Looped: 1
   m_Waypoints:
-  - position: {x: -15.370523, y: 0, z: -15.512398}
+  - position: {x: -25, y: 0, z: 0}
     roll: 0
-  - position: {x: 4.909999, y: 0, z: -13.718603}
+  - position: {x: 0, y: 0, z: -25}
     roll: 0
-  - position: {x: 6.511075, y: 0, z: 5.225708}
+  - position: {x: 25, y: 0, z: 0}
     roll: 0
-  - position: {x: -6.095912, y: 0, z: 10.863075}
-    roll: 0
-  - position: {x: -19.646328, y: 0, z: 3.425808}
+  - position: {x: 0, y: 0, z: 25}
     roll: 0
 --- !u!4 &91602317
 Transform:
@@ -175,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91602315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.05, y: 4.06, z: 28.8}
+  m_LocalPosition: {x: 0, y: 3.5, z: 25.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5273,7 +5271,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertInput: 1
+    m_InvertInput: 0
     m_MinValue: -180
     m_MaxValue: 180
     m_Wrap: 1
@@ -10211,8 +10209,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519856840}
-  m_LocalRotation: {x: 0.07236754, y: 0.010268356, z: -0.0007450897, w: 0.99732494}
-  m_LocalPosition: {x: 4.656337, y: -48.578796, z: 11.074932}
+  m_LocalRotation: {x: 0.02971806, y: 0.009427276, z: -0.00028029922, w: 0.99951386}
+  m_LocalPosition: {x: 4.4857574, y: -49.138798, z: 0.7895622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1873425582}
@@ -10730,7 +10728,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157431361}
-  m_LocalRotation: {x: 0.14388892, y: 0.60509676, z: -0.11235294, w: 0.77493924}
+  m_LocalRotation: {x: 0.14388892, y: 0.60509676, z: -0.112352945, w: 0.77493924}
   m_LocalPosition: {x: 0.0000019073486, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15724,7 +15722,8 @@ GameObject:
   - component: {fileID: 1369303848}
   - component: {fileID: 1369303847}
   - component: {fileID: 1369303846}
-  m_Layer: 0
+  - component: {fileID: 1369303849}
+  m_Layer: 14
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15767,6 +15766,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1369303849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369303845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2b8f076936f974bb8806ae9227d142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1452901770
 GameObject:
   m_ObjectHideFlags: 0
@@ -25566,7 +25577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 91602316}
-  m_PathPosition: 0.41338432
+  m_PathPosition: 1
   m_PositionUnits: 0
   m_PathOffset: {x: -1.3057669, y: 0, z: 0.0038712248}
   m_XDamping: 0
@@ -31638,7 +31649,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 1
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
