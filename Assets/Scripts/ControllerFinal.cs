@@ -6,6 +6,7 @@ public class ControllerFinal : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private Transform m_Camera = null;
+    [SerializeField] private GameObject m_PlayerModel = null;
     private CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
@@ -42,11 +43,14 @@ public class ControllerFinal : MonoBehaviour
     private Vector3 m_HookshotPosition;
     [SerializeField] private Vector3 m_CharacterVelocityMomentum;
     private HookshotState m_HookshotState;
-    private float m_HookshotSize;
+    // private float m_HookshotSize;
 
     [Header("Feedback")]
     private Animator m_PlayerAnim = null;
+
+    [Header("Hookshot Feedback")]
     private Transform m_HookShotTarget = null;
+    private Quaternion m_SavedRotation;
 
     #region Initialisation
     void Awake()
@@ -72,7 +76,8 @@ public class ControllerFinal : MonoBehaviour
                     CharacterMovement();
                     HandleHookshotStart();
                     break;
-                case HookshotState.HookshotThrown:
+                case HookshotState.HookshotLaunch:
+                    SlerpHomemade();
                     // HookshotThrow();
                     // HandleCharacterLook();
                     CharacterMovement();
@@ -93,6 +98,16 @@ public class ControllerFinal : MonoBehaviour
 
         // Récupère la cible du grappin désigné dans le script HookPosDetection
         m_HookShotTarget = m_HookPosDetection.m_HookTarget;
+
+        // Feedback
+        switch (m_HookshotState)
+        {
+            default:
+                break;
+            case HookshotState.HookshotLaunch:
+                SlerpHomemade();
+                break;
+        }
     }
 
     private void CharacterMovement()
@@ -190,7 +205,7 @@ public class ControllerFinal : MonoBehaviour
     {
         Neutral,
         HookshotLaunch,
-        HookshotThrown,
+        // HookshotThrown,
         HookshotFlyingPlayer,
     }
 
@@ -210,29 +225,15 @@ public class ControllerFinal : MonoBehaviour
         m_HookshotState = HookshotState.HookshotLaunch;
         m_HookShotOrigin.gameObject.SetActive(true);
         m_CanInteract = false;
+        HookshotStartFeedback();
 
         yield return new WaitForSeconds(m_HookshotLag);
 
         m_CanInteract = true;
         m_HookshotPosition = m_HookShotTarget.position;
-        m_HookshotSize = 0f;
 
         // Change d'état (permet d'amorcer la propulsion du grappin)
         m_HookshotState = HookshotState.HookshotFlyingPlayer;
-    }
-
-    private void HookshotThrow()
-    {
-        m_HookShotOrigin.LookAt(m_HookshotPosition);
-
-        m_CanJump = true;
-
-        m_HookshotSize += hookshotThrowSpeed * Time.deltaTime;
-
-        if (m_HookshotSize >= Vector3.Distance(transform.position, m_HookshotPosition))
-        {
-            m_HookshotState = HookshotState.HookshotFlyingPlayer;
-        }
     }
 
     private void HookshotMovement()
@@ -254,6 +255,7 @@ public class ControllerFinal : MonoBehaviour
         {
             // StopHookshot();
             MomentumLaunch(hookshotDir, hookshotSpeed);
+            HookshotReleaseFeedback();
         }
 
         //if (TestInputDownHookshot())
@@ -306,7 +308,11 @@ public class ControllerFinal : MonoBehaviour
 
         // Gestion des conditions de dérapage
         if (m_IsGrounded && m_CharacterVelocityMomentum.magnitude > 0)
+        {
+
+            // Debug.Break();
             m_PlayerAnim.SetBool("IsSkidding", true);
+        }
         else
             m_PlayerAnim.SetBool("IsSkidding", false);
 
@@ -319,6 +325,27 @@ public class ControllerFinal : MonoBehaviour
             m_PlayerAnim.SetBool("IsMoving", true);
         else
             m_PlayerAnim.SetBool("IsMoving", false);
+    }
+
+    private void HookshotStartFeedback()
+    {
+        m_PlayerAnim.SetTrigger("IsHookshot");
+        // m_HookshotParticle.Play();
+    }
+
+    private void SlerpHomemade()
+    {
+        m_SavedRotation = Quaternion.LookRotation((m_HookShotTarget.position - transform.position).normalized);
+        if (m_SavedRotation != Quaternion.identity)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, m_SavedRotation, Time.deltaTime * 10);
+        }
+    }
+
+    private void HookshotReleaseFeedback()
+    {
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        m_PlayerAnim.SetTrigger("LaunchSalto");
     }
     #endregion
 
