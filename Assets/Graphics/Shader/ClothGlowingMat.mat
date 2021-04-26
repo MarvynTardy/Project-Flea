@@ -67,7 +67,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - Color_AE8CB51C: {r: 766.9961, g: 766.9961, b: 766.9961, a: 0}
+    - Color_AE8CB51C: {r: 191.74902, g: 191.74902, b: 191.74902, a: 0}
     - _DoubleSidedConstants: {r: -1, g: -1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &4516183988389791775

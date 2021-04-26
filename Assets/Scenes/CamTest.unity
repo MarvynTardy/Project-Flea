@@ -17624,10 +17624,14 @@ MonoBehaviour:
   m_GravityScaleSpirit: -10
   m_GravityScaleReset: -5
   m_HookShotOrigin: {fileID: 258313555}
+  m_HookLine: {fileID: 0}
   m_HookshotLag: 0.3
-  hookshotSpeedMultiplier: 5
+  m_HookshotSpeedMultiplier: 5
   m_MomentumBoost: 5
-  m_CharacterVelocityMomentum: {x: 0, y: 0, z: 0}
+  m_GlideParticle: {fileID: 0}
+  m_GlowMaterial: {fileID: 0}
+  m_Cloth: {fileID: 623821227}
+  m_Pagne: {fileID: 1855975711}
 --- !u!1 &1157431361
 GameObject:
   m_ObjectHideFlags: 3
@@ -17652,7 +17656,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157431361}
-  m_LocalRotation: {x: 0.11197297, y: 0.6091969, z: -0.087431975, w: 0.7801903}
+  m_LocalRotation: {x: 0.11197296, y: 0.6091969, z: -0.08743198, w: 0.7801903}
   m_LocalPosition: {x: 0.0000019073486, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -34263,7 +34267,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129265248}
-  m_LocalRotation: {x: 0.0835587, y: 0.6119709, z: -0.06524524, w: 0.7837428}
+  m_LocalRotation: {x: 0.083558686, y: 0.6119708, z: -0.065245226, w: 0.78374285}
   m_LocalPosition: {x: 0.0000019073486, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -85,7 +85,7 @@ public class Gliding : MonoBehaviour
         BeginGliding();
         EndGliding(p_Controller);
 
-        m_PlayerWallGliding.WallGlidingUpdate(p_Controller);
+        // m_PlayerWallGliding.WallGlidingUpdate(p_Controller);
 
         return l_DirectionToReturn;
     }

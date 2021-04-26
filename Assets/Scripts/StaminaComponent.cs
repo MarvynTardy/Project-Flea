@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class StaminaComponent : MonoBehaviour
 {
-    [SerializeField]
-    private float m_MaxStamina = 100;
-    [SerializeField]
-    private MeshRenderer m_MeshParchment;
+    [SerializeField] private float m_MaxStamina = 100;
+    [SerializeField] private MeshRenderer m_MeshParchment;
     private float m_CurrentStamina;
     private StaminaUI m_StaminaUI;
     private float m_CutoffValue;
@@ -22,6 +20,14 @@ public class StaminaComponent : MonoBehaviour
         set
         {
             m_CurrentStamina = value;
+            if (m_CurrentStamina < 0)
+            {
+                m_CurrentStamina = 0;
+            }
+            if (m_CurrentStamina > m_MaxStamina)
+            {
+                m_CurrentStamina = m_MaxStamina;
+            }
         }       
     }
 

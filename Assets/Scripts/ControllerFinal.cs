@@ -10,6 +10,7 @@ public class ControllerFinal : MonoBehaviour
     private CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
+    private StaminaComponent m_StaminaComponent = null;
     private HookPosDetection m_HookPosDetection = null;
     private bool m_CanInteract = false;
 
@@ -25,6 +26,7 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] [Range(0, 10)] private float m_JumpForce = 4;
+    [SerializeField] [Range(0, 10)] private float m_JumpForceSpirit = 3;
     private bool m_CanJump;
     private bool m_IsJumping;
 
@@ -36,21 +38,28 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("Hookshot")]
     [SerializeField] private Transform m_HookShotOrigin = null;
+    [SerializeField] private LineRenderer m_HookLine;
     [SerializeField] [Range(0, 1)] private float m_HookshotLag = 0.3f;
-    [SerializeField] [Range(1, 10)] float hookshotSpeedMultiplier = 5f;
+    [SerializeField] [Range(1, 10)] float m_HookshotSpeedMultiplier = 5f;
     [SerializeField] [Range(0, 10)] float m_MomentumBoost = 5f;
-    float hookshotThrowSpeed = 500f; // probablement inutilisé à la fin
     private Vector3 m_HookshotPosition;
-    [SerializeField] private Vector3 m_CharacterVelocityMomentum;
+    private Vector3 m_CharacterVelocityMomentum;
     private HookshotState m_HookshotState;
-    // private float m_HookshotSize;
 
     [Header("Feedback")]
     private Animator m_PlayerAnim = null;
 
     [Header("Hookshot Feedback")]
+    [SerializeField] private ParticleSystem m_GlideParticle = null;
     private Transform m_HookShotTarget = null;
     private Quaternion m_SavedRotation;
+
+    [Header ("Spirit Feedback")]
+    [SerializeField] private Material m_GlowMaterial = null;
+    [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
+    [SerializeField] private MeshRenderer m_Pagne = null;
+    private Material m_ClothSavedMaterial;
+    private Material m_PagneSavedMaterial;
 
     #region Initialisation
     void Awake()
@@ -60,7 +69,12 @@ public class ControllerFinal : MonoBehaviour
         m_Controller = GetComponent<CharacterController>();
         m_PlayerGliding = GetComponent<Gliding>();
         m_PlayerWalking = GetComponent<Walking>();
+        m_StaminaComponent = GetComponent<StaminaComponent>();
         m_HookPosDetection = GetComponent<HookPosDetection>();
+
+        // Permet de conserver en mémoire les materials originels des vêtements
+        m_ClothSavedMaterial = m_Cloth.materials[0];
+        m_PagneSavedMaterial = m_Pagne.materials[0];
     }
     #endregion
 
@@ -74,10 +88,10 @@ public class ControllerFinal : MonoBehaviour
                 case HookshotState.Neutral:
                     // HandleCharacterLook();
                     CharacterMovement();
-                    HandleHookshotStart();
+                    HookshotStart();
                     break;
                 case HookshotState.HookshotLaunch:
-                    SlerpHomemade();
+                    SlerpRotationPlayer();
                     // HookshotThrow();
                     // HandleCharacterLook();
                     CharacterMovement();
@@ -92,9 +106,10 @@ public class ControllerFinal : MonoBehaviour
 
             if (Input.GetButtonDown("Jump") && m_CanJump)
                 Jump();
-        }
 
-        // HandleHookshotStart();
+            StaminaCondition();
+
+        }
 
         // Récupère la cible du grappin désigné dans le script HookPosDetection
         m_HookShotTarget = m_HookPosDetection.m_HookTarget;
@@ -105,7 +120,11 @@ public class ControllerFinal : MonoBehaviour
             default:
                 break;
             case HookshotState.HookshotLaunch:
-                SlerpHomemade();
+                SlerpRotationPlayer();
+                DrawLine();
+                break;
+            case HookshotState.HookshotFlyingPlayer:
+                DrawLine();
                 break;
         }
     }
@@ -148,6 +167,30 @@ public class ControllerFinal : MonoBehaviour
         AnimCondGeneral();
     }
 
+    #region Jump
+    private void Jump()
+    {
+        m_CanJump = false;        
+        m_IsJumping = true;
+
+        if (m_SpiritMode)
+            m_VelocityY = Mathf.Sqrt(m_JumpForceSpirit * -2f * m_GravityScale);
+        else
+            m_VelocityY = Mathf.Sqrt(m_JumpForce * -2f * m_GravityScale);
+
+        // Permet d'éviter que le joueur collide toujours avec le sol et reset sa gravité
+        StartCoroutine(JumpCO());
+    }
+
+    IEnumerator JumpCO()
+    {
+        yield return new WaitForSeconds(0.05f);
+
+        m_IsJumping = false;
+    }
+    #endregion
+
+    #region Gestion de la gravité
     private void CheckGround()
     {
         if (!m_IsJumping)
@@ -163,22 +206,6 @@ public class ControllerFinal : MonoBehaviour
         }
     }
     
-    private void Jump()
-    {
-        m_CanJump = false;        
-        m_IsJumping = true;
-        m_VelocityY = Mathf.Sqrt(m_JumpForce * -2f * m_GravityScale);
-        StartCoroutine(JumpCO());
-    }
-
-    IEnumerator JumpCO()
-    {
-        yield return new WaitForSeconds(0.05f);
-
-        m_IsJumping = false;
-    }
-
-    #region Gestion de la gravité
     private void GravityUpload()
     {
         // Applique la gravité à la velocité du personnage
@@ -209,7 +236,7 @@ public class ControllerFinal : MonoBehaviour
         HookshotFlyingPlayer,
     }
 
-    private void HandleHookshotStart()
+    private void HookshotStart()
     {
         if (Input.GetButtonDown("Hook"))
         {
@@ -246,7 +273,7 @@ public class ControllerFinal : MonoBehaviour
         float hookshotSpeedMax = 20f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, m_HookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
 
-        m_Controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
+        m_Controller.Move(hookshotDir * hookshotSpeed * m_HookshotSpeedMultiplier * Time.deltaTime);
 
         float reachedHookshotPositionDistance = 1.5f;
 
@@ -285,6 +312,37 @@ public class ControllerFinal : MonoBehaviour
 
     #endregion
 
+    #region SpiritMode
+    private void StaminaCondition()
+    {
+        if (m_StaminaComponent.CurrentStamina > 0)
+        {
+            if (Input.GetButton("Glide"))
+                SpiritStart();
+            else if (Input.GetButtonUp("Glide"))
+                SpiritRelease();
+                
+        }
+        else if (m_StaminaComponent.CurrentStamina <= 0 || (Input.GetButtonUp("Glide")))
+            SpiritRelease();
+    }
+
+    private void SpiritStart()
+    {
+        m_SpiritMode = true;
+        m_StaminaComponent.UseStamina(10f * Time.deltaTime);
+
+        SpiritStartFeedback();
+    }
+
+    private void SpiritRelease()
+    {
+        m_SpiritMode = false;
+
+        SpiritReleaseFeedback();
+    }
+    #endregion
+
     #region Visual Feedback
     // Gestion des animations, particles, shaders
 
@@ -307,7 +365,7 @@ public class ControllerFinal : MonoBehaviour
             m_PlayerAnim.SetTrigger("IsJumping");
 
         // Gestion des conditions de dérapage
-        if (m_IsGrounded && m_CharacterVelocityMomentum.magnitude > 0)
+        if (m_IsGrounded && m_CharacterVelocityMomentum.magnitude > 0 && !m_SpiritMode)
         {
 
             // Debug.Break();
@@ -333,7 +391,7 @@ public class ControllerFinal : MonoBehaviour
         // m_HookshotParticle.Play();
     }
 
-    private void SlerpHomemade()
+    private void SlerpRotationPlayer()
     {
         m_SavedRotation = Quaternion.LookRotation((m_HookShotTarget.position - transform.position).normalized);
         if (m_SavedRotation != Quaternion.identity)
@@ -342,10 +400,41 @@ public class ControllerFinal : MonoBehaviour
         }
     }
 
+    private void DrawLine()
+    {
+        // Set du LineRenderer
+        m_HookLine.SetPosition(0, m_HookShotOrigin.position);
+        m_HookLine.SetPosition(1, m_HookShotTarget.position);
+    }
+
     private void HookshotReleaseFeedback()
     {
+        // Reset de la rotation du perso sur l'axe y
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
         m_PlayerAnim.SetTrigger("LaunchSalto");
+
+        // Reset du LineRenderer
+        m_HookLine.SetPosition(0, Vector3.zero);
+        m_HookLine.SetPosition(1, Vector3.zero);
+    }
+
+    private void SpiritStartFeedback()
+    {
+        m_GlideParticle.Play();
+
+        // Permet d'appliquer le shader qui illumine les habits du personnage
+        m_Cloth.material = m_GlowMaterial;
+        m_Pagne.material = m_GlowMaterial;
+    }
+    
+    private void SpiritReleaseFeedback()
+    {
+        m_GlideParticle.Stop();
+
+        // Permet de remettre le material d'origine au model du personnage 
+        m_Cloth.material = m_ClothSavedMaterial;
+        m_Pagne.material = m_PagneSavedMaterial;
     }
     #endregion
 

@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class HookPosDetection : MonoBehaviour
 {
-    [SerializeField]
-    private float m_DetectionDistance = 20.0f;
-    [SerializeField]
-    private float m_HookDistance = 17.0f;
+    [Header("Variables")]
+    [SerializeField] private float m_DetectionDistance = 20.0f;
+    [SerializeField] private float m_HookDistance = 17.0f;
+    private Vector2 m_CenterScreenPos;
 
-    public Transform m_HookTarget = null;
-    [SerializeField] GameObject m_UIFeedback;
-    Transform m_LoadSprite = null;
-    Transform m_RefuseSprite = null;
-    [SerializeField] LayerMask m_LayerToDetect;
+    [Header ("References")]
+    [SerializeField] private GameObject m_UIFeedback;
+    [SerializeField] private LayerMask m_LayerToDetect;
+    [SerializeField] private LayerMask m_HookPointLayer;
+    [HideInInspector] public Transform m_HookTarget = null;
+    [HideInInspector] public bool m_CanBeHooked = false;
+    private Camera m_Camera;
+    private Transform m_LoadSprite = null;
+    private Transform m_RefuseSprite = null;
 
-
-    [SerializeField]
-    private LayerMask m_HookPointLayer;
-
-    [SerializeField]
-    private Camera cam;
-
-    Vector2 m_CenterScreenPos;
-    public bool m_CanBeHooked = false;
 
     private void Awake()
     {
-        cam = Camera.main;
-        m_CenterScreenPos = new Vector2(cam.pixelWidth/2, cam.pixelHeight/2 );
+        m_Camera = Camera.main;
+        m_CenterScreenPos = new Vector2(m_Camera.pixelWidth/2, m_Camera.pixelHeight/2 );
     }
 
     private void Update()
@@ -56,8 +51,8 @@ public class HookPosDetection : MonoBehaviour
             foreach (Collider l_HookPosition in l_HookPositions)
             {
                 // On crée une variable de sa position à l'écran
-                Vector2 l_HookPosToScreen = cam.WorldToScreenPoint(l_HookPosition.transform.position);
-                Vector2 l_PotentialPosToScreen = cam.WorldToScreenPoint(l_PotentialTarget.transform.position);
+                Vector2 l_HookPosToScreen = m_Camera.WorldToScreenPoint(l_HookPosition.transform.position);
+                Vector2 l_PotentialPosToScreen = m_Camera.WorldToScreenPoint(l_PotentialTarget.transform.position);
 
                 if (Vector2.Distance(l_HookPosToScreen, m_CenterScreenPos) <= Vector2.Distance(l_PotentialPosToScreen, m_CenterScreenPos))
                 {
@@ -76,21 +71,22 @@ public class HookPosDetection : MonoBehaviour
         
         if(m_HookTarget != null)
         {
-            m_UIFeedback.SetActive(true);
-            m_UIFeedback.transform.position = cam.WorldToScreenPoint(m_HookTarget.transform.position);
+            if (m_UIFeedback)
+            {
+                m_UIFeedback.SetActive(true);
+                m_UIFeedback.transform.position = m_Camera.WorldToScreenPoint(m_HookTarget.transform.position);
 
-            ActualiseLoadingSprite();
-
-            ActualiseRefuseSprite();
-
+                ActualiseLoadingSprite();
+                ActualiseRefuseSprite();
+            }
 
             if (!Physics.Linecast(transform.position, m_HookTarget.position, m_LayerToDetect) && Vector3.Distance(this.transform.position, m_HookTarget.position) <= m_HookDistance)
                 m_CanBeHooked = true;
             else
                 m_CanBeHooked = false;
 
-                // Si la distance entre le joueur et le point de grappin est supérieur à la distance de détection de point de grappin
-                if (Vector3.Distance(transform.position, m_HookTarget.position) > m_DetectionDistance)
+            // Si la distance entre le joueur et le point de grappin est supérieur à la distance de détection de point de grappin
+            if (Vector3.Distance(transform.position, m_HookTarget.position) > m_DetectionDistance)
             {
                 // On désactive le point de grappin
                 CancelHookPoint();
@@ -99,7 +95,8 @@ public class HookPosDetection : MonoBehaviour
         
         if (!m_HookTarget)
         {
-            m_UIFeedback.SetActive(false);
+            if (m_UIFeedback)
+                m_UIFeedback.SetActive(false);
         }
     }
 
@@ -119,9 +116,12 @@ public class HookPosDetection : MonoBehaviour
         // On actualise notre cible
         m_HookTarget = p_ActualiseHookPoint;
         // m_LoadSprite = m_HookTarget.Find("Sprite/Load");
-        m_LoadSprite = m_UIFeedback.transform.Find("Image/Load");
-        // m_RefuseSprite = m_HookTarget.Find("Sprite/Refuse");
-        m_RefuseSprite = m_UIFeedback.transform.Find("Image/Refuse");
+        if (m_UIFeedback)
+        {
+            m_LoadSprite = m_UIFeedback.transform.Find("Image/Load");
+            // m_RefuseSprite = m_HookTarget.Find("Sprite/Refuse");
+            m_RefuseSprite = m_UIFeedback.transform.Find("Image/Refuse");
+        }
 
         // On active son feedback de ciblage
         // m_HookTarget.GetComponentInChildren<SpriteRenderer>().enabled = true;
