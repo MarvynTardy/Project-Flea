@@ -60,7 +60,7 @@ public class Gliding : MonoBehaviour
             m_BeginGlide = true;
             float l_TargetAngle = Mathf.Atan2(p_Direction.x, p_Direction.z) * Mathf.Rad2Deg + p_Camera.eulerAngles.y;
             float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_TurnSmoothTime);
-            if (!m_PlayerWallGliding.IsWallGliding()) transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+            transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
             Vector3 l_MoveDir;
             /*if (!m_PlayerWallGliding.IsWallGliding()) l_MoveDir = Quaternion.Euler(0f, l_Angle, 0f) * Vector3.forward;

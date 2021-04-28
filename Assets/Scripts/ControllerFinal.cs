@@ -7,12 +7,12 @@ public class ControllerFinal : MonoBehaviour
     [Header("General")]
     [SerializeField] private Transform m_Camera = null;
     [SerializeField] private GameObject m_PlayerModel = null;
+    [HideInInspector] public bool m_CanInteract = false;
     private CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private StaminaComponent m_StaminaComponent = null;
     private HookPosDetection m_HookPosDetection = null;
-    private bool m_CanInteract = false;
 
     [Header("Movement")]
     private Vector3 m_Direction;
@@ -20,9 +20,9 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
-    private bool m_IsGrounded = false;
     [SerializeField] private Transform m_GroundChecker = null;
     [SerializeField] private LayerMask m_GroundMask;
+    private bool m_IsGrounded = false;
 
     [Header("Jump")]
     [SerializeField] [Range(0, 10)] private float m_JumpForce = 4;
@@ -37,7 +37,7 @@ public class ControllerFinal : MonoBehaviour
     private float m_VelocityY = 0;
 
     [Header("Hookshot")]
-    [SerializeField] private Transform m_HookShotOrigin = null;
+    [SerializeField] private Transform m_HookshotOrigin = null;
     [SerializeField] private LineRenderer m_HookLine;
     [SerializeField] [Range(0, 1)] private float m_HookshotLag = 0.3f;
     [SerializeField] [Range(1, 10)] float m_HookshotSpeedMultiplier = 5f;
@@ -50,11 +50,18 @@ public class ControllerFinal : MonoBehaviour
     private Animator m_PlayerAnim = null;
 
     [Header("Hookshot Feedback")]
-    [SerializeField] private ParticleSystem m_GlideParticle = null;
-    private Transform m_HookShotTarget = null;
+    [SerializeField] private ParticleSystem m_SpeedParticle = null;
+    [SerializeField] private ParticleSystem m_ProjectionParticle = null;
+    [SerializeField] private ParticleSystem m_ImpactParticle = null;
+    [SerializeField] private Transform m_ProjectionPoint;
+    private bool m_TargetReach = false;
+    private bool m_PlayImpact = false;
+    private float m_TimeElapsed = 0;
+    private Transform m_HookshotTarget = null;
     private Quaternion m_SavedRotation;
 
     [Header ("Spirit Feedback")]
+    [SerializeField] private ParticleSystem m_GlideParticle = null;
     [SerializeField] private Material m_GlowMaterial = null;
     [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
     [SerializeField] private MeshRenderer m_Pagne = null;
@@ -64,6 +71,8 @@ public class ControllerFinal : MonoBehaviour
     #region Initialisation
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         m_CanInteract = true;
         m_PlayerAnim = GetComponentInChildren<Animator>();
         m_Controller = GetComponent<CharacterController>();
@@ -112,7 +121,7 @@ public class ControllerFinal : MonoBehaviour
         }
 
         // Récupère la cible du grappin désigné dans le script HookPosDetection
-        m_HookShotTarget = m_HookPosDetection.m_HookTarget;
+        m_HookshotTarget = m_HookPosDetection.m_HookTarget;
 
         // Feedback
         switch (m_HookshotState)
@@ -121,9 +130,12 @@ public class ControllerFinal : MonoBehaviour
                 break;
             case HookshotState.HookshotLaunch:
                 SlerpRotationPlayer();
+                ProjectionPoint();
                 DrawLine();
                 break;
             case HookshotState.HookshotFlyingPlayer:
+                SpeedStartFeedback();
+                ProjectionPoint();
                 DrawLine();
                 break;
         }
@@ -240,24 +252,26 @@ public class ControllerFinal : MonoBehaviour
     {
         if (Input.GetButtonDown("Hook"))
         {
-            if (m_HookShotTarget && m_HookPosDetection.m_CanBeHooked)
+            if (m_HookshotTarget && m_HookPosDetection.m_CanBeHooked)
             {
-                StartCoroutine(HandleHookshotStartCO());
+                StartCoroutine(HookshotStartCO());
             }
         }
     }
 
-    IEnumerator HandleHookshotStartCO()
+    IEnumerator HookshotStartCO()
     {
+        ResetProjectionPoint();
+
         m_HookshotState = HookshotState.HookshotLaunch;
-        m_HookShotOrigin.gameObject.SetActive(true);
+        m_HookshotOrigin.gameObject.SetActive(true);
         m_CanInteract = false;
         HookshotStartFeedback();
 
         yield return new WaitForSeconds(m_HookshotLag);
 
         m_CanInteract = true;
-        m_HookshotPosition = m_HookShotTarget.position;
+        m_HookshotPosition = m_HookshotTarget.position;
 
         // Change d'état (permet d'amorcer la propulsion du grappin)
         m_HookshotState = HookshotState.HookshotFlyingPlayer;
@@ -265,7 +279,7 @@ public class ControllerFinal : MonoBehaviour
 
     private void HookshotMovement()
     {
-        m_HookShotOrigin.LookAt(m_HookshotPosition);
+        m_HookshotOrigin.LookAt(m_HookshotPosition);
 
         Vector3 hookshotDir = (m_HookshotPosition - transform.position).normalized;
 
@@ -320,8 +334,7 @@ public class ControllerFinal : MonoBehaviour
             if (Input.GetButton("Glide"))
                 SpiritStart();
             else if (Input.GetButtonUp("Glide"))
-                SpiritRelease();
-                
+                SpiritRelease();                
         }
         else if (m_StaminaComponent.CurrentStamina <= 0 || (Input.GetButtonUp("Glide")))
             SpiritRelease();
@@ -338,6 +351,9 @@ public class ControllerFinal : MonoBehaviour
     private void SpiritRelease()
     {
         m_SpiritMode = false;
+
+        // Permet d'éviter que le player garde l'inertie de décélération de la précédente activation
+        m_PlayerGliding.GlideSpeed = 0;
 
         SpiritReleaseFeedback();
     }
@@ -367,13 +383,11 @@ public class ControllerFinal : MonoBehaviour
         // Gestion des conditions de dérapage
         if (m_IsGrounded && m_CharacterVelocityMomentum.magnitude > 0 && !m_SpiritMode)
         {
-
             // Debug.Break();
             m_PlayerAnim.SetBool("IsSkidding", true);
         }
         else
             m_PlayerAnim.SetBool("IsSkidding", false);
-
     }
 
     private void AnimCondWalk(Vector3 p_Direction)
@@ -393,18 +407,63 @@ public class ControllerFinal : MonoBehaviour
 
     private void SlerpRotationPlayer()
     {
-        m_SavedRotation = Quaternion.LookRotation((m_HookShotTarget.position - transform.position).normalized);
+        m_SavedRotation = Quaternion.LookRotation((m_HookshotTarget.position - transform.position).normalized);
         if (m_SavedRotation != Quaternion.identity)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, m_SavedRotation, Time.deltaTime * 10);
         }
     }
 
+    private void ProjectionPoint()
+    {
+        if (m_TimeElapsed < m_HookshotLag)
+        {
+            m_ProjectionPoint.position = Vector3.Lerp(m_HookshotOrigin.position, m_HookshotTarget.position, m_TimeElapsed / m_HookshotLag * 2.5f);
+            m_TimeElapsed += Time.deltaTime;
+            m_ProjectionParticle.Play();
+            m_PlayImpact = true;
+            ImpactFeedback();
+        }
+        else
+        {
+            m_TargetReach = true;
+            m_ProjectionPoint.position = m_HookshotTarget.position;
+            m_ProjectionParticle.Stop();
+            m_ProjectionParticle.Clear();
+        }
+    }
+
+    private void ResetProjectionPoint()
+    {
+        if (m_TargetReach)
+        {
+            m_TimeElapsed = 0;
+            m_TargetReach = false;
+        }
+    }
+
+    private void ImpactFeedback()
+    {
+        if (m_PlayImpact)
+        {
+            // Debug.Break();
+            m_ImpactParticle.transform.position = m_HookshotTarget.position;
+            m_ImpactParticle.transform.SetParent(m_HookshotTarget);
+            m_ImpactParticle.Play();
+            m_PlayImpact = false;
+        }
+    }
+    
     private void DrawLine()
     {
         // Set du LineRenderer
-        m_HookLine.SetPosition(0, m_HookShotOrigin.position);
-        m_HookLine.SetPosition(1, m_HookShotTarget.position);
+        m_HookLine.SetPosition(0, m_HookshotOrigin.position);
+        if (m_TargetReach)
+        {
+            m_HookLine.SetPosition(1, m_HookshotTarget.position);
+        }
+        else
+            m_HookLine.SetPosition(1, m_ProjectionPoint.position);
     }
 
     private void HookshotReleaseFeedback()
@@ -417,6 +476,19 @@ public class ControllerFinal : MonoBehaviour
         // Reset du LineRenderer
         m_HookLine.SetPosition(0, Vector3.zero);
         m_HookLine.SetPosition(1, Vector3.zero);
+
+        SpeedReleaseFeedback();
+    }
+
+    private void SpeedStartFeedback()
+    {
+        m_SpeedParticle.Play();
+    }
+
+    private void SpeedReleaseFeedback()
+    {
+        m_SpeedParticle.Clear();
+        m_SpeedParticle.Stop();
     }
 
     private void SpiritStartFeedback()
@@ -426,6 +498,9 @@ public class ControllerFinal : MonoBehaviour
         // Permet d'appliquer le shader qui illumine les habits du personnage
         m_Cloth.material = m_GlowMaterial;
         m_Pagne.material = m_GlowMaterial;
+
+        if (m_Controller.velocity.x > 0 || m_Controller.velocity.z > 0)
+            SpeedStartFeedback();
     }
     
     private void SpiritReleaseFeedback()
@@ -435,6 +510,8 @@ public class ControllerFinal : MonoBehaviour
         // Permet de remettre le material d'origine au model du personnage 
         m_Cloth.material = m_ClothSavedMaterial;
         m_Pagne.material = m_PagneSavedMaterial;
+
+        SpeedReleaseFeedback();
     }
     #endregion
 
