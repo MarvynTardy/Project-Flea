@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class RespawnSystem : MonoBehaviour
 {
+    [Header("Variables")]
     [SerializeField] private Vector3 m_Checkpoint = new Vector3(0, 1, 0);
     private ControllerFinal m_ControllerPlayer;
+    private bool m_CanCheck = false;
 
     [Header("Feedback")]
     [SerializeField] private Image m_BlackScreen;
@@ -14,6 +16,7 @@ public class RespawnSystem : MonoBehaviour
 
     private void Awake()
     {
+        m_Checkpoint = transform.position;
         m_ControllerPlayer = GetComponent<ControllerFinal>();
         m_PlayerAnim = GetComponentInChildren<Animator>();
 
@@ -22,12 +25,19 @@ public class RespawnSystem : MonoBehaviour
             m_BlackScreen.gameObject.SetActive(true);
             m_BlackScreen.CrossFadeAlpha(0, 0.5f, false);
         }
+
+        m_CanCheck = true;
     }
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.A))
-        //    RespawnBegin();
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //        RespawnBegin();
+
+        if (m_CanCheck)
+        {
+            CheckValidPoint();
+        }
     }
 
     public void RespawnBegin()
@@ -62,4 +72,32 @@ public class RespawnSystem : MonoBehaviour
         m_ControllerPlayer.m_CanInteract = true;
         m_PlayerAnim.SetBool("IsRespawn", false);
     }
+
+    private void CheckValidPoint()
+    {
+        m_CanCheck = false;
+
+        RaycastHit l_HitPoint;
+
+        if (Physics.Raycast(m_ControllerPlayer.transform.position, m_ControllerPlayer.transform.TransformDirection(Vector3.down), out l_HitPoint, 3, m_ControllerPlayer.m_GroundMask))
+        {
+            m_Checkpoint = new Vector3(l_HitPoint.point.x, l_HitPoint.point.y + 1.05f, l_HitPoint.point.z);
+        }
+
+        StartCoroutine(CheckValidPointCO());
+    }
+
+    IEnumerator CheckValidPointCO()
+    {
+        yield return new WaitForSeconds(1);
+
+        m_CanCheck = true;
+    }
+
+
+    //private void OnDrawGizmos()
+    //{
+    //    Color color = Color.green;
+    //    Debug.DrawLine(m_ControllerPlayer.transform.position, m_ControllerPlayer.transform.TransformDirection(Vector3.down) * 3);
+    //}
 }

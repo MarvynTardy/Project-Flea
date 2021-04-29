@@ -20,8 +20,8 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
-    [SerializeField] private Transform m_GroundChecker = null;
-    [SerializeField] private LayerMask m_GroundMask;
+    [SerializeField] public Transform m_GroundChecker = null;
+    [SerializeField] public LayerMask m_GroundMask;
     private bool m_IsGrounded = false;
 
     [Header("Jump")]
@@ -119,9 +119,6 @@ public class ControllerFinal : MonoBehaviour
             StaminaCondition();
 
         }
-
-        // Récupère la cible du grappin désigné dans le script HookPosDetection
-        m_HookshotTarget = m_HookPosDetection.m_HookTarget;
 
         // Feedback
         switch (m_HookshotState)
@@ -252,7 +249,7 @@ public class ControllerFinal : MonoBehaviour
     {
         if (Input.GetButtonDown("Hook"))
         {
-            if (m_HookshotTarget && m_HookPosDetection.m_CanBeHooked)
+            if (m_HookPosDetection.m_HookTarget && m_HookPosDetection.m_CanBeHooked)
             {
                 StartCoroutine(HookshotStartCO());
             }
@@ -261,6 +258,9 @@ public class ControllerFinal : MonoBehaviour
 
     IEnumerator HookshotStartCO()
     {
+        // Récupère la cible du grappin désigné dans le script HookPosDetection
+        m_HookshotTarget = m_HookPosDetection.m_HookTarget;
+
         ResetProjectionPoint();
 
         m_HookshotState = HookshotState.HookshotLaunch;
@@ -294,12 +294,13 @@ public class ControllerFinal : MonoBehaviour
         // Joueur a atteint le point de grappin
         if (Vector3.Distance(transform.position, m_HookshotPosition) < reachedHookshotPositionDistance)
         {
-            // StopHookshot();
+            m_CanJump = true;
             MomentumLaunch(hookshotDir, hookshotSpeed);
             HookshotReleaseFeedback();
         }
 
-        //if (TestInputDownHookshot())
+        //// Permet de cancel le hookshot
+        //if (Input.GetButtonDown("Hook"))
         //{
         //    StopHookshot();
         //}
