@@ -1,10 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class TriggerCinemachineSwitcher : MonoBehaviour
 {
     private CinemachineSwitcher m_CinemachineSwitcher;
+
+    [SerializeField]
+    private CinemachineVirtualCamera m_CameraToGo;
+  
+    
+    [SerializeField]
+    private CinemachineVirtualCameraBase m_CameraToReturn;
+    
 
     private void Start()
     {
@@ -15,11 +24,11 @@ public class TriggerCinemachineSwitcher : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Ok");
-        m_CinemachineSwitcher.SwitchCamera();
+        m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
     }
     private void OnTriggerExit(Collider other)
     {
-        m_CinemachineSwitcher.ReSwitchCamera();
+        m_CinemachineSwitcher.ReSwitchCamera(m_CameraToReturn);
     }
 
 }

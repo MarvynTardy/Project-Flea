@@ -6,35 +6,34 @@ using Cinemachine;
 public class CinemachineSwitcher : MonoBehaviour
 {
     private Animator m_Animator;
-    private bool m_ThirdPersonCamera;
-    //private CinemachineBrain m_CinemachineBrain;
+    private CinemachineStateDrivenCamera m_CinemachineStateDrivenCamera;
     
+   
+   
 
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
+        m_CinemachineStateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
         
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
-            SwitchCamera();
-        }
-        Debug.Log(Camera.current);
+
+        Debug.Log(m_CinemachineStateDrivenCamera.LiveChild);
 
         
     }
 
-    public void SwitchCamera()
+    public void SwitchCamera(CinemachineVirtualCamera p_CameraToGo)
     {
+        m_Animator.Play(p_CameraToGo.name);
         
-        m_Animator.Play("CameraRail");
     }
-    public void ReSwitchCamera()
+    public void ReSwitchCamera(CinemachineVirtualCameraBase p_CameraToReturn)
     {
-        m_Animator.Play("Main Camera");
+        m_Animator.Play(p_CameraToReturn.name);
     }
 
 
