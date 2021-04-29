@@ -12197,7 +12197,7 @@ MonoBehaviour:
   - {fileID: 519856841}
   - {fileID: 1123022704}
   m_Instructions:
-  - m_FullHash: 1839989770
+  - m_FullHash: 1408701979
     m_VirtualCamera: {fileID: 429862876}
     m_ActivateAfter: 0
     m_MinDuration: 0
@@ -12220,7 +12220,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   m_CustomBlends: {fileID: 11400000, guid: cfe8bf9d51b2a0d408df98210797b856, type: 2}
   m_ParentHash:
-  - m_Hash: 1839989770
+  - m_Hash: 1408701979
     m_ParentHash: 756556552
   - m_Hash: 1120423357
     m_ParentHash: 756556552
@@ -17415,7 +17415,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DetectionDistance: 20
   m_HookDistance: 17
-  m_HookTarget: {fileID: 0}
   m_UIFeedback: {fileID: 228096198}
   m_LayerToDetect:
     serializedVersion: 2
@@ -17423,7 +17422,7 @@ MonoBehaviour:
   m_HookPointLayer:
     serializedVersion: 2
     m_Bits: 1024
-  cam: {fileID: 123473060}
+  m_HookTarget: {fileID: 0}
   m_CanBeHooked: 0
 --- !u!114 &1153163822
 MonoBehaviour:
@@ -17606,20 +17605,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 123473064}
   m_PlayerModel: {fileID: 958177233}
+  m_CanInteract: 0
   m_GroundDistance: 0.25
   m_GroundChecker: {fileID: 1115315273}
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 512
   m_JumpForce: 3.5
+  m_JumpForceSpirit: 3
   m_GravityScale: -50
   m_GravityScaleSpirit: -10
   m_GravityScaleReset: -5
-  m_HookShotOrigin: {fileID: 258313555}
+  m_HookshotOrigin: {fileID: 0}
   m_HookLine: {fileID: 0}
   m_HookshotLag: 0.3
   m_HookshotSpeedMultiplier: 5
   m_MomentumBoost: 5
+  m_SpeedParticle: {fileID: 0}
+  m_ProjectionParticle: {fileID: 0}
+  m_ImpactParticle: {fileID: 0}
+  m_ProjectionPoint: {fileID: 0}
   m_GlideParticle: {fileID: 0}
   m_GlowMaterial: {fileID: 0}
   m_Cloth: {fileID: 623821227}
@@ -18129,7 +18134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CameraToGo: {fileID: 519856841}
-  m_CameraToReturn: {fileID: 0}
+  m_CameraToReturn: {fileID: 429862876}
 --- !u!1 &1388493523
 GameObject:
   m_ObjectHideFlags: 0
@@ -18207,7 +18212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CameraToGo: {fileID: 1123022704}
-  m_CameraToReturn: {fileID: 0}
+  m_CameraToReturn: {fileID: 429862876}
 --- !u!136 &1454028471
 CapsuleCollider:
   m_ObjectHideFlags: 0
