@@ -109,16 +109,16 @@ MonoBehaviour:
     m_Value: 2
   threshold:
     m_OverrideState: 1
-    m_Value: 0.56
+    m_Value: 0.3
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.273
+    m_Value: 0.2
     min: 0
     max: 1
   scatter:
     m_OverrideState: 1
-    m_Value: 0.534
+    m_Value: 0.5
     min: 0
     max: 1
   tint:
@@ -143,36 +143,6 @@ MonoBehaviour:
   m_HighQualityFiltering:
     m_OverrideState: 0
     m_Value: 1
---- !u!114 &-2109818796249167647
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 598e2d32e2c7b0c418e030c3236d663a, type: 3}
-  m_Name: ChromaticAberration
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  quality:
-    m_OverrideState: 1
-    m_Value: 2
-  spectralLut:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.037
-    min: 0
-    max: 1
-  m_MaxSamples:
-    m_OverrideState: 0
-    m_Value: 8
-    min: 3
-    max: 24
 --- !u!114 &-860101642106036297
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -232,7 +202,7 @@ MonoBehaviour:
     m_Value: 112
     min: -200
     max: 200
-  m_SelectedChannel: 1
+  m_SelectedChannel: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +219,6 @@ MonoBehaviour:
   - {fileID: 8711377374188185572}
   - {fileID: 6640133647794636954}
   - {fileID: 396278178000043239}
-  - {fileID: -2109818796249167647}
   - {fileID: 6934922526879357422}
   - {fileID: 758181424201351961}
   - {fileID: 2770939046116516299}
@@ -275,7 +244,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   temperature:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 50
     min: -100
     max: 100
   tint:
@@ -440,10 +409,10 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 2
   toeStrength:
     m_OverrideState: 1
-    m_Value: 0.147
+    m_Value: 0.45
     min: 0
     max: 1
   toeLength:
@@ -453,7 +422,7 @@ MonoBehaviour:
     max: 1
   shoulderStrength:
     m_OverrideState: 1
-    m_Value: 0.692
+    m_Value: 0.7
     min: 0
     max: 1
   shoulderLength:
@@ -467,7 +436,7 @@ MonoBehaviour:
     max: 1
   gamma:
     m_OverrideState: 1
-    m_Value: 1.01
+    m_Value: 1
     min: 0.001
   lutTexture:
     m_OverrideState: 0
@@ -493,7 +462,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.12
+    m_Value: 0.05
   contrast:
     m_OverrideState: 1
     m_Value: 4
@@ -540,7 +509,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 8
+    m_Value: 8.5
   compensation:
     m_OverrideState: 0
     m_Value: 0
@@ -654,7 +623,7 @@ MonoBehaviour:
     m_Value: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.8301887, g: 0.82848185, b: 0.8262727, a: 1}
+    m_Value: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -663,12 +632,12 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.154
+    m_Value: 0.5
     min: 0
     max: 1
   smoothness:
-    m_OverrideState: 0
-    m_Value: 0.2
+    m_OverrideState: 1
+    m_Value: 0.1
     min: 0.01
     max: 1
   roundness:

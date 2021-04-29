@@ -17616,10 +17616,14 @@ MonoBehaviour:
   m_GravityScaleSpirit: -10
   m_GravityScaleReset: -5
   m_HookShotOrigin: {fileID: 258313555}
+  m_HookLine: {fileID: 0}
   m_HookshotLag: 0.3
-  hookshotSpeedMultiplier: 5
+  m_HookshotSpeedMultiplier: 5
   m_MomentumBoost: 5
-  m_CharacterVelocityMomentum: {x: 0, y: 0, z: 0}
+  m_GlideParticle: {fileID: 0}
+  m_GlowMaterial: {fileID: 0}
+  m_Cloth: {fileID: 623821227}
+  m_Pagne: {fileID: 1855975711}
 --- !u!1 &1157431361
 GameObject:
   m_ObjectHideFlags: 3
