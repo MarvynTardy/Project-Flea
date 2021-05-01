@@ -16,7 +16,7 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("Movement")]
     private Vector3 m_Direction;
-    private bool m_SpiritMode = false;
+    [HideInInspector] public bool m_SpiritMode = false;
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
@@ -119,6 +119,9 @@ public class ControllerFinal : MonoBehaviour
             StaminaCondition();
 
         }
+
+        if (Input.GetButtonUp("Glide"))
+            SpiritRelease();
 
         // Feedback
         switch (m_HookshotState)
@@ -334,8 +337,8 @@ public class ControllerFinal : MonoBehaviour
         {
             if (Input.GetButton("Glide"))
                 SpiritStart();
-            else if (Input.GetButtonUp("Glide"))
-                SpiritRelease();                
+            //else if (Input.GetButtonUp("Glide"))
+            //    SpiritRelease();                
         }
         else if (m_StaminaComponent.CurrentStamina <= 0 || (Input.GetButtonUp("Glide")))
             SpiritRelease();
@@ -349,7 +352,7 @@ public class ControllerFinal : MonoBehaviour
         SpiritStartFeedback();
     }
 
-    private void SpiritRelease()
+    public void SpiritRelease()
     {
         m_SpiritMode = false;
 
@@ -366,10 +369,10 @@ public class ControllerFinal : MonoBehaviour
     private void AnimCondGeneral()
     {        
         // Gestion des conditions d'animation du mode esprit
-        if (m_SpiritMode)
-            m_PlayerAnim.SetBool("IsGliding", true);
-        else
-            m_PlayerAnim.SetBool("IsGliding", false);
+        //if (m_SpiritMode)
+        //    m_PlayerAnim.SetBool("IsSpirit", true);
+        //else
+        //    m_PlayerAnim.SetBool("IsSpirit", false);
 
         // Gestion des conditions d'animation du personnage au sol ou en l'air
         if (m_IsGrounded)
@@ -494,18 +497,20 @@ public class ControllerFinal : MonoBehaviour
 
     private void SpiritStartFeedback()
     {
+        m_PlayerAnim.SetBool("IsSpirit", true);
         m_GlideParticle.Play();
 
         // Permet d'appliquer le shader qui illumine les habits du personnage
         m_Cloth.material = m_GlowMaterial;
         m_Pagne.material = m_GlowMaterial;
 
-        if (m_Controller.velocity.x > 0 || m_Controller.velocity.z > 0)
-            SpeedStartFeedback();
+        //if (m_Controller.velocity.x > 0 || m_Controller.velocity.z > 0)
+        //    SpeedStartFeedback();
     }
     
     private void SpiritReleaseFeedback()
     {
+        m_PlayerAnim.SetBool("IsSpirit", false);
         m_GlideParticle.Stop();
 
         // Permet de remettre le material d'origine au model du personnage 
