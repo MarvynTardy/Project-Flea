@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5529994646848382823}
   - component: {fileID: 7735648816072053677}
   m_Layer: 0
-  m_Name: HERBE 2
+  m_Name: Herbe final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8095915139331191416}
-  m_Mesh: {fileID: 6135426327426793576, guid: 4744130068cca2a44b1834e1f28a7ae5, type: 3}
+  m_Mesh: {fileID: 6135426327426793576, guid: f1d59253a5e89954c9adfd81cd6a692c, type: 3}
 --- !u!23 &7735648816072053677
 MeshRenderer:
   m_ObjectHideFlags: 0

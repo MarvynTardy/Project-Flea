@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class TriggerCinemachineSwitcher : MonoBehaviour
+public class CameraGliding : MonoBehaviour
 {
     private CinemachineSwitcher m_CinemachineSwitcher;
 
     [SerializeField]
     private CinemachineVirtualCameraBase m_CameraToGo;
-  
-    
+
+
     [SerializeField]
     private CinemachineVirtualCameraBase m_CameraToReturn;
-    
 
     private void Start()
     {
         m_CinemachineSwitcher = FindObjectOfType<CinemachineSwitcher>();
     }
-
-
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        Debug.Log("Ok");
-        m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
+        }
+        else
+        {
+            m_CinemachineSwitcher.SwitchCamera(m_CameraToReturn);
+        }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        m_CinemachineSwitcher.ReSwitchCamera(m_CameraToReturn);
-    }
-
-    
-
 }
