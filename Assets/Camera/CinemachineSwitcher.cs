@@ -26,7 +26,7 @@ public class CinemachineSwitcher : MonoBehaviour
         
     }
 
-    public void SwitchCamera(CinemachineVirtualCamera p_CameraToGo)
+    public void SwitchCamera(CinemachineVirtualCameraBase p_CameraToGo)
     {
         m_Animator.Play(p_CameraToGo.name);
         

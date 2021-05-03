@@ -111,7 +111,7 @@ MonoBehaviour:
     m_To: CameraTest
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve:
@@ -159,6 +159,100 @@ MonoBehaviour:
     m_Blend:
       m_Style: 1
       m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.000000059604645
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 136
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.22322063
+          value: 0.58282554
+          inSlope: 0.48002332
+          outSlope: 0.48002332
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.5474742
+          value: 0.15466201
+          inSlope: -0.099702924
+          outSlope: -0.099702924
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.7270588
+          inSlope: 1.6684475
+          outSlope: 1.6684475
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.028205156
+          outWeight: 0.33333334
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: ThirdPersonCamera
+    m_To: CameraGliding
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.5
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.000000059604645
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 136
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.22322063
+          value: 0.58282554
+          inSlope: 0.48002332
+          outSlope: 0.48002332
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.5474742
+          value: 0.15466201
+          inSlope: -0.099702924
+          outSlope: -0.099702924
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.7270588
+          inSlope: 1.6684475
+          outSlope: 1.6684475
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.028205156
+          outWeight: 0.33333334
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: CameraGliding
+    m_To: ThirdPersonCamera
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve:
