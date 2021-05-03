@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ControllerFinal : MonoBehaviour
 {
@@ -61,8 +62,9 @@ public class ControllerFinal : MonoBehaviour
     private Quaternion m_SavedRotation;
 
     [Header ("Spirit Feedback")]
-    [SerializeField] private ParticleSystem m_GlideParticle = null;
+    [SerializeField] private ParticleSystem m_SpiritParticle = null;
     [SerializeField] private Material m_GlowMaterial = null;
+    [SerializeField] private Material m_EmptyMaterial = null;
     [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
     [SerializeField] private MeshRenderer m_Pagne = null;
     private Material m_ClothSavedMaterial;
@@ -116,8 +118,9 @@ public class ControllerFinal : MonoBehaviour
             if (Input.GetButtonDown("Jump") && m_CanJump)
                 Jump();
 
-            StaminaCondition();
+            // AnalogJump();
 
+            StaminaCondition();
         }
 
         if (Input.GetButtonUp("Glide"))
@@ -216,6 +219,20 @@ public class ControllerFinal : MonoBehaviour
                 ResetGravityEffect();
             }
         }
+    }
+
+    private void AnalogJump()
+    {
+        float l_FallMultiplier = 2.5f;
+        float l_LowJumpMultiplier = 1f;
+
+        if (m_Controller.velocity.y < 0)
+        {
+            m_VelocityY += 1 * m_GravityScale * (l_FallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (m_Controller.velocity.y > 0 && !Input.GetButton("Jump"))
+            m_VelocityY += 1 * m_GravityScale * (l_LowJumpMultiplier - 1) * Time.deltaTime;
+            
     }
     
     private void GravityUpload()
@@ -340,8 +357,10 @@ public class ControllerFinal : MonoBehaviour
             //else if (Input.GetButtonUp("Glide"))
             //    SpiritRelease();                
         }
-        else if (m_StaminaComponent.CurrentStamina <= 0 || (Input.GetButtonUp("Glide")))
+        else if (m_StaminaComponent.CurrentStamina <= 0 && m_SpiritMode || (Input.GetButtonUp("Glide")))
             SpiritRelease();
+        else if (m_StaminaComponent.CurrentStamina <= 0 && Input.GetButtonDown("Glide"))
+            SpiritEmptyFeedback();
     }
 
     private void SpiritStart()
@@ -498,7 +517,7 @@ public class ControllerFinal : MonoBehaviour
     private void SpiritStartFeedback()
     {
         m_PlayerAnim.SetBool("IsSpirit", true);
-        m_GlideParticle.Play();
+        m_SpiritParticle.Play();
 
         // Permet d'appliquer le shader qui illumine les habits du personnage
         m_Cloth.material = m_GlowMaterial;
@@ -511,13 +530,33 @@ public class ControllerFinal : MonoBehaviour
     private void SpiritReleaseFeedback()
     {
         m_PlayerAnim.SetBool("IsSpirit", false);
-        m_GlideParticle.Stop();
+        m_SpiritParticle.Stop();
 
         // Permet de remettre le material d'origine au model du personnage 
         m_Cloth.material = m_ClothSavedMaterial;
         m_Pagne.material = m_PagneSavedMaterial;
 
         SpeedReleaseFeedback();
+    }
+
+    private void SpiritEmptyFeedback()
+    {
+        //Debug.Log("yeaaaa");
+        //m_StaminaComponent.m_MeshParchment.transform.parent.transform.DOPunchPosition(new Vector3 (m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x), 0.2f, 200);
+        //m_StaminaComponent.m_MeshParchment.transform.parent.transform.DOPunchScale(new Vector3 (m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x), 0.2f, 20);
+        
+        //Color l_EmptyMatColor = m_EmptyMaterial.color;
+        //l_EmptyMatColor.a = 100;
+        //m_EmptyMaterial.color = l_EmptyMatColor;
+        m_StaminaComponent.m_MeshParchmentEmpty.gameObject.SetActive(true);
+        StartCoroutine(SpiritEmptyFeedbackCO());
+    }
+
+    IEnumerator SpiritEmptyFeedbackCO()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        m_StaminaComponent.m_MeshParchmentEmpty.gameObject.SetActive(false);
     }
     #endregion
 
