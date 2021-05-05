@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3279178947330625187}
   m_Layer: 0
-  m_Name: Checkpoint 1
+  m_Name: Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9693,6 +9693,11 @@ PrefabInstance:
     - target: {fileID: -8937038674237597667, guid: 868ab6a1bf1900e40a597937c4da7f95,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c40272555874c34aa2b088f26fe2ff2, type: 2}
+    - target: {fileID: -8937038674237597667, guid: 868ab6a1bf1900e40a597937c4da7f95,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 5c40272555874c34aa2b088f26fe2ff2, type: 2}
     - target: {fileID: -8679921383154817045, guid: 868ab6a1bf1900e40a597937c4da7f95,
