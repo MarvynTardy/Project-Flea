@@ -20,13 +20,15 @@ public class CameraGliding : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
-        }
-        else
-        {
-            m_CinemachineSwitcher.SwitchCamera(m_CameraToReturn);
-        }
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{ bhy
+        //    m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
+        //    m_CameraToReturn.ForceCameraPosition(m_CameraToGo.transform.position, Quaternion.identity);
+        //}
+        //else
+        //{
+        //    m_CinemachineSwitcher.SwitchCamera(m_CameraToReturn);
+        //    m_CameraToGo.ForceCameraPosition(m_CameraToReturn.transform.position, Quaternion.identity);
+        //}
     }
 }

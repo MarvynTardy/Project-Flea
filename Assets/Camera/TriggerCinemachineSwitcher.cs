@@ -8,7 +8,7 @@ public class TriggerCinemachineSwitcher : MonoBehaviour
     private CinemachineSwitcher m_CinemachineSwitcher;
 
     [SerializeField]
-    private CinemachineVirtualCameraBase m_CameraToGo;
+    private CinemachineVirtualCamera m_CameraToGo;
   
     
     [SerializeField]
