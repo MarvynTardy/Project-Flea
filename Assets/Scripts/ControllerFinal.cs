@@ -17,6 +17,8 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("Movement")]
     private Vector3 m_Direction;
+    float m_Horizontal = 0;
+    float m_Vertical = 0;
     [HideInInspector] public bool m_SpiritMode = false;
 
     [Header("GroundCheck")]
@@ -45,10 +47,12 @@ public class ControllerFinal : MonoBehaviour
     [SerializeField] [Range(0, 10)] float m_MomentumBoost = 5f;
     private Vector3 m_HookshotPosition;
     private Vector3 m_CharacterVelocityMomentum;
-    private HookshotState m_HookshotState;
+    public HookshotState m_HookshotState;
 
-    [Header("Feedback")]
+    [Header("General Feedback")]
     private Animator m_PlayerAnim = null;
+    private bool m_HasPlayIdle = false;
+    private float m_TimerIdle = 0;
 
     [Header("Hookshot Feedback")]
     [SerializeField] private ParticleSystem m_SpeedParticle = null;
@@ -121,7 +125,11 @@ public class ControllerFinal : MonoBehaviour
             // AnalogJump();
 
             StaminaCondition();
+
+            // IdleFeedbackAFK();
         }
+
+        IdleFeedbackAFKRelease();
 
         if (Input.GetButtonUp("Glide"))
             SpiritRelease();
@@ -146,10 +154,10 @@ public class ControllerFinal : MonoBehaviour
 
     private void CharacterMovement()
     {
-        float l_Horizontal = Input.GetAxisRaw("Horizontal");
-        float l_Vertical = Input.GetAxisRaw("Vertical");
+        m_Horizontal = Input.GetAxisRaw("Horizontal");
+        m_Vertical = Input.GetAxisRaw("Vertical");
 
-        m_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
+        m_Direction = new Vector3(m_Horizontal, 0f, m_Vertical).normalized;
 
         if (m_SpiritMode)
             m_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, m_Direction);
@@ -164,7 +172,6 @@ public class ControllerFinal : MonoBehaviour
 
         // Application de la direction finale au character controller du personnage
         m_Controller.Move(m_Direction * Time.deltaTime);
-
 
         // Réduction du momentum
         if (m_CharacterVelocityMomentum.magnitude > 0f)
@@ -257,7 +264,7 @@ public class ControllerFinal : MonoBehaviour
     #region Hookshot
     // Gestion d'état du grappin et fonctions adéquates
 
-    private enum HookshotState
+    public enum HookshotState
     {
         Neutral,
         HookshotLaunch,
@@ -384,6 +391,59 @@ public class ControllerFinal : MonoBehaviour
 
     #region Visual Feedback
     // Gestion des animations, particles, shaders
+
+    private void IdleFeedbackAFK()
+    {
+        if (m_IsGrounded)
+        {
+            m_TimerIdle += Time.deltaTime;
+
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+            if (m_Horizontal == 0 && m_Vertical == 0)
+            {
+                Debug.Log("it works");
+            }
+            if (m_TimerIdle >= 5f && !m_HasPlayIdle)
+            {
+                // m_TimerIdle = 0;
+                m_HasPlayIdle = true;
+                m_PlayerAnim.SetTrigger("IsLookAround");
+            }
+            if (m_TimerIdle >= 15f)
+            {
+                m_TimerIdle = 0;
+                m_CanInteract = false;
+                m_PlayerAnim.SetBool("IsInactive", true);
+            }
+        }
+        else if (!m_IsGrounded)
+        {
+            m_TimerIdle = 0;
+        }
+    }
+
+    private void IdleFeedbackAFKRelease()
+    {
+        if (!m_CanInteract)
+        {
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+            if (m_Horizontal > 0 || m_Vertical > 0)
+            {
+                m_PlayerAnim.SetBool("IsInactive", false);
+                StartCoroutine(IdleFeedbackAFKReleaseCO());
+            }
+        }
+    }
+
+    public IEnumerator IdleFeedbackAFKReleaseCO()
+    {
+        yield return new WaitForSeconds(3.5f);
+        // Debug.Log("yes");
+        m_CanInteract = true;
+        m_TimerIdle = 0;
+    }
 
     private void AnimCondGeneral()
     {        

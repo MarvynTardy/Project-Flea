@@ -15,15 +15,18 @@ public class HookPosDetection : MonoBehaviour
     [SerializeField] private LayerMask m_HookPointLayer;
     [HideInInspector] public Transform m_HookTarget = null;
     [HideInInspector] public bool m_CanBeHooked = false;
+    private ControllerFinal m_Controller;
     private Camera m_Camera;
     private Transform m_LoadSprite = null;
     private Transform m_RefuseSprite = null;
+    private Transform m_ValidSprite = null;
 
 
     private void Awake()
     {
         m_Camera = Camera.main;
         m_CenterScreenPos = new Vector2(m_Camera.pixelWidth/2, m_Camera.pixelHeight/2 );
+        m_Controller = GetComponent<ControllerFinal>();
     }
 
     private void Update()
@@ -73,11 +76,18 @@ public class HookPosDetection : MonoBehaviour
         {
             if (m_UIFeedback)
             {
-                m_UIFeedback.SetActive(true);
-                m_UIFeedback.transform.position = m_Camera.WorldToScreenPoint(m_HookTarget.transform.position);
+                if (m_Controller.m_HookshotState == ControllerFinal.HookshotState.Neutral)
+                {
+                    m_UIFeedback.SetActive(true);
+                    m_UIFeedback.transform.position = m_Camera.WorldToScreenPoint(m_HookTarget.transform.position);
 
-                ActualiseLoadingSprite();
-                ActualiseRefuseSprite();
+                    ActualiseLoadingSprite();
+                    ActualiseRefuseSprite();
+                }
+                else
+                {
+                    m_UIFeedback.SetActive(false);
+                }
             }
 
             if (!Physics.Linecast(transform.position, m_HookTarget.position, m_LayerToDetect) && Vector3.Distance(this.transform.position, m_HookTarget.position) <= m_HookDistance)
@@ -121,6 +131,7 @@ public class HookPosDetection : MonoBehaviour
             m_LoadSprite = m_UIFeedback.transform.Find("Image/Load");
             // m_RefuseSprite = m_HookTarget.Find("Sprite/Refuse");
             m_RefuseSprite = m_UIFeedback.transform.Find("Image/Refuse");
+            m_ValidSprite = m_UIFeedback.transform.Find("Image/Valid");
         }
 
         // On active son feedback de ciblage
@@ -136,9 +147,18 @@ public class HookPosDetection : MonoBehaviour
     // Permet d'actualiser la taille du sprite qui "charge" le point de grappin
     private void ActualiseLoadingSprite()
     {
-        float MPT = Vector3.Distance(this.transform.position, m_HookTarget.position);
-        MPT = Mathf.Clamp(MPT, m_HookDistance, m_DetectionDistance);
-        m_LoadSprite.localScale = new Vector3(1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)), 1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)), 1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)));
+        if (Vector3.Distance(transform.position, m_HookTarget.position) > m_HookDistance)
+        {
+            m_ValidSprite.localScale = Vector3.zero;
+            float MPT = Vector3.Distance(this.transform.position, m_HookTarget.position);
+            MPT = Mathf.Clamp(MPT, m_HookDistance, m_DetectionDistance);
+            m_LoadSprite.localScale = new Vector3(1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)), 1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)), 1 - ((MPT - m_HookDistance) / (m_DetectionDistance - m_HookDistance)));
+        }
+        else
+        {
+            m_LoadSprite.localScale = Vector3.zero;
+            m_ValidSprite.localScale = Vector3.one;
+        }
     }
 
     private void ActualiseRefuseSprite()

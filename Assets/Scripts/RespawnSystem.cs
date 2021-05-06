@@ -55,7 +55,8 @@ public class RespawnSystem : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         this.gameObject.transform.position = m_Checkpoint;
-        m_PlayerAnim.SetBool("IsInactive", true);
+        // m_PlayerAnim.SetBool("IsInactive", true);
+        m_PlayerAnim.SetTrigger("IsRespawn");
 
         yield return new WaitForSeconds(0.2f);
 
@@ -73,7 +74,8 @@ public class RespawnSystem : MonoBehaviour
 
     private void RespawnExit()
     {
-        m_ControllerPlayer.m_CanInteract = true;
+        // m_ControllerPlayer.m_CanInteract = true;
+        StartCoroutine(m_ControllerPlayer.IdleFeedbackAFKReleaseCO());
         m_PlayerAnim.SetBool("IsInactive", false);
     }
 
