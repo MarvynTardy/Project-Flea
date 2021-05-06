@@ -254,7 +254,7 @@ public class ControllerFinal : MonoBehaviour
         m_Direction.y = m_VelocityY;
     }
 
-    private void ResetGravityEffect()
+    public void ResetGravityEffect()
     {
         // Appellé pour éviter que la gravité ne s'incrémente en permanence
         m_VelocityY = m_GravityScaleReset;

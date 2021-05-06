@@ -34,7 +34,7 @@ public class RespawnSystem : MonoBehaviour
     //    if (Input.GetKeyDown(KeyCode.A))
     //        RespawnBegin();
 
-        if (m_CanCheck)
+        if (m_CanCheck && m_ControllerPlayer.m_CanInteract)
         {
             CheckValidPoint();
         }
@@ -53,6 +53,9 @@ public class RespawnSystem : MonoBehaviour
     IEnumerator RespawnCO()
     {
         yield return new WaitForSeconds(1);
+
+        // fade au noir à été executé
+        m_ControllerPlayer.ResetGravityEffect();
 
         this.gameObject.transform.position = m_Checkpoint;
         // m_PlayerAnim.SetBool("IsInactive", true);
@@ -74,8 +77,8 @@ public class RespawnSystem : MonoBehaviour
 
     private void RespawnExit()
     {
-        // m_ControllerPlayer.m_CanInteract = true;
-        StartCoroutine(m_ControllerPlayer.IdleFeedbackAFKReleaseCO());
+        m_ControllerPlayer.m_CanInteract = true;
+        // StartCoroutine(m_ControllerPlayer.IdleFeedbackAFKReleaseCO());
         m_PlayerAnim.SetBool("IsInactive", false);
     }
 
