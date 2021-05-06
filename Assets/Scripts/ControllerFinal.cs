@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ControllerFinal : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("Movement")]
     private Vector3 m_Direction;
+    float m_Horizontal = 0;
+    float m_Vertical = 0;
     [HideInInspector] public bool m_SpiritMode = false;
 
     [Header("GroundCheck")]
@@ -44,10 +47,12 @@ public class ControllerFinal : MonoBehaviour
     [SerializeField] [Range(0, 10)] float m_MomentumBoost = 5f;
     private Vector3 m_HookshotPosition;
     private Vector3 m_CharacterVelocityMomentum;
-    private HookshotState m_HookshotState;
+    public HookshotState m_HookshotState;
 
-    [Header("Feedback")]
+    [Header("General Feedback")]
     private Animator m_PlayerAnim = null;
+    private bool m_HasPlayIdle = false;
+    private float m_TimerIdle = 0;
 
     [Header("Hookshot Feedback")]
     [SerializeField] private ParticleSystem m_SpeedParticle = null;
@@ -61,8 +66,9 @@ public class ControllerFinal : MonoBehaviour
     private Quaternion m_SavedRotation;
 
     [Header ("Spirit Feedback")]
-    [SerializeField] private ParticleSystem m_GlideParticle = null;
+    [SerializeField] private ParticleSystem m_SpiritParticle = null;
     [SerializeField] private Material m_GlowMaterial = null;
+    [SerializeField] private Material m_EmptyMaterial = null;
     [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
     [SerializeField] private MeshRenderer m_Pagne = null;
     private Material m_ClothSavedMaterial;
@@ -116,9 +122,14 @@ public class ControllerFinal : MonoBehaviour
             if (Input.GetButtonDown("Jump") && m_CanJump)
                 Jump();
 
+            // AnalogJump();
+
             StaminaCondition();
 
+            // IdleFeedbackAFK();
         }
+
+        IdleFeedbackAFKRelease();
 
         if (Input.GetButtonUp("Glide"))
             SpiritRelease();
@@ -143,10 +154,10 @@ public class ControllerFinal : MonoBehaviour
 
     private void CharacterMovement()
     {
-        float l_Horizontal = Input.GetAxisRaw("Horizontal");
-        float l_Vertical = Input.GetAxisRaw("Vertical");
+        m_Horizontal = Input.GetAxisRaw("Horizontal");
+        m_Vertical = Input.GetAxisRaw("Vertical");
 
-        m_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
+        m_Direction = new Vector3(m_Horizontal, 0f, m_Vertical).normalized;
 
         if (m_SpiritMode)
             m_Direction = m_PlayerGliding.Glide(m_Camera, m_Controller, m_Direction);
@@ -161,7 +172,6 @@ public class ControllerFinal : MonoBehaviour
 
         // Application de la direction finale au character controller du personnage
         m_Controller.Move(m_Direction * Time.deltaTime);
-
 
         // Réduction du momentum
         if (m_CharacterVelocityMomentum.magnitude > 0f)
@@ -217,6 +227,20 @@ public class ControllerFinal : MonoBehaviour
             }
         }
     }
+
+    private void AnalogJump()
+    {
+        float l_FallMultiplier = 2.5f;
+        float l_LowJumpMultiplier = 1f;
+
+        if (m_Controller.velocity.y < 0)
+        {
+            m_VelocityY += 1 * m_GravityScale * (l_FallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (m_Controller.velocity.y > 0 && !Input.GetButton("Jump"))
+            m_VelocityY += 1 * m_GravityScale * (l_LowJumpMultiplier - 1) * Time.deltaTime;
+            
+    }
     
     private void GravityUpload()
     {
@@ -240,7 +264,7 @@ public class ControllerFinal : MonoBehaviour
     #region Hookshot
     // Gestion d'état du grappin et fonctions adéquates
 
-    private enum HookshotState
+    public enum HookshotState
     {
         Neutral,
         HookshotLaunch,
@@ -340,8 +364,10 @@ public class ControllerFinal : MonoBehaviour
             //else if (Input.GetButtonUp("Glide"))
             //    SpiritRelease();                
         }
-        else if (m_StaminaComponent.CurrentStamina <= 0 || (Input.GetButtonUp("Glide")))
+        else if (m_StaminaComponent.CurrentStamina <= 0 && m_SpiritMode || (Input.GetButtonUp("Glide")))
             SpiritRelease();
+        else if (m_StaminaComponent.CurrentStamina <= 0 && Input.GetButtonDown("Glide"))
+            SpiritEmptyFeedback();
     }
 
     private void SpiritStart()
@@ -365,6 +391,59 @@ public class ControllerFinal : MonoBehaviour
 
     #region Visual Feedback
     // Gestion des animations, particles, shaders
+
+    private void IdleFeedbackAFK()
+    {
+        if (m_IsGrounded)
+        {
+            m_TimerIdle += Time.deltaTime;
+
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+            if (m_Horizontal == 0 && m_Vertical == 0)
+            {
+                Debug.Log("it works");
+            }
+            if (m_TimerIdle >= 5f && !m_HasPlayIdle)
+            {
+                // m_TimerIdle = 0;
+                m_HasPlayIdle = true;
+                m_PlayerAnim.SetTrigger("IsLookAround");
+            }
+            if (m_TimerIdle >= 15f)
+            {
+                m_TimerIdle = 0;
+                m_CanInteract = false;
+                m_PlayerAnim.SetBool("IsInactive", true);
+            }
+        }
+        else if (!m_IsGrounded)
+        {
+            m_TimerIdle = 0;
+        }
+    }
+
+    private void IdleFeedbackAFKRelease()
+    {
+        if (!m_CanInteract)
+        {
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+            if (m_Horizontal > 0 || m_Vertical > 0)
+            {
+                m_PlayerAnim.SetBool("IsInactive", false);
+                StartCoroutine(IdleFeedbackAFKReleaseCO());
+            }
+        }
+    }
+
+    public IEnumerator IdleFeedbackAFKReleaseCO()
+    {
+        yield return new WaitForSeconds(3.5f);
+        // Debug.Log("yes");
+        m_CanInteract = true;
+        m_TimerIdle = 0;
+    }
 
     private void AnimCondGeneral()
     {        
@@ -498,7 +577,7 @@ public class ControllerFinal : MonoBehaviour
     private void SpiritStartFeedback()
     {
         m_PlayerAnim.SetBool("IsSpirit", true);
-        m_GlideParticle.Play();
+        m_SpiritParticle.Play();
 
         // Permet d'appliquer le shader qui illumine les habits du personnage
         m_Cloth.material = m_GlowMaterial;
@@ -511,13 +590,33 @@ public class ControllerFinal : MonoBehaviour
     private void SpiritReleaseFeedback()
     {
         m_PlayerAnim.SetBool("IsSpirit", false);
-        m_GlideParticle.Stop();
+        m_SpiritParticle.Stop();
 
         // Permet de remettre le material d'origine au model du personnage 
         m_Cloth.material = m_ClothSavedMaterial;
         m_Pagne.material = m_PagneSavedMaterial;
 
         SpeedReleaseFeedback();
+    }
+
+    private void SpiritEmptyFeedback()
+    {
+        //Debug.Log("yeaaaa");
+        //m_StaminaComponent.m_MeshParchment.transform.parent.transform.DOPunchPosition(new Vector3 (m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.position.x), 0.2f, 200);
+        //m_StaminaComponent.m_MeshParchment.transform.parent.transform.DOPunchScale(new Vector3 (m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x, m_StaminaComponent.m_MeshParchment.transform.parent.transform.localScale.x), 0.2f, 20);
+        
+        //Color l_EmptyMatColor = m_EmptyMaterial.color;
+        //l_EmptyMatColor.a = 100;
+        //m_EmptyMaterial.color = l_EmptyMatColor;
+        m_StaminaComponent.m_MeshParchmentEmpty.gameObject.SetActive(true);
+        StartCoroutine(SpiritEmptyFeedbackCO());
+    }
+
+    IEnumerator SpiritEmptyFeedbackCO()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        m_StaminaComponent.m_MeshParchmentEmpty.gameObject.SetActive(false);
     }
     #endregion
 
