@@ -102,11 +102,4 @@ public class RespawnSystem : MonoBehaviour
 
         m_CanCheck = true;
     }
-
-
-    //private void OnDrawGizmos()
-    //{
-    //    Color color = Color.green;
-    //    Debug.DrawLine(m_ControllerPlayer.transform.position, m_ControllerPlayer.transform.TransformDirection(Vector3.down) * 3);
-    //}
 }
