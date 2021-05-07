@@ -129,7 +129,7 @@ public class ControllerFinal : MonoBehaviour
             // IdleFeedbackAFK();
         }
 
-        IdleFeedbackAFKRelease();
+        // IdleFeedbackAFKRelease();
 
         if (Input.GetButtonUp("Glide"))
             SpiritRelease();
@@ -387,6 +387,15 @@ public class ControllerFinal : MonoBehaviour
 
         SpiritReleaseFeedback();
     }
+    #endregion
+
+    #region Animation Event
+
+    public void RespawnInteractionExit()
+    {
+        m_CanInteract = true;
+    }
+
     #endregion
 
     #region Visual Feedback
