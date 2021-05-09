@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8357498730820745443}
   - component: {fileID: 6061629152841813033}
   - component: {fileID: 3867765820387572189}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Landmark_Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
