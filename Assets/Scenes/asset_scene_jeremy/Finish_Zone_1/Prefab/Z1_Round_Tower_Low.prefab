@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3416937106139988470}
   - component: {fileID: 1784759868601421395}
   - component: {fileID: 4548718005735701145}
-  - component: {fileID: 4193751818265468752}
+  - component: {fileID: 4061912949350366724}
   m_Layer: 0
   m_Name: Z1_Round_Tower_Low
   m_TagString: Untagged
@@ -80,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &4193751818265468752
-CapsuleCollider:
+--- !u!64 &4061912949350366724
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,7 +90,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.0733473
-  m_Height: 13.909058
-  m_Direction: 1
-  m_Center: {x: 0.0016467571, y: 3.5150938, z: 0.004524231}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8113851674491875075, guid: 9ebce16ccd20ceb43a97f70dcf38c6bc, type: 3}
