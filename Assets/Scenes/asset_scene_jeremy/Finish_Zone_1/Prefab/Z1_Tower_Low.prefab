@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8375879126174576295}
   - component: {fileID: 6042123132455508589}
   - component: {fileID: 8131543117587962777}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Z1_Tower_Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
