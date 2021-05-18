@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2384583577431358780}
   - component: {fileID: 5949866672800827556}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 7025026434181818769}
   - component: {fileID: 6256119762652096052}
   - component: {fileID: 8157923893340607230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Z1_Small_Steps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
