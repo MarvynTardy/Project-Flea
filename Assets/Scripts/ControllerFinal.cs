@@ -9,7 +9,7 @@ public class ControllerFinal : MonoBehaviour
     [SerializeField] private Transform m_Camera = null;
     [SerializeField] private GameObject m_PlayerModel = null;
     [HideInInspector] public bool m_CanInteract = false;
-    private CharacterController m_Controller = null;
+    [HideInInspector] public CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
     private StaminaComponent m_StaminaComponent = null;
@@ -20,6 +20,14 @@ public class ControllerFinal : MonoBehaviour
     float m_Horizontal = 0;
     float m_Vertical = 0;
     [HideInInspector] public bool m_SpiritMode = false;
+
+    [Header("SlopeDetection")]
+    [SerializeField] private float m_SlopeForce;
+    [SerializeField] private Transform m_SlopeCheck;
+    private float m_SlopeRayLength = 1;
+    [SerializeField] private bool m_IsSliding;
+    private float m_SlopeAngleTolerance;
+    private Vector3 m_SlopeVelocity;
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
@@ -95,6 +103,8 @@ public class ControllerFinal : MonoBehaviour
 
     void Update()
     {
+        SlopeDetection();
+
         if (m_CanInteract)
         {
             switch (m_HookshotState)
@@ -154,9 +164,17 @@ public class ControllerFinal : MonoBehaviour
 
     private void CharacterMovement()
     {
-        m_Horizontal = Input.GetAxisRaw("Horizontal");
-        m_Vertical = Input.GetAxisRaw("Vertical");
-
+        //if (!m_IsSliding)
+        //{
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+        //}
+        //else
+        //{
+        //    m_Horizontal = 0;
+        //    m_Vertical = 0;
+        //}
+        
         m_Direction = new Vector3(m_Horizontal, 0f, m_Vertical).normalized;
 
         if (m_SpiritMode)
@@ -169,6 +187,9 @@ public class ControllerFinal : MonoBehaviour
 
         // Application du momentum du grappin
         m_Direction += m_CharacterVelocityMomentum;
+
+        // Application de la velocité en pente
+        m_Direction += m_SlopeVelocity;
 
         // Application de la direction finale au character controller du personnage
         m_Controller.Move(m_Direction * Time.deltaTime);
@@ -187,6 +208,55 @@ public class ControllerFinal : MonoBehaviour
 
         // Met à jour les animations du personnage
         AnimCondGeneral();
+    }
+
+    private void SlopeDetection()
+    {
+        RaycastHit l_Hit;
+
+        // Raycast en direction du sol pour savoir si le joueur est sur une pente
+        //Physics.Raycast(this.transform.position, Vector3.down, out l_Hit, Mathf.Infinity);
+        Physics.Raycast(m_SlopeCheck.position, Vector3.down, out l_Hit, Mathf.Infinity);
+
+        // Sauvegarde de la normal du sol
+        Vector3 l_HitNormal = l_Hit.normal;
+
+        // Produit vectoriel avec un Vector3.Up 
+        Vector3 l_GroundParallel = Vector3.Cross(Vector3.up, l_HitNormal);
+
+        // Produit vectoriel avec la parallèle du sol pour retourner un vecteur parallèle au sol et qui pointe toujours vers le bas
+        Vector3 l_SlopeParallel = Vector3.Cross(l_GroundParallel, l_HitNormal);
+        Debug.DrawRay(l_Hit.point, l_SlopeParallel * 10, Color.black); 
+
+        // Permet de définir l'angle de la pente sur laquelle on se trouve
+        float l_CurrentSlope = Mathf.Round(Vector3.Angle(l_Hit.normal, transform.up));
+        // Debug.Log(l_CurrentSlope);
+
+        // If the slope is on a slope too steep and the player is Grounded the player is pushed down the slope.
+        if (l_CurrentSlope >= 45f && m_Controller.isGrounded)
+        {
+            // Debug.Log("Glisse fdp");
+            m_IsSliding = true;
+            m_SlopeVelocity += l_SlopeParallel.normalized;
+        }
+
+        if (l_CurrentSlope < 45f && m_Controller.isGrounded)
+        {
+            m_IsSliding = false;
+            m_SlopeVelocity = Vector3.zero;
+        }
+
+        //// If the player is standing on a slope that isn't too steep, is grounded, as is not sliding anymore we start a function to count time
+        //else if (currentSlope < 45 && MaintainingGround() && m_IsSliding)
+        //{
+        //    TimePassed();
+
+        //    // If enough time has passed the sliding stops. There's no need for these last two if statements, the thing works already, but it's nicer to have the player slide for a little bit more once they get back on the ground
+        //    if (currentSlope < 45 && MaintainingGround() && m_IsSliding && timePassed > 1f)
+        //    {
+        //        m_IsSliding = false;
+        //    }
+        //}
     }
 
     #region Jump
