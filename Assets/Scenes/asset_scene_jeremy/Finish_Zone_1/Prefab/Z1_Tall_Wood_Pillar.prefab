@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5015341140337736351}
   - component: {fileID: 7097362367199792725}
   - component: {fileID: 2372592586277406978}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Z1_Tall_Wood_Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

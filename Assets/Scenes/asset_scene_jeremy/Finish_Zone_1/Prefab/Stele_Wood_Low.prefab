@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1224605117693844640}
   - component: {fileID: 3970587812949174378}
   - component: {fileID: 5049035976134959449}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Stele_Wood_Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
