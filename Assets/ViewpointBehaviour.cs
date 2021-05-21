@@ -8,10 +8,13 @@ public class ViewpointBehaviour : MonoBehaviour
 
     // References
     [SerializeField] private Transform m_Platform;
+    private bool m_MovePlayer = false;
+    private bool m_RotatePlayer = false;
     private Animator m_Anim;
     private ParticleSystem m_Particle;
     private ViewpointManager m_VpManager;
     private ControllerFinal m_Controller;
+    private float m_ActualTime = 0;
 
     void Awake()
     {
@@ -26,13 +29,18 @@ public class ViewpointBehaviour : MonoBehaviour
     // Lancer la séquence d'animation joueur
     // Activer 
 
-    //private void Update()
-    //{
-    //    if ()
-    //    {
+    private void Update()
+    {
+        if (m_MovePlayer)
+        {
+            SetPlayerPosition();
+        }
 
-    //    }
-    //}
+        if (m_RotatePlayer)
+        {
+            SetPlayerRotation();
+        }
+    }
 
     private void OnTriggerEnter(Collider p_Other)
     {
@@ -55,13 +63,19 @@ public class ViewpointBehaviour : MonoBehaviour
         // Feedback visuel
         m_Anim.SetBool("IsTrigger", true);
         m_Particle.Play();
-        SetPlayerPosition(p_Other.gameObject.transform.position);
+
+        m_MovePlayer = true;
 
         // Passer le joueur inactif
         p_Other.gameObject.GetComponent<ControllerFinal>().m_CanInteract = false;
 
+        // Fais jouer son animation de marche
+        m_Controller.m_PlayerAnim.SetBool("IsMoving", true);
+
         // Passer le joueur en enfant de la plateforme afin d'éviter l'effet de "tremblement"
         p_Other.transform.parent = m_Platform;
+
+        // Passer la velocité du joueur à 0
 
         // Caméra à gérer ici
 
@@ -75,30 +89,36 @@ public class ViewpointBehaviour : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    //private void OnTriggerStay(Collider p_Other)
-    //{
-    //    p_Other.transform.position = new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z);
-    //}
-
-    private void SetPlayerPosition(Vector3 p_PlayerPos)
+    private void SetPlayerPosition()
     {
-        //while (Vector3.Distance(m_Platform.position, m_Controller.transform.position) > 0.1f)
-        //{
-        //    Debug.Log("Ils sont trop loin");
-
-        //    Vector3 m_Direction;
-
-        //    m_Direction = Vector3.Lerp(m_Platform.position, m_Controller.transform.position, 0.5f);
-
-        //    m_Controller.m_Controller.Move(m_Direction);
-        //}
-
-        Debug.Log("Ils sont trop loin");
-
         Vector3 m_Direction;
 
-        m_Direction = Vector3.Lerp(m_Platform.position, m_Controller.transform.position, 0.5f);
+        m_Direction = Vector3.Lerp(m_Controller.transform.position, m_Platform.position, 0.1f);
 
-        m_Controller.m_Controller.Move(m_Direction);
+        m_Direction.y = m_Controller.transform.position.y;
+
+        m_Controller.transform.position = m_Direction;
+
+        if (Vector3.Distance(m_Platform.position, m_Controller.transform.position) < 2.59f)
+        {
+            m_Controller.m_PlayerAnim.SetBool("IsMoving", false);
+
+            m_RotatePlayer = true;
+
+            m_MovePlayer = false;
+        }
+    }
+
+    private void SetPlayerRotation()
+    {
+        m_Controller.transform.rotation = Quaternion.Slerp(m_Controller.transform.rotation, this.transform.rotation, Time.deltaTime * 1);
+
+        m_ActualTime += Time.deltaTime;
+
+        if (m_ActualTime >= 3f)
+        {
+            m_ActualTime = 0;
+            m_RotatePlayer = false;
+        }
     }
 }

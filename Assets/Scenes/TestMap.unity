@@ -479,7 +479,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23168368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -60491,7 +60491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1819640476
 Transform:
   m_ObjectHideFlags: 0
@@ -77571,6 +77571,7 @@ MonoBehaviour:
   m_Camera: {fileID: 294794817754665778}
   m_PlayerModel: {fileID: 294794817780046632}
   m_CanInteract: 0
+  m_Controller: {fileID: 0}
   m_SpiritMode: 0
   m_SlopeForce: 0
   m_SlopeCheck: {fileID: 23168369}
