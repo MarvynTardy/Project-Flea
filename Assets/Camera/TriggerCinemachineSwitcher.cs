@@ -6,17 +6,19 @@ using Cinemachine;
 public class TriggerCinemachineSwitcher : MonoBehaviour
 {
     private CinemachineSwitcher m_CinemachineSwitcher;
+    private CameraChecker m_CameraChecker;
 
     [SerializeField]
-    private CinemachineVirtualCamera m_CameraToGo;
-  
-    
+    private CinemachineVirtualCameraBase m_FromCamera;
+
+
     [SerializeField]
-    private CinemachineVirtualCameraBase m_CameraToReturn;
+    private CinemachineVirtualCameraBase m_TargetCamera;
     
 
     private void Start()
     {
+        m_CameraChecker = FindObjectOfType<CameraChecker>();
         m_CinemachineSwitcher = FindObjectOfType<CinemachineSwitcher>();
     }
 
@@ -24,11 +26,14 @@ public class TriggerCinemachineSwitcher : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Ok");
-        m_CinemachineSwitcher.SwitchCamera(m_CameraToGo);
+        m_CinemachineSwitcher.SwitchCamera(m_FromCamera, m_TargetCamera);
+        m_CameraChecker.enabled = false;
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other) 
     {
-        m_CinemachineSwitcher.ReSwitchCamera(m_CameraToReturn);
+        m_CinemachineSwitcher.ReSwitchCamera(m_FromCamera, m_TargetCamera);
+        m_CameraChecker.enabled = true;
+        
     }
 
     

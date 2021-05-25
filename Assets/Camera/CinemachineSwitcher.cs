@@ -4,47 +4,54 @@ using UnityEngine;
 using Cinemachine;
 using Cinemachine.Editor;
 
+
 public class CinemachineSwitcher : MonoBehaviour
 {
     private Animator m_Animator;
+    [SerializeField]
     private CinemachineStateDrivenCamera m_CinemachineStateDrivenCamera;
     [SerializeField]
-    private CinemachineVirtualCamera[] m_CinemachineVirtualCameras;
+    private CinemachineTrackedDolly m_CinemachineTrackedDolly;
+    [SerializeField]
+    public ICinemachineCamera m_ActualCamera;
 
 
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
         m_CinemachineStateDrivenCamera = FindObjectOfType<CinemachineStateDrivenCamera>();
-        m_CinemachineVirtualCameras = GetComponentsInChildren<CinemachineVirtualCamera>();
-        foreach (CinemachineVirtualCamera cinemachineVirtualCamera in m_CinemachineVirtualCameras)
-        {
-            
-           
-               
-        }
+        m_CinemachineTrackedDolly = GetComponentInChildren<CinemachineTrackedDolly>();
+        
     }
 
     private void Update()
     {
-        Debug.Log(m_CinemachineStateDrivenCamera.LiveChild);
+        m_ActualCamera = m_CinemachineStateDrivenCamera.LiveChild;
+        Debug.Log(m_ActualCamera);
     }
 
-    public void SwitchCamera(CinemachineVirtualCamera p_CameraToGo)
+ 
+    public void SwitchCamera(CinemachineVirtualCameraBase p_FromCamera = null, CinemachineVirtualCameraBase p_ToCamera = null)
     {
-        m_Animator.Play(p_CameraToGo.name);
-        
-        
+        if((object)m_CinemachineStateDrivenCamera.LiveChild == p_FromCamera)
+        {
+            m_CinemachineTrackedDolly.m_AutoDolly.m_Enabled = true;
+            m_Animator.Play(p_ToCamera.name);
+        }
+
     }
-    public void ReSwitchCamera(CinemachineVirtualCameraBase p_CameraToReturn)
+
+    public void ReSwitchCamera(CinemachineVirtualCameraBase p_FromCamera = null, CinemachineVirtualCameraBase p_ToCamera = null)
     {
-        m_Animator.Play(p_CameraToReturn.name);
-    }
-    public void SwitchFreelookCamera(CinemachineFreeLook p_CameraToGo)
-    {
-        m_Animator.Play(p_CameraToGo.name);
+        if ((object)m_CinemachineStateDrivenCamera.LiveChild == p_ToCamera)
+        {
+            m_CinemachineTrackedDolly.m_AutoDolly.m_Enabled = false;
+            m_CinemachineTrackedDolly.m_PathPosition = 0.0f;
+            m_Animator.Play(p_FromCamera.name);
+        }
+
     }
 
 
-   
+
 }
