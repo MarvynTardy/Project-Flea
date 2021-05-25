@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 2
+  version: 11
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -23,7 +23,7 @@ Material:
   m_Name: Grass
   m_Shader: {fileID: -6465566751694194690, guid: 637bb4e54097f9a44b3429c34a345101,
     type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _BLENDMODE_ALPHA _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT
+  m_ShaderKeywords: _ALPHATEST_ON _DISABLE_SSR_TRANSPARENT _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT
     _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -35,6 +35,9 @@ Material:
   disabledShaderPasses:
   - MOTIONVECTORS
   - TransparentBackface
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - RayTracingPrepass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -42,41 +45,70 @@ Material:
         m_Texture: {fileID: 2800000, guid: 17179f9bc6e2e304d9a67e034daa8a8e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_EBEA3586:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_FE13D5FA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_15213A74: 0.3
     - Vector1_19EB579F: 0.06
+    - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 1
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
+    - _AlphaToMask: 0
+    - _AlphaToMaskInspectorValue: 0
     - _BlendMode: 0
     - _CullMode: 0
     - _CullModeForward: 0
+    - _DepthOffsetEnable: 0
     - _DoubleSidedEnable: 1
     - _DoubleSidedNormalMode: 0
     - _DstBlend: 10
+    - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
+    - _OpaqueCullMode: 2
+    - _RayTracing: 0
     - _ReceivesSSR: 1
-    - _RenderQueueType: 5
+    - _ReceivesSSRTransparent: 0
+    - _RefractionModel: 0
+    - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _SrcBlend: 1
     - _StencilRef: 0
-    - _StencilRefDepth: 8
+    - _StencilRefDepth: 0
     - _StencilRefDistortionVec: 4
-    - _StencilRefGBuffer: 10
-    - _StencilRefMV: 40
+    - _StencilRefGBuffer: 2
+    - _StencilRefMV: 32
     - _StencilWriteMask: 6
     - _StencilWriteMaskDepth: 8
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskGBuffer: 14
     - _StencilWriteMaskMV: 40
+    - _SupportDecals: 1
     - _SurfaceType: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
+    - _TransparentDepthPostpassEnable: 0
+    - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 0
+    - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 4
@@ -85,5 +117,8 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - Vector2_2BFDF149: {r: 6, g: 0, b: 0, a: 0}
+    - Vector2_2D866359: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_FAF78442: {r: 1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: -1, g: -1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
