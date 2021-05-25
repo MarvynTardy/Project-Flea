@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4456546204559041820}
   - component: {fileID: 1890423742216770006}
   - component: {fileID: 2153268954372370604}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Z1_Modular_Platform_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7071657545589117316}
   - component: {fileID: 2745679363510752985}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1767095318712230166}
   - component: {fileID: 1800690720839488436}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

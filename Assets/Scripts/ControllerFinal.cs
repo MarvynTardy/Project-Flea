@@ -58,7 +58,7 @@ public class ControllerFinal : MonoBehaviour
     public HookshotState m_HookshotState;
 
     [Header("General Feedback")]
-    private Animator m_PlayerAnim = null;
+    [HideInInspector] public Animator m_PlayerAnim = null;
     private bool m_HasPlayIdle = false;
     private float m_TimerIdle = 0;
 

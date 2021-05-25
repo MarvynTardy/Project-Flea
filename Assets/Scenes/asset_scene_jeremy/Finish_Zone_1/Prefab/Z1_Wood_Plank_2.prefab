@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2475583736038152151}
   - component: {fileID: 414327881214796573}
   - component: {fileID: 144610276505609622}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Z1_Wood_Plank_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

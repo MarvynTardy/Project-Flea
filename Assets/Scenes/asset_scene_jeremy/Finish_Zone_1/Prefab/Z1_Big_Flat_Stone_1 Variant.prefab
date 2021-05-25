@@ -85,6 +85,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Z1_Big_Flat_Stone_1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 45f5f68c0f9841a45997dd3f8e771f34,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f5f68c0f9841a45997dd3f8e771f34, type: 3}
 --- !u!1 &3430641814888397485 stripped

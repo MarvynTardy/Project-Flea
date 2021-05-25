@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2352141872219045530}
   - component: {fileID: 522571333664557648}
   - component: {fileID: 8557783369637614421}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Z1_Stone_Step
   m_TagString: Untagged
   m_Icon: {fileID: 0}
