@@ -8,6 +8,7 @@ public class ViewpointBehaviour : MonoBehaviour
 
     // References
     [SerializeField] private Transform m_Platform;
+    [SerializeField] private float m_TimeToWait;
     private bool m_MovePlayer = false;
     private bool m_RotatePlayer = false;
     private Animator m_Anim;
@@ -40,6 +41,11 @@ public class ViewpointBehaviour : MonoBehaviour
         {
             SetPlayerRotation();
         }
+
+        if (m_IsTrigger)
+        {
+
+        }
     }
 
     private void OnTriggerEnter(Collider p_Other)
@@ -67,7 +73,7 @@ public class ViewpointBehaviour : MonoBehaviour
         m_MovePlayer = true;
 
         // Passer le joueur inactif
-        p_Other.gameObject.GetComponent<ControllerFinal>().m_CanInteract = false;
+        m_Controller.m_CanInteract = false;
 
         // Fais jouer son animation de marche
         m_Controller.m_PlayerAnim.SetBool("IsMoving", true);
@@ -120,5 +126,11 @@ public class ViewpointBehaviour : MonoBehaviour
             m_ActualTime = 0;
             m_RotatePlayer = false;
         }
+    }
+
+    private void ReleaseViewPoint()
+    {
+        // Repasse le joueur actif
+        m_Controller.m_CanInteract = false;
     }
 }
