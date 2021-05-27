@@ -90,7 +90,11 @@ public class RespawnSystem : MonoBehaviour
 
         if (Physics.Raycast(m_ControllerPlayer.transform.position, m_ControllerPlayer.transform.TransformDirection(Vector3.down), out l_HitPoint, 3, m_ControllerPlayer.m_GroundMask))
         {
-            m_Checkpoint = new Vector3(l_HitPoint.point.x, l_HitPoint.point.y + 1.05f, l_HitPoint.point.z);
+            // Si le personnage est bien au sol
+            if (m_ControllerPlayer.m_IsGrounded && !m_ControllerPlayer.m_IsSliding)
+            {
+                m_Checkpoint = new Vector3(l_HitPoint.point.x, l_HitPoint.point.y + 1.05f, l_HitPoint.point.z);
+            }
         }
 
         StartCoroutine(CheckValidPointCO());

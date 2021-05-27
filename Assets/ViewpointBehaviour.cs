@@ -5,17 +5,19 @@ using UnityEngine;
 public class ViewpointBehaviour : MonoBehaviour
 {
     private bool m_IsTrigger;
+    private bool m_IsExit;
 
     // References
     [SerializeField] private Transform m_Platform;
-    [SerializeField] private float m_TimeToWait;
+    [SerializeField] private float m_TimeToWait = 10;
     private bool m_MovePlayer = false;
     private bool m_RotatePlayer = false;
     private Animator m_Anim;
     private ParticleSystem m_Particle;
     private ViewpointManager m_VpManager;
     private ControllerFinal m_Controller;
-    private float m_ActualTime = 0;
+    private float m_ActualTimeRotation = 0;
+    private float m_ActualTimeTrigger = 0;
 
     void Awake()
     {
@@ -32,35 +34,59 @@ public class ViewpointBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (m_MovePlayer)
-        {
-            SetPlayerPosition();
-        }
+        if (!m_IsExit)
+        { 
+            if (m_MovePlayer)
+            {
+                SetPlayerPosition();
+            }
 
-        if (m_RotatePlayer)
-        {
-            SetPlayerRotation();
-        }
+            if (m_RotatePlayer)
+            {
+                SetPlayerRotation();
+            }
 
-        if (m_IsTrigger)
-        {
+            if (m_IsTrigger)
+            {
+                m_ActualTimeTrigger += Time.deltaTime;
 
+                if (m_ActualTimeTrigger >= m_TimeToWait)
+                {
+                    ReleaseViewPoint();
+                }
+            }
         }
     }
 
     private void OnTriggerEnter(Collider p_Other)
     {
         // S'il n'a pas encore été activé
-        if (!m_IsTrigger)
+        if (!m_IsTrigger && !m_IsExit)
         {
             // On récupère le script Controller sur le joueur
             m_Controller = p_Other.gameObject.GetComponent<ControllerFinal>();
 
-            // Il est désormais activé
+            // Le POV est désormais activé
             m_IsTrigger = true;
             
             // On commence la séquence d'activation
             StartCoroutine(Activation(p_Other));
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (m_IsExit)
+        {
+            float m_Horizontal = 0;
+            float m_Vertical = 0;
+
+            m_Horizontal = Input.GetAxisRaw("Horizontal");
+            m_Vertical = Input.GetAxisRaw("Vertical");
+            if (m_Horizontal > 0 || m_Vertical > 0)
+            {
+                m_Controller.m_PlayerAnim.SetBool("IsInactive", false);
+            }
         }
     }
 
@@ -70,6 +96,7 @@ public class ViewpointBehaviour : MonoBehaviour
         m_Anim.SetBool("IsTrigger", true);
         m_Particle.Play();
 
+        // Active la fonction qui recentre le joueur sur le socle
         m_MovePlayer = true;
 
         // Passer le joueur inactif
@@ -105,9 +132,12 @@ public class ViewpointBehaviour : MonoBehaviour
 
         m_Controller.transform.position = m_Direction;
 
+
+        // Si le joueur a atteint le centre de la plateforme
         if (Vector3.Distance(m_Platform.position, m_Controller.transform.position) < 2.59f)
         {
             m_Controller.m_PlayerAnim.SetBool("IsMoving", false);
+            m_Controller.m_PlayerAnim.SetBool("IsInactive", true);
 
             m_RotatePlayer = true;
 
@@ -119,18 +149,23 @@ public class ViewpointBehaviour : MonoBehaviour
     {
         m_Controller.transform.rotation = Quaternion.Slerp(m_Controller.transform.rotation, this.transform.rotation, Time.deltaTime * 1);
 
-        m_ActualTime += Time.deltaTime;
+        m_ActualTimeRotation += Time.deltaTime;
 
-        if (m_ActualTime >= 3f)
+        if (m_ActualTimeRotation >= 3f)
         {
-            m_ActualTime = 0;
+            m_ActualTimeRotation = 0;
             m_RotatePlayer = false;
         }
     }
 
+
     private void ReleaseViewPoint()
     {
-        // Repasse le joueur actif
-        m_Controller.m_CanInteract = false;
+        m_IsExit = true;
+        m_ActualTimeRotation = 0;
+        m_IsTrigger = false;
+        m_Controller.transform.parent = null;
+        m_Controller.m_PlayerAnim.SetBool("IsInactive", false);
+        //m_Controller.m_CanInteract = true;
     }
 }
