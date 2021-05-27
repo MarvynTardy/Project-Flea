@@ -8,7 +8,7 @@ public class ControllerFinal : MonoBehaviour
     [Header("General")]
     [SerializeField] private Transform m_Camera = null;
     [SerializeField] private GameObject m_PlayerModel = null;
-    [HideInInspector] public bool m_CanInteract = false;
+     public bool m_CanInteract = false;
     [HideInInspector] public CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
@@ -24,8 +24,8 @@ public class ControllerFinal : MonoBehaviour
     [Header("SlopeDetection")]
     [SerializeField] private float m_SlopeForce;
     [SerializeField] private Transform m_SlopeCheck;
+    [SerializeField] public bool m_IsSliding;
     private float m_SlopeRayLength = 1;
-    [SerializeField] private bool m_IsSliding;
     private float m_SlopeAngleTolerance;
     private Vector3 m_SlopeVelocity;
 
@@ -33,7 +33,7 @@ public class ControllerFinal : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
     [SerializeField] public Transform m_GroundChecker = null;
     [SerializeField] public LayerMask m_GroundMask;
-    private bool m_IsGrounded = false;
+    [HideInInspector] public bool m_IsGrounded = false;
 
     [Header("Jump")]
     [SerializeField] [Range(0, 10)] private float m_JumpForce = 4;
