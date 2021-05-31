@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ViewpointManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Dictionary<int, ViewpointBehaviour> m_ViewPoints = new Dictionary<int, ViewpointBehaviour>();
+    public bool[] m_ActivationList;
+
     void Start()
     {
         

@@ -7,9 +7,13 @@ public class ViewpointBehaviour : MonoBehaviour
     private bool m_IsTrigger;
     private bool m_IsExit;
 
-    // References
-    [SerializeField] private Transform m_Platform;
+    [Header("Variables")]
     [SerializeField] private float m_TimeToWait = 10;
+    [SerializeField] private int m_ID = 0;
+    static int m_Count = 0;
+
+    [Header("References")]
+    [SerializeField] private Transform m_Platform;
     private bool m_MovePlayer = false;
     private bool m_RotatePlayer = false;
     private Animator m_Anim;
@@ -21,9 +25,12 @@ public class ViewpointBehaviour : MonoBehaviour
 
     void Awake()
     {
+        m_ID = m_Count;
+        m_Count += 1;
         m_Anim = GetComponentInChildren<Animator>();
         m_Particle = GetComponentInChildren<ParticleSystem>();
         m_VpManager = FindObjectOfType<ViewpointManager>();
+        m_VpManager.m_ViewPoints.Add(m_ID, this);
     }
 
     // Gérer le fait de passer le player en enfant le temps de l'anim
@@ -98,17 +105,18 @@ public class ViewpointBehaviour : MonoBehaviour
 
         // Active la fonction qui recentre le joueur sur le socle
         m_MovePlayer = true;
-
+        
         // Passer le joueur inactif
         m_Controller.m_CanInteract = false;
 
+        // Orienter le joueur vers le centre
+        m_Controller.transform.LookAt(new Vector3(transform.position.x, m_Controller.transform.position.y, transform.position.z));
+        
         // Fais jouer son animation de marche
         m_Controller.m_PlayerAnim.SetBool("IsMoving", true);
 
         // Passer le joueur en enfant de la plateforme afin d'éviter l'effet de "tremblement"
         p_Other.transform.parent = m_Platform;
-
-        // Passer la velocité du joueur à 0
 
         // Caméra à gérer ici
 
