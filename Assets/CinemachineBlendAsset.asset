@@ -14,378 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: ThirdPersonCamera
-    m_To: CameraRail
+    m_To: TitleCamera
     m_Blend:
       m_Style: 1
-      m_Time: 1
+      m_Time: 9
       m_CustomCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.000000059604645
+          value: 0.055423737
           inSlope: 0
           outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.26668862
-          value: 0.54214174
-          inSlope: 0.24597079
-          outSlope: 0.24597079
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.45544612
-          value: 0.11793056
-          inSlope: -0.35418785
-          outSlope: -0.35418785
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.60388607
-          inSlope: 1.6684475
-          outSlope: 1.6684475
+          value: 1
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
         m_RotationOrder: 0
-  - m_From: CameraRail
-    m_To: ThirdPersonCamera
-    m_Blend:
-      m_Style: 1
-      m_Time: 1
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: ThirdPersonCamera
-    m_To: CameraTest
-    m_Blend:
-      m_Style: 1
-      m_Time: 5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: CameraTest
+  - m_From: TitleCamera
     m_To: ThirdPersonCamera
     m_Blend:
       m_Style: 1
       m_Time: 2
       m_CustomCurve:
         serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: ThirdPersonCamera
-    m_To: CameraGliding
-    m_Blend:
-      m_Style: 1
-      m_Time: 0.5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: CameraGliding
-    m_To: ThirdPersonCamera
-    m_Blend:
-      m_Style: 1
-      m_Time: 0.5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: CameraGliding
-    m_To: CameraTest
-    m_Blend:
-      m_Style: 1
-      m_Time: 5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: ThirdPersonCamera
-    m_To: CameraRailTower
-    m_Blend:
-      m_Style: 1
-      m_Time: 0.5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.000000059604645
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.22322063
-          value: 0.58282554
-          inSlope: 0.48002332
-          outSlope: 0.48002332
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5474742
-          value: 0.15466201
-          inSlope: -0.099702924
-          outSlope: -0.099702924
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.7270588
-          inSlope: 1.6684475
-          outSlope: 1.6684475
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.028205156
-          outWeight: 0.33333334
+        m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
