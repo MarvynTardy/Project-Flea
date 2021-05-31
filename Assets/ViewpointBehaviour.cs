@@ -5,7 +5,7 @@ using UnityEngine;
 public class ViewpointBehaviour : MonoBehaviour
 {
     private bool m_IsTrigger;
-    private bool m_IsExit;
+    [HideInInspector] public bool m_IsExit;
 
     [Header("Variables")]
     [SerializeField] private float m_TimeToWait = 10;
@@ -30,7 +30,7 @@ public class ViewpointBehaviour : MonoBehaviour
         m_Anim = GetComponentInChildren<Animator>();
         m_Particle = GetComponentInChildren<ParticleSystem>();
         m_VpManager = FindObjectOfType<ViewpointManager>();
-        m_VpManager.m_ViewPoints.Add(m_ID, this);
+        // m_VpManager.m_ViewPoints.Add(m_ID, this);
     }
 
     // Gérer le fait de passer le player en enfant le temps de l'anim
@@ -174,6 +174,7 @@ public class ViewpointBehaviour : MonoBehaviour
         m_IsTrigger = false;
         m_Controller.transform.parent = null;
         m_Controller.m_PlayerAnim.SetBool("IsInactive", false);
+        m_VpManager.AddValidViewPointsOpti(m_ID);
         //m_Controller.m_CanInteract = true;
     }
 }
