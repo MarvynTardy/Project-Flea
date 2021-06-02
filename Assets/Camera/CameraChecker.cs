@@ -37,7 +37,7 @@ public class CameraChecker : MonoBehaviour
                 m_CinemachineSwitcher.ReSwitchCamera(m_FromCamera, m_TargetCamera);
 
             }
-            if (l_Hit.transform.gameObject.layer == LayerMask.NameToLayer("Props"))
+            if (l_Hit.transform.gameObject.layer == LayerMask.NameToLayer("SpecialProps"))
             {
                 m_CinemachineSwitcher.SwitchCamera(m_FromCamera, m_TargetCamera);
             }
