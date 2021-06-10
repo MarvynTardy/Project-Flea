@@ -78,7 +78,7 @@ public class ControllerFinal : MonoBehaviour
     [SerializeField] private Material m_GlowMaterial = null;
     [SerializeField] private Material m_EmptyMaterial = null;
     [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
-    [SerializeField] private MeshRenderer m_Pagne = null;
+    [SerializeField] private SkinnedMeshRenderer m_Pagne = null;
     private Material m_ClothSavedMaterial;
     private Material m_PagneSavedMaterial;
 
