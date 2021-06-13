@@ -44,14 +44,14 @@ Material:
     - Vector1_4BD6ECC: 2
     - Vector1_59C696A9: 200
     - Vector1_5EAFA8AD: 2
-    - Vector1_6120CB3F: 500
+    - Vector1_6120CB3F: 644.1
     - Vector1_6CE252F4: 120
     - Vector1_714EC61D: -1
-    - Vector1_8FD3AB5D: 0.01
+    - Vector1_8FD3AB5D: 0.005
     - Vector1_A76DB6E8: 2
-    - Vector1_ADBF0E24: 0.02
+    - Vector1_ADBF0E24: 0.001
     - Vector1_D3369EA6: 15
-    - Vector1_DAC911A0: 30
+    - Vector1_DAC911A0: 13
     - Vector1_F662A479: 5
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 0
