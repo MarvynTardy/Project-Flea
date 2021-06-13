@@ -14,5 +14,11 @@ public class GivebackControl : MonoBehaviour
     public void EnabledControl()
     {
         m_Controller.m_CanInteract = true;
+        m_Controller.m_IsAfk = false;
+    }
+
+    public void StopLookAroundLoop()
+    {
+        m_Controller.m_PlayerAnim.SetBool("IsLookAround", false);
     }
 }

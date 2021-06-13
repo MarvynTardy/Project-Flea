@@ -8,7 +8,8 @@ public class ControllerFinal : MonoBehaviour
     [Header("General")]
     [SerializeField] private Transform m_Camera = null;
     [SerializeField] private GameObject m_PlayerModel = null;
-     public bool m_CanInteract = false;
+    public bool m_CanInteract = false;
+    public bool m_IsAfk = false;
     [HideInInspector] public CharacterController m_Controller = null;
     private Gliding m_PlayerGliding = null;
     private Walking m_PlayerWalking = null;
@@ -61,8 +62,8 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("General Feedback")]
     [HideInInspector] public Animator m_PlayerAnim = null;
-    private bool m_HasPlayIdle = false;
-    private float m_TimerIdle = 0;
+    private bool m_HasPlayLookAround = false;
+    public float m_TimerIdle = 0;
 
     [Header("Hookshot Feedback")]
     [SerializeField] private ParticleSystem m_SpeedParticle = null;
@@ -107,7 +108,7 @@ public class ControllerFinal : MonoBehaviour
     {
         SlopeDetection();
 
-        if (m_CanInteract)
+        if (m_CanInteract && !m_IsAfk)
         {
             switch (m_HookshotState)
             {
@@ -139,10 +140,10 @@ public class ControllerFinal : MonoBehaviour
 
             StaminaCondition();
 
-            // IdleFeedbackAFK();
+            IdleFeedbackAFK();
         }
 
-        // IdleFeedbackAFKRelease();
+        IdleFeedbackAFKRelease();
 
         if (Input.GetButtonUp("Glide"))
             SpiritRelease();
@@ -476,26 +477,37 @@ public class ControllerFinal : MonoBehaviour
 
     private void IdleFeedbackAFK()
     {
+        float l_LookAroundPlayTime = 3;
+        float l_AfkPlayTime = 10f;
+
         if (m_IsGrounded)
         {
-            m_TimerIdle += Time.deltaTime;
-
             m_Horizontal = Input.GetAxisRaw("Horizontal");
             m_Vertical = Input.GetAxisRaw("Vertical");
+
+            // Conditions d'incrémentation du timer
             if (m_Horizontal == 0 && m_Vertical == 0)
-            {
-                Debug.Log("it works");
-            }
-            if (m_TimerIdle >= 5f && !m_HasPlayIdle)
-            {
-                // m_TimerIdle = 0;
-                m_HasPlayIdle = true;
-                m_PlayerAnim.SetTrigger("IsLookAround");
-            }
-            if (m_TimerIdle >= 15f)
+                m_TimerIdle += Time.deltaTime;
+            else
             {
                 m_TimerIdle = 0;
-                m_CanInteract = false;
+                m_HasPlayLookAround = false;
+                m_PlayerAnim.SetBool("IsLookAround", false);
+            }
+
+            // Conditions de lancement des animations
+            if (m_TimerIdle >= l_LookAroundPlayTime && !m_HasPlayLookAround)
+            {
+                // m_TimerIdle = 0;
+                m_HasPlayLookAround = true;
+                m_PlayerAnim.SetBool("IsLookAround", true);
+                // m_PlayerAnim.SetBool("IsLookAround", false);
+            }
+
+            if (m_TimerIdle >= l_AfkPlayTime)
+            {
+                m_TimerIdle = 0;                
+                m_IsAfk = true;
                 m_PlayerAnim.SetBool("IsInactive", true);
             }
         }
@@ -507,14 +519,15 @@ public class ControllerFinal : MonoBehaviour
 
     private void IdleFeedbackAFKRelease()
     {
-        if (!m_CanInteract)
+        if (m_IsAfk)
         {
             m_Horizontal = Input.GetAxisRaw("Horizontal");
             m_Vertical = Input.GetAxisRaw("Vertical");
             if (m_Horizontal > 0 || m_Vertical > 0)
             {
+                m_TimerIdle = 0;
                 m_PlayerAnim.SetBool("IsInactive", false);
-                StartCoroutine(IdleFeedbackAFKReleaseCO());
+                // StartCoroutine(IdleFeedbackAFKReleaseCO());
             }
         }
     }
@@ -523,8 +536,7 @@ public class ControllerFinal : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         // Debug.Log("yes");
-        m_CanInteract = true;
-        m_TimerIdle = 0;
+        // m_CanInteract = true;
     }
 
     private void AnimCondGeneral()
