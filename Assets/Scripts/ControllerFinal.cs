@@ -31,6 +31,8 @@ public class ControllerFinal : MonoBehaviour
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
+    private int m_CoyoteTimeCounterFrame = 0;
+    private int m_CoyoteTimeLimit = 4;
     [SerializeField] public Transform m_GroundChecker = null;
     [SerializeField] public LayerMask m_GroundMask;
     [HideInInspector] public bool m_IsGrounded = false;
@@ -126,11 +128,12 @@ public class ControllerFinal : MonoBehaviour
                     HookshotMovement();
                     break;
             }
+            if (Input.GetButtonDown("Jump") && m_CanJump)
+                Jump();
+            
             // CharacterMovement();
             CheckGround();
 
-            if (Input.GetButtonDown("Jump") && m_CanJump)
-                Jump();
 
             // AnalogJump();
 
@@ -532,12 +535,6 @@ public class ControllerFinal : MonoBehaviour
         //else
         //    m_PlayerAnim.SetBool("IsSpirit", false);
 
-        // Gestion des conditions d'animation du personnage au sol ou en l'air
-        if (m_IsGrounded)
-            m_PlayerAnim.SetBool("IsGrounded", true);
-        else
-            m_PlayerAnim.SetBool("IsGrounded", false);
-
         // Gestion des conditions d'animation de saut
         if (Input.GetButtonDown("Jump") && m_CanJump && !m_SpiritMode)
             m_PlayerAnim.SetTrigger("IsJumping");
@@ -550,6 +547,23 @@ public class ControllerFinal : MonoBehaviour
         }
         else
             m_PlayerAnim.SetBool("IsSkidding", false);
+
+        AnimCondGrounded();
+    }
+
+    private void AnimCondGrounded()
+    {
+        // Incrementation du timer de coyote time
+        if (!m_IsGrounded)
+            m_CoyoteTimeCounterFrame += 1;
+        else
+            m_CoyoteTimeCounterFrame = 0;
+
+        // Gestion des conditions de IsGrounded
+        if (m_CoyoteTimeCounterFrame >= m_CoyoteTimeLimit)
+            m_PlayerAnim.SetBool("IsGrounded", false);
+        else
+            m_PlayerAnim.SetBool("IsGrounded", true);
     }
 
     private void AnimCondWalk(Vector3 p_Direction)

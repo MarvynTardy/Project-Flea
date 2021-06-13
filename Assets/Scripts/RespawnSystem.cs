@@ -67,6 +67,8 @@ public class RespawnSystem : MonoBehaviour
         if (m_ControllerPlayer.m_SpiritMode)
             m_ControllerPlayer.SpiritRelease();
         
+        yield return new WaitForSeconds(0.5f);
+
         if (m_BlackScreen)
             m_BlackScreen.CrossFadeAlpha(0, 3, false);
 
@@ -77,8 +79,10 @@ public class RespawnSystem : MonoBehaviour
 
     private void RespawnExit()
     {
-        m_ControllerPlayer.m_CanInteract = true;
+        // m_ControllerPlayer.m_CanInteract = true;
         // StartCoroutine(m_ControllerPlayer.IdleFeedbackAFKReleaseCO());
+
+        m_ControllerPlayer.ResetGravityEffect();
         m_PlayerAnim.SetBool("IsInactive", false);
     }
 
