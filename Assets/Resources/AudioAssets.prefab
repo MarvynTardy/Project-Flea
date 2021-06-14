@@ -57,3 +57,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3d4567cf08e506248bd2c7ac1b100254, type: 3}
     - {fileID: 8300000, guid: af0f04349ac6f3849b823634b18c4f7e, type: 3}
     m_ProbabilityToLaunch: 100
+  - m_Sound: 9
+    m_AudioClip:
+    - {fileID: 8300000, guid: 7ccd81aac659f3f42836a2ddbf4fa913, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 5
+    m_AudioClip:
+    - {fileID: 8300000, guid: 77a03555119c7be47866d49b2530488e, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 6
+    m_AudioClip:
+    - {fileID: 8300000, guid: 337309e53eb70174b90debf03b56ec32, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 2
+    m_AudioClip:
+    - {fileID: 8300000, guid: 0b29baf3530a11146867a1dbec5f900b, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 2
+    m_AudioClip:
+    - {fileID: 8300000, guid: 0b29baf3530a11146867a1dbec5f900b, type: 3}
+    m_ProbabilityToLaunch: 100

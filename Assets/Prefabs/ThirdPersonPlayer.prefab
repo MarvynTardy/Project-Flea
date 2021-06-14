@@ -63256,6 +63256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8426029799202924052}
+  - component: {fileID: 5794472471726700292}
   m_Layer: 0
   m_Name: cuisse_droit
   m_TagString: Untagged
@@ -63279,6 +63280,19 @@ Transform:
   m_Father: {fileID: 8426029800823143035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5794472471726700292
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426029799202924053}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13065301
+  m_Center: {x: -0.17560238, y: -0.0010161217, z: 0.000000041508688}
 --- !u!1 &8426029799217232557
 GameObject:
   m_ObjectHideFlags: 0
@@ -63511,6 +63525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8426029799626366261}
+  - component: {fileID: 2097302155071190963}
   m_Layer: 0
   m_Name: cuisse_gauche
   m_TagString: Untagged
@@ -63534,6 +63549,19 @@ Transform:
   m_Father: {fileID: 8426029800823143035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2097302155071190963
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426029799626366258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1425691
+  m_Center: {x: -0.17664747, y: 0.004713968, z: -0.000000025385724}
 --- !u!1 &8426029799698816178
 GameObject:
   m_ObjectHideFlags: 0
@@ -63856,7 +63884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8426029800132559230
 Transform:
   m_ObjectHideFlags: 0
@@ -64018,7 +64046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8426029800354062677
 Transform:
   m_ObjectHideFlags: 0
@@ -64465,8 +64493,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.00000023841858, y: 0, z: -0.002151847}
-    m_Extent: {x: 0.59768355, y: 0.5218103, z: 0.66438293}
+    m_Center: {x: 0.000053554773, y: -0.00017818809, z: -0.0017499328}
+    m_Extent: {x: 0.39835486, y: 0.3475747, z: 0.44323725}
   m_DirtyAABB: 0
 --- !u!183 &8426029800476680675
 Cloth:
@@ -64949,7 +64977,9 @@ Cloth:
   - maxDistance: 1
     collisionSphereDistance: 3.4028235e+38
   m_CapsuleColliders: []
-  m_SphereColliders: []
+  m_SphereColliders:
+  - first: {fileID: 5794472471726700292}
+    second: {fileID: 2097302155071190963}
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
   m_SelfAndInterCollisionIndices: 
