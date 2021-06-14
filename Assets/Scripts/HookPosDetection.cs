@@ -7,6 +7,8 @@ public class HookPosDetection : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float m_DetectionDistance = 20.0f;
     [SerializeField] private float m_HookDistance = 17.0f;
+
+    float l_DotProductLimit = 0.5f;
     private Vector2 m_CenterScreenPos;
 
     [Header ("References")]
@@ -38,7 +40,16 @@ public class HookPosDetection : MonoBehaviour
         //}
         
         HookPointDetection();
+
+        if (m_HookTarget)
+        {
+            if (!TestDotPositionValidity(m_HookTarget))
+            {
+                m_HookTarget = null;
+            }
+        }
     }
+
     private void HookPointDetection()
     {
         Transform l_PotentialTarget;
@@ -47,28 +58,33 @@ public class HookPosDetection : MonoBehaviour
         Collider[] l_HookPositions = Physics.OverlapSphere(transform.position, m_DetectionDistance, m_HookPointLayer);
         if(l_HookPositions.Length > 0)
         {
-            // On initie la cible potentielle avec la première entrée de notre tableau
-            l_PotentialTarget = l_HookPositions[0].transform;
-
-            // Pour chaque HookPoint à portée
-            foreach (Collider l_HookPosition in l_HookPositions)
+            if (TestDotPositionValidity(l_HookPositions[0].transform))
             {
-                // On crée une variable de sa position à l'écran
-                Vector2 l_HookPosToScreen = m_Camera.WorldToScreenPoint(l_HookPosition.transform.position);
-                Vector2 l_PotentialPosToScreen = m_Camera.WorldToScreenPoint(l_PotentialTarget.transform.position);
-
-                if (Vector2.Distance(l_HookPosToScreen, m_CenterScreenPos) <= Vector2.Distance(l_PotentialPosToScreen, m_CenterScreenPos))
+                // On initie la cible potentielle avec la première entrée de notre tableau
+                l_PotentialTarget = l_HookPositions[0].transform;
+                
+                // Pour chaque HookPoint à portée
+                foreach (Collider l_HookPosition in l_HookPositions)
                 {
-                    l_PotentialTarget = l_HookPosition.transform;
-                }               
-            }
+                    if (TestDotPositionValidity(l_HookPosition.transform))
+                    {
+                        // On crée une variable de sa position à l'écran
+                        Vector2 l_HookPosToScreen = m_Camera.WorldToScreenPoint(l_HookPosition.transform.position);
+                        Vector2 l_PotentialPosToScreen = m_Camera.WorldToScreenPoint(l_PotentialTarget.transform.position);
 
-            // Debug.Log(Vector2.Distance(l_PotentialTarget.position, m_CenterScreenPos));
+                        if (Vector2.Distance(l_HookPosToScreen, m_CenterScreenPos) <= Vector2.Distance(l_PotentialPosToScreen, m_CenterScreenPos))
+                        {
+                            l_PotentialTarget = l_HookPosition.transform;
+                        }               
+                    }
+                }
+                // Debug.Log(Vector2.Distance(l_PotentialTarget.position, m_CenterScreenPos));
 
-            // Actualise le point de grappin si la cible potentiel n'est pas nulle et que la cible n'est pas déjà la cible actuelle
-            if (l_PotentialTarget != null && m_HookTarget != l_PotentialTarget)
-            {
-                SetHookPoint(l_PotentialTarget);
+                // Actualise le point de grappin si la cible potentiel n'est pas nulle et que la cible n'est pas déjà la cible actuelle
+                if (l_PotentialTarget != null && m_HookTarget != l_PotentialTarget)
+                {
+                    SetHookPoint(l_PotentialTarget);
+                }
             }
         }
         
@@ -136,6 +152,25 @@ public class HookPosDetection : MonoBehaviour
 
         // On active son feedback de ciblage
         // m_HookTarget.GetComponentInChildren<SpriteRenderer>().enabled = true;
+    }
+
+    private float TestDotPosition(Transform l_Target)
+    {
+        // On récupère le vecteur de la caméra jusqu'à la target testée
+        Vector3 l_VectorCamToTarget = Vector3.Normalize(l_Target.position - m_Controller.m_Camera.transform.position);
+
+        // On vérifie si il est bien devant la caméra
+        float l_DotProduct = Vector3.Dot(m_Controller.m_Camera.transform.forward, l_VectorCamToTarget);
+
+        return l_DotProduct;
+    }
+
+    private bool TestDotPositionValidity(Transform l_Target)
+    {
+        if (TestDotPosition(l_Target) >= l_DotProductLimit)
+            return true;
+        else
+            return false;
     }
 
     private void CancelHookPoint()

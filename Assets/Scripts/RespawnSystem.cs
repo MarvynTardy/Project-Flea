@@ -9,6 +9,7 @@ public class RespawnSystem : MonoBehaviour
     [SerializeField] private Vector3 m_Checkpoint = new Vector3(0, 1, 0);
     private ControllerFinal m_ControllerPlayer;
     private bool m_CanCheck = false;
+    private bool m_IsFalling = false;
 
     [Header("Feedback")]
     [SerializeField] private Image m_BlackScreen;
@@ -38,6 +39,13 @@ public class RespawnSystem : MonoBehaviour
         {
             CheckValidPoint();
         }
+
+        if (m_IsFalling)
+        {
+            m_ControllerPlayer.GravityUpload();
+            m_ControllerPlayer.Move();
+        }
+
     }
 
     public void RespawnBegin()
@@ -47,6 +55,8 @@ public class RespawnSystem : MonoBehaviour
         if (m_BlackScreen)
             m_BlackScreen.CrossFadeAlpha(1, 1, false);
 
+        m_IsFalling = true;
+
         StartCoroutine(RespawnCO());
     }
 
@@ -55,6 +65,8 @@ public class RespawnSystem : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         // fade au noir à été executé
+
+        m_IsFalling = false;
         m_ControllerPlayer.ResetGravityEffect();
 
         this.gameObject.transform.position = m_Checkpoint;

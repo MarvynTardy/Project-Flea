@@ -6,7 +6,7 @@ using DG.Tweening;
 public class ControllerFinal : MonoBehaviour
 {
     [Header("General")]
-    [SerializeField] private Transform m_Camera = null;
+    [SerializeField] public Transform m_Camera = null;
     //[SerializeField] private GameObject m_PlayerModel = null;
     public bool m_CanInteract = false;
     public bool m_IsAfk = false;
@@ -195,8 +195,7 @@ public class ControllerFinal : MonoBehaviour
         // Application de la velocité en pente
         m_Direction += m_SlopeVelocity;
 
-        // Application de la direction finale au character controller du personnage
-        m_Controller.Move(m_Direction * Time.deltaTime);
+        Move();
 
         // Réduction du momentum
         if (m_CharacterVelocityMomentum.magnitude > 0f)
@@ -263,6 +262,12 @@ public class ControllerFinal : MonoBehaviour
         //}
     }
 
+    public void Move()
+    {
+        // Application de la direction finale au character controller du personnage
+        m_Controller.Move(m_Direction * Time.deltaTime);
+    }
+
     #region Jump
     private void Jump()
     {
@@ -316,7 +321,7 @@ public class ControllerFinal : MonoBehaviour
             
     }
     
-    private void GravityUpload()
+    public void GravityUpload()
     {
         // Applique la gravité à la velocité du personnage
         if (m_SpiritMode)
