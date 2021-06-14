@@ -8,7 +8,18 @@ public static class AudioManager
     {
         Foley,
         Footstep,
-        PlayerAttack,
+        Landing,
+        SpiritModeFoley,
+        SpiritModeLaunch,
+        HookShotLaunch,
+        HookShotReachPoint,
+        AmbientWind,
+        AmbientGrass,
+        POV,
+        ManaSpot,
+        ManaRestore,
+
+
     }
     private static Dictionary<Sound, float> probability;
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -39,6 +50,25 @@ public static class AudioManager
 
         }
         
+    }
+
+    public static void Play3DSound(Sound p_Sound)
+    {
+        if (CanPlaySound(p_Sound))
+        {
+            if (m_OneShotGameObject == null)
+            {
+                m_OneShotGameObject = new GameObject("One Shot Sound");
+                m_OneShotAudioSource = m_OneShotGameObject.AddComponent<AudioSource>();
+                m_OneShotAudioSource.PlayOneShot(GetAudioClip(p_Sound));
+                m_OneShotAudioSource.spatialBlend = 1f;
+            }
+            m_OneShotAudioSource.PlayOneShot(GetAudioClip(p_Sound));
+            //Object.Destroy(m_OneShotGameObject, m_OneShotAudioSource.clip.length);
+
+
+        }
+
     }
 
     private static bool CanPlaySound(Sound p_Sound)
