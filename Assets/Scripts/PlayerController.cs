@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_GroundDistance = 0.4f;
     [SerializeField] float m_JumpForce = 15f;
     [SerializeField] float m_MomentumBoost = 5f;
-    [SerializeField] float gravityDownForce = -40f;
+    //[SerializeField] float gravityDownForce = -40f;
 
     private bool m_IsGrounded;
     private bool m_CanJump;

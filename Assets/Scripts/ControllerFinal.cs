@@ -7,7 +7,7 @@ public class ControllerFinal : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private Transform m_Camera = null;
-    [SerializeField] private GameObject m_PlayerModel = null;
+    //[SerializeField] private GameObject m_PlayerModel = null;
     public bool m_CanInteract = false;
     public bool m_IsAfk = false;
     [HideInInspector] public CharacterController m_Controller = null;
@@ -23,12 +23,12 @@ public class ControllerFinal : MonoBehaviour
     [HideInInspector] public bool m_SpiritMode = false;
 
     [Header("SlopeDetection")]
-    [SerializeField] private float m_SlopeForce;
     [SerializeField] private Transform m_SlopeCheck;
     [SerializeField] public bool m_IsSliding;
-    private float m_SlopeRayLength = 1;
-    private float m_SlopeAngleTolerance;
     private Vector3 m_SlopeVelocity;
+    //[SerializeField] private float m_SlopeForce;
+    //private float m_SlopeRayLength = 1;
+    //private float m_SlopeAngleTolerance;
 
     [Header("GroundCheck")]
     [SerializeField] [Range(0, 1)] private float m_GroundDistance = 0.4f;
@@ -79,7 +79,7 @@ public class ControllerFinal : MonoBehaviour
     [Header ("Spirit Feedback")]
     [SerializeField] private ParticleSystem m_SpiritParticle = null;
     [SerializeField] private Material m_GlowMaterial = null;
-    [SerializeField] private Material m_EmptyMaterial = null;
+    //[SerializeField] private Material m_EmptyMaterial = null;
     [SerializeField] private SkinnedMeshRenderer m_Cloth = null;
     [SerializeField] private SkinnedMeshRenderer m_Pagne = null;
     private Material m_ClothSavedMaterial;
