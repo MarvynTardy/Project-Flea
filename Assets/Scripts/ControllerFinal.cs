@@ -435,6 +435,7 @@ public class ControllerFinal : MonoBehaviour
         {
             if (Input.GetButton("Glide"))
                 SpiritStart();
+           
             //else if (Input.GetButtonUp("Glide"))
             //    SpiritRelease();                
         }
@@ -448,7 +449,7 @@ public class ControllerFinal : MonoBehaviour
     {
         m_SpiritMode = true;
         m_StaminaComponent.UseStamina(10f * Time.deltaTime);
-
+        
         SpiritStartFeedback();
     }
 

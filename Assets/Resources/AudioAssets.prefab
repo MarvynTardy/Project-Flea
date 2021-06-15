@@ -73,7 +73,11 @@ MonoBehaviour:
     m_AudioClip:
     - {fileID: 8300000, guid: 0b29baf3530a11146867a1dbec5f900b, type: 3}
     m_ProbabilityToLaunch: 100
-  - m_Sound: 2
+  - m_Sound: 11
     m_AudioClip:
-    - {fileID: 8300000, guid: 0b29baf3530a11146867a1dbec5f900b, type: 3}
+    - {fileID: 8300000, guid: d0209f8f00cb0b143b27805dab4ce9d6, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 4
+    m_AudioClip:
+    - {fileID: 8300000, guid: 8cc005eaa76140e4895f2c97d69b98a4, type: 3}
     m_ProbabilityToLaunch: 100

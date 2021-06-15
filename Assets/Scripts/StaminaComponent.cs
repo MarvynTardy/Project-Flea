@@ -79,6 +79,7 @@ public class StaminaComponent : MonoBehaviour
         if (other.gameObject.layer == 13)
         {
             GainStamina(m_MaxStamina - CurrentStamina);
+            AudioManager.PlaySound(AudioManager.Sound.ManaRestore);
         }
     }
 }
