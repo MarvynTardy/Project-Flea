@@ -482,8 +482,8 @@ public class ControllerFinal : MonoBehaviour
 
     private void IdleFeedbackAFK()
     {
-        float l_LookAroundPlayTime = 3;
-        float l_AfkPlayTime = 10f;
+        float l_LookAroundPlayTime = 6;
+        float l_AfkPlayTime = 20f;
 
         if (m_IsGrounded)
         {
