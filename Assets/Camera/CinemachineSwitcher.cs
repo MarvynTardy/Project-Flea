@@ -27,7 +27,7 @@ public class CinemachineSwitcher : MonoBehaviour
     private void Update()
     {
         m_ActualCamera = m_CinemachineStateDrivenCamera.LiveChild;
-        Debug.Log(m_ActualCamera);
+        //Debug.Log(m_ActualCamera);
     }
 
  
