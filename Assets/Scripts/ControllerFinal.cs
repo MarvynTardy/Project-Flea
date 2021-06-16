@@ -441,7 +441,12 @@ public class ControllerFinal : MonoBehaviour
         if (m_StaminaComponent.CurrentStamina > 0)
         {
             if (Input.GetButtonDown("Glide"))
+            {
                 SpiritStartFeedback();
+                AudioManager.PlaySound(AudioManager.Sound.SpiritModeLaunch);
+            }
+                
+
             if (Input.GetButton("Glide"))
                 SpiritStart();
            
