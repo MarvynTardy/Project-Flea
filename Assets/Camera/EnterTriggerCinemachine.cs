@@ -8,6 +8,8 @@ public class EnterTriggerCinemachine : MonoBehaviour
 
     private CinemachineSwitcher m_CinemachineSwitcher;
     private CameraChecker m_CameraChecker;
+    [SerializeField]
+    private float m_DurationTimer = 0.0f;
 
     [SerializeField]
     private CinemachineVirtualCameraBase m_FromCamera;
@@ -31,7 +33,7 @@ public class EnterTriggerCinemachine : MonoBehaviour
 
     public IEnumerator StartTimer()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(m_DurationTimer);
 
         Debug.Log("Ok");
         m_CinemachineSwitcher.SwitchCamera(m_TargetCamera, m_FromCamera);
