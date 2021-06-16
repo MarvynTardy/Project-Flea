@@ -24,6 +24,17 @@ public class EnterTriggerCinemachine : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Yes");
         m_CinemachineSwitcher.SwitchCamera(m_FromCamera, m_TargetCamera);
+        StartCoroutine(StartTimer());
+    }
+
+    public IEnumerator StartTimer()
+    {
+        yield return new WaitForSeconds(10f);
+
+        Debug.Log("Ok");
+        m_CinemachineSwitcher.SwitchCamera(m_TargetCamera, m_FromCamera);
     }
 }
+
