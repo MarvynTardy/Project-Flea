@@ -54,7 +54,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: ThirdPersonCamera
-    m_To: CentralViewPointCam
+    m_To: CentralViewpointCam
     m_Blend:
       m_Style: 1
       m_Time: 9
@@ -64,7 +64,7 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: CentralViewPointCam
+  - m_From: CentralViewpointCam
     m_To: ThirdPersonCamera
     m_Blend:
       m_Style: 1
