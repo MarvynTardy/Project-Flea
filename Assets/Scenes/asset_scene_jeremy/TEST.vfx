@@ -35,18 +35,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
-  m_Children:
-  - {fileID: 8926484042661614555}
-  - {fileID: 8926484042661614558}
-  - {fileID: 8926484042661614583}
-  - {fileID: 8926484042661614585}
-  - {fileID: 8926484042661614611}
-  - {fileID: 8926484042661614635}
-  - {fileID: 8926484042661614657}
-  - {fileID: 8926484042661614670}
-  - {fileID: 8926484042661614702}
-  - {fileID: 8926484042661614719}
-  - {fileID: 8926484042661614729}
+  m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
