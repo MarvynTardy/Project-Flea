@@ -448,7 +448,10 @@ public class ControllerFinal : MonoBehaviour
                 
 
             if (Input.GetButton("Glide"))
+            {
                 SpiritStart();
+                SpiritUpdateFeedback();
+            }
            
             //else if (Input.GetButtonUp("Glide"))
             //    SpiritRelease();                
@@ -519,8 +522,15 @@ public class ControllerFinal : MonoBehaviour
                 // m_PlayerAnim.SetBool("IsLookAround", false);
             }
 
+            //if (m_TimerIdle > l_LookAroundPlayTime + 1 && m_HasPlayLookAround)
+            //{
+            //    // Debug.Break();
+            //    m_PlayerAnim.SetBool("IsLookAround", false);                
+            //}
+
             if (m_TimerIdle >= l_AfkPlayTime)
             {
+                m_HasPlayLookAround = false;
                 m_TimerIdle = 0;                
                 m_IsAfk = true;
                 m_PlayerAnim.SetBool("IsInactive", true);
@@ -698,7 +708,6 @@ public class ControllerFinal : MonoBehaviour
     {
         m_PlayerAnim.SetBool("IsSpirit", true);
         m_SpiritParticle.Play();
-        m_SpeedParticleSpirit.Play();
 
         // Permet d'appliquer le shader qui illumine les habits du personnage
         m_Cloth.material = m_GlowMaterial;
@@ -709,6 +718,19 @@ public class ControllerFinal : MonoBehaviour
 
         //if (m_Controller.velocity.x > 0 || m_Controller.velocity.z > 0)
         //    SpeedStartFeedback();
+    }
+
+    private void SpiritUpdateFeedback()
+    {
+        if (m_Horizontal > 0 || m_Vertical > 0)
+        {
+            m_SpeedParticleSpirit.Play();
+        }
+        else
+        {
+            m_SpeedParticleSpirit.Stop();
+            m_SpeedParticleSpirit.Clear();
+        }
     }
     
     private void SpiritReleaseFeedback()
