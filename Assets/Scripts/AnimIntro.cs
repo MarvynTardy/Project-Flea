@@ -20,6 +20,8 @@ public class AnimIntro : MonoBehaviour
 
     IEnumerator IntroCo()
     {
+        StartCoroutine(IntroCoSound());
+
         yield return new WaitForSeconds(2f);
 
         m_Logo.transform.DOMoveY(600, 0.4f);
@@ -35,6 +37,13 @@ public class AnimIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        m_SceneLoader.LoadLevel("MainMenu");
+        m_SceneLoader.LoadLevel("Disclaimer");
+    }
+
+    IEnumerator IntroCoSound()
+    {
+        yield return new WaitForSeconds(1.65f);
+
+        AudioManager.PlaySound(AudioManager.Sound.Intro);
     }
 }

@@ -18,7 +18,7 @@ public static class AudioManager
         POV,
         ManaSpot,
         ManaRestore,
-
+        Intro,
 
     }
     private static Dictionary<Sound, float> probability;

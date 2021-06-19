@@ -21,9 +21,9 @@ public class ExitMainMenu : MonoBehaviour
     {
         m_FadeBlackOut.gameObject.SetActive(true);
         m_FadeBlackOut.CrossFadeAlpha(0, 0, true);
-        m_FadeBlackOut.CrossFadeAlpha(1, 1, true);
+        m_FadeBlackOut.CrossFadeAlpha(1, 2, true);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         GetComponent<SceneLoader>().LoadLevel(p_NextScene);
     }
