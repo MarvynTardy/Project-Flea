@@ -103,6 +103,9 @@ public class ControllerFinal : MonoBehaviour
         // Permet de conserver en mémoire les materials originels des vêtements
         m_ClothSavedMaterial = m_Cloth.materials[0];
         m_PagneSavedMaterial = m_Pagne.materials[0];
+
+        m_CanInteract = false;
+        //m_PlayerAnim.Play();
     }
     #endregion
 
