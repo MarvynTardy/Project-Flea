@@ -448,19 +448,24 @@ public class ControllerFinal : MonoBehaviour
                 SpiritStartFeedback();
                 AudioManager.PlaySound(AudioManager.Sound.SpiritModeLaunch);
             }
-                
+
 
             if (Input.GetButton("Glide"))
             {
                 SpiritStart();
+                
                 SpiritUpdateFeedback();
             }
-           
+
             //else if (Input.GetButtonUp("Glide"))
             //    SpiritRelease();                
         }
         else if (m_StaminaComponent.CurrentStamina <= 0 && m_SpiritMode || (Input.GetButtonUp("Glide")))
+        {
             SpiritRelease();
+            
+        }
+            
         else if (m_StaminaComponent.CurrentStamina <= 0 && Input.GetButtonDown("Glide"))
             SpiritEmptyFeedback();
     }
@@ -476,7 +481,7 @@ public class ControllerFinal : MonoBehaviour
     public void SpiritRelease()
     {
         m_SpiritMode = false;
-
+        AudioManager.PlaySound(AudioManager.Sound.SpiritModeRelease);
         // Permet d'éviter que le player garde l'inertie de décélération de la précédente activation
         m_PlayerGliding.GlideSpeed = 0;
 
