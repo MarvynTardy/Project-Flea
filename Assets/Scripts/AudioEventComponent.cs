@@ -16,7 +16,18 @@ public class AudioEventComponent : MonoBehaviour
 
     private void PlayPOVSound()
     {
-        AudioManager.PlaySound(AudioManager.Sound.POV);
+        if(gameObject.name == ("PointOfView1"))
+        {
+            AudioManager.PlaySound(AudioManager.Sound.POV1);
+        }
+        if (gameObject.name == ("PointOfView2"))
+        {
+            AudioManager.PlaySound(AudioManager.Sound.POV2);
+        }
+        if (gameObject.name == ("PointOfView3"))
+        {
+            AudioManager.PlaySound(AudioManager.Sound.POV3);
+        }
     }
 
     private void HookShotLaunch()
@@ -32,4 +43,6 @@ public class AudioEventComponent : MonoBehaviour
     {
         AudioManager.PlaySound(AudioManager.Sound.Landing);
     }
+
+    
 }
