@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8706698064678715099
 Transform:
@@ -98,7 +98,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6293632435069343960
 Transform:
@@ -179,7 +179,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8180729957824727449
 Transform:
@@ -254,12 +254,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5993656039624951722}
+  - component: {fileID: -8786522995598537927}
   m_Layer: 0
   m_Name: Grass_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5993656039624951722
 Transform:
@@ -279,6 +280,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &-8786522995598537927
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369900515635502352}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.000009059906, y: 0.90992373, z: 0.0000014305115}
+  m_Size: 6.720747
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.48844683
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 874651833518241171}
+    - renderer: {fileID: 1573369326294357712}
+    - renderer: {fileID: 8510664366937932214}
+    - renderer: {fileID: 3317681381390207017}
+  - screenRelativeHeight: 0.13123141
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 874651833518241171}
+    - renderer: {fileID: 1573369326294357712}
+    - renderer: {fileID: 8510664366937932214}
+  - screenRelativeHeight: 0.0029994375
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 874651833518241171}
+  m_Enabled: 1
 --- !u!1 &7484022029089116811
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +328,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1488487232229899419
 Transform:

@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &475371195441554794
 Transform:
@@ -98,7 +98,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &28703901003669051
 Transform:
@@ -179,7 +179,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2405825170132520426
 Transform:
@@ -254,12 +254,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7409464745090885146}
+  - component: {fileID: 1319834619382797092}
   m_Layer: 0
   m_Name: Grass_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7409464745090885146
 Transform:
@@ -278,3 +279,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1319834619382797092
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897172177472748704}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00000166893, y: 0.9099245, z: 0.0000023841858}
+  m_Size: 5.707673
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.3412019
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1512520708589135789}
+    - renderer: {fileID: 4554835883882596340}
+    - renderer: {fileID: 6364363543865216183}
+  - screenRelativeHeight: 0.111874744
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1512520708589135789}
+    - renderer: {fileID: 4554835883882596340}
+  - screenRelativeHeight: 0.004061788
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6364363543865216183}
+  m_Enabled: 1
