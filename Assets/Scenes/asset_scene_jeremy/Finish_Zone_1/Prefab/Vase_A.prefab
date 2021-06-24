@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6188064027427442002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8609580193562896622}
+  - component: {fileID: 8298071659740087733}
+  m_Layer: 9
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &8609580193562896622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188064027427442002}
+  m_LocalRotation: {x: -0.00000008146034, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0011, y: 0.0858, z: -0}
+  m_LocalScale: {x: 0.18412307, y: 0.18412307, z: 0.18412307}
+  m_Children: []
+  m_Father: {fileID: 5922453878808565763}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8298071659740087733
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188064027427442002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7062727
+  m_Center: {x: 0.005996704, y: 0.008885026, z: -1.2626381e-16}
 --- !u!1 &6447774504553054905
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,12 +55,12 @@ GameObject:
   - component: {fileID: 5922453878808565763}
   - component: {fileID: 7322593482970486694}
   - component: {fileID: 4790674074027893612}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Vase_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5922453878808565763
 Transform:
@@ -28,7 +72,8 @@ Transform:
   m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -146.44804, y: 0.0003257117, z: -40.141937}
   m_LocalScale: {x: 5.43115, y: 5.43115, z: 5.43115}
-  m_Children: []
+  m_Children:
+  - {fileID: 8609580193562896622}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
