@@ -49,7 +49,11 @@ public class CinemachineSwitcher : MonoBehaviour
     {
         if ((object)m_CinemachineStateDrivenCamera.LiveChild == p_ToCamera)
         {
-            m_CinemachineTrackedDolly.m_AutoDolly.m_Enabled = false;
+            if(m_CinemachineTrackedDolly != null)
+            {
+                m_CinemachineTrackedDolly.m_AutoDolly.m_Enabled = false;
+            }
+            
             m_CinemachineTrackedDolly.m_PathPosition = 0.0f;
             m_Animator.Play(p_FromCamera.name);
         }
