@@ -39,10 +39,10 @@ public class AudioEventComponent : MonoBehaviour
         AudioManager.PlaySound(AudioManager.Sound.HookShotReachPoint);
     }
 
-    private void PlayLanding()
-    {
-        AudioManager.PlaySound(AudioManager.Sound.Landing);
-    }
+    //private void PlayLanding()
+    //{
+    //    AudioManager.PlaySound(AudioManager.Sound.Landing);
+    //}
 
     
 }

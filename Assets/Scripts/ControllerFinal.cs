@@ -581,7 +581,7 @@ public class ControllerFinal : MonoBehaviour
         //    m_PlayerAnim.SetBool("IsSpirit", false);
 
         // Gestion des conditions d'animation de saut
-        if (Input.GetButtonDown("Jump") && m_CanJump && !m_SpiritMode)
+        if (Input.GetButtonDown("Jump") && m_CanJump)
             m_PlayerAnim.SetTrigger("IsJumping");
 
         // Gestion des conditions de dérapage
