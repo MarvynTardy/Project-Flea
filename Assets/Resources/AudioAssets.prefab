@@ -76,10 +76,6 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8347d0355344cee4a8ac8c6581d858d3, type: 3}
     - {fileID: 8300000, guid: 6f2a4188233d6dc45bcbf406b8c1daf6, type: 3}
     m_ProbabilityToLaunch: 100
-  - m_Sound: 2
-    m_AudioClip:
-    - {fileID: 8300000, guid: 0b29baf3530a11146867a1dbec5f900b, type: 3}
-    m_ProbabilityToLaunch: 100
   - m_Sound: 10
     m_AudioClip:
     - {fileID: 8300000, guid: ead93e8966fd7344ea62fe429156b1d8, type: 3}
@@ -99,4 +95,13 @@ MonoBehaviour:
   - m_Sound: 12
     m_AudioClip:
     - {fileID: 8300000, guid: 6056aaa3d028488449b1f0186808dbff, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 7
+    m_AudioClip:
+    - {fileID: 8300000, guid: 02077cb8eb4b2ba47a9f6a758f864f8b, type: 3}
+    - {fileID: 8300000, guid: 933c18d6620079146957a96a5b5293b2, type: 3}
+    m_ProbabilityToLaunch: 100
+  - m_Sound: 15
+    m_AudioClip:
+    - {fileID: 8300000, guid: f7587e1582df45243a411c9d6003edf7, type: 3}
     m_ProbabilityToLaunch: 100

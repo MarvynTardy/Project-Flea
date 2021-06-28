@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2101431538298149526
 Transform:
@@ -29,6 +29,7 @@ Transform:
   m_Children:
   - {fileID: 6404590899461542540}
   - {fileID: 8321487001475883123}
+  - {fileID: 8250870545112784797}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,7 +49,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8321487001475883123
 Transform:
@@ -138,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 10
+  m_Version: 11
   m_ObsoleteShadowResolutionTier: 1
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
@@ -248,6 +249,50 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
+--- !u!1 &8260840286399635583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8250870545112784797}
+  - component: {fileID: 2611921833787503730}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &8250870545112784797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260840286399635583}
+  m_LocalRotation: {x: -0, y: -0.42334378, z: -0, w: 0.9059692}
+  m_LocalPosition: {x: 1.816, y: 1.6999996, z: 1.835}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_Children: []
+  m_Father: {fileID: 2101431538298149526}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -50.092, z: 0}
+--- !u!65 &2611921833787503730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260840286399635583}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.76417434, y: 3.4716716, z: 0.9008293}
+  m_Center: {x: -4.1089606, y: -3.4477093, z: -0.049584568}
 --- !u!1001 &6875611246488958311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -324,6 +369,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: lanterne_4_finie
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5afcabbceff387e4db73c49452028b98,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afcabbceff387e4db73c49452028b98, type: 3}
