@@ -83,7 +83,7 @@ public class ViewpointManager : MonoBehaviour
     {
         Vector3 m_Direction;
 
-        m_Direction = Vector3.Lerp(m_Controller.transform.position, m_TargetPlayer.position, 0.001f);
+        m_Direction = Vector3.Lerp(m_Controller.transform.position, m_TargetPlayer.position, 0.005f);
 
         m_Controller.m_PlayerAnim.SetBool("IsMoving", true);
         m_Controller.m_PlayerAnim.SetBool("IsGrounded", true);

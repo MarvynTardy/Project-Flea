@@ -33,6 +33,7 @@ public class CinemachineSwitcher : MonoBehaviour
  
     public void SwitchCamera(CinemachineVirtualCameraBase p_FromCamera = null, CinemachineVirtualCameraBase p_ToCamera = null)
     {
+        
         if((object)m_CinemachineStateDrivenCamera.LiveChild == p_FromCamera)
         {
             if(m_CinemachineTrackedDolly != null)
